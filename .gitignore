@@ -1,0 +1,12 @@
+.vscode/
+
+*.log
+
+## latex files
+*.aux
+*.toc
+*.lof
+*.bbl
+*.bcf
+*.blg
+*.run.xml
