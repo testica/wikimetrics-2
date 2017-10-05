@@ -1,0 +1,8 @@
+<div class="title" fxLayout="row wrap" fxLayoutGap="10px">
+  <div>Artículos</div>
+  <input #searchBox placeholder="Buscar" (keyup)="search(searchBox.value.toLowerCase().trim())" type="search">
+</div>
+<div class="container" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px" fxLayoutGap.xs="0">
+  <md-card *ngFor="let article of articles" fxFlex="30" fxFlex.sm="50" fxFlex.xs="100">{{article.title}}</md-card>
+  <md-card  class="new-article" fxFlex="30" fxFlex.sm="50" fxFlex.xs="100">Agregar Nuevo</md-card>
+</div>
