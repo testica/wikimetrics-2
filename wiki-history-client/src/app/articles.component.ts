@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
 // Observable operators
@@ -31,7 +32,7 @@ export class ArticlesComponent implements OnInit {
 
   private searchTerms = new Subject<string>();
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.searchTerms
@@ -44,6 +45,10 @@ export class ArticlesComponent implements OnInit {
 
   search(term: string): void {
     this.searchTerms.next(term);
+  }
+
+  gotoDetail(title: string): void {
+    this.router.navigate(['/articles', title]);
   }
 
 
