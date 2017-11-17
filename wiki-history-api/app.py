@@ -3,12 +3,17 @@ from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
     get_jwt_identity
 )
+from flask_cors import CORS
 from pymongo import MongoClient, ASCENDING
 import hashlib
 import json
 import datetime
 
 app = Flask(__name__)
+
+# allow CORS
+CORS(app)
+
 app.config['JWT_SECRET_KEY'] = 'super-secret'
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=30)
 
