@@ -1,0 +1,21 @@
+<div class="signup-container" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <mat-form-field class="username-container">
+    <input matInput placeholder="Username" [formControl]="usernameFormControl">
+    <mat-error *ngIf="invalidUsername">Username vacío</mat-error>
+  </mat-form-field>
+  <div class="passwords-container" [formGroup]="passwordGroupControl">
+    <mat-form-field class="password-container">
+      <input matInput type="password" placeholder="Contraseña" formControlName="password">
+      <mat-error *ngIf="invalidPassword">Contraseña vacía</mat-error>
+    </mat-form-field>
+    <mat-form-field class="repassword-container">
+      <input matInput type="password" placeholder="Repetir contraseña" formControlName="repassword">
+      <mat-error *ngIf="invalidRepassword">Contraseña no coincide</mat-error>
+    </mat-form-field>
+  </div>
+  <button mat-raised-button 
+          [disabled]="invalidUsername || invalidPassword || invalidRepassword" 
+          (click)="signUp()"> Registrarse
+  </button>
+  <a [routerLink]="['/sign-in']">¿ Ya tienes cuenta ?</a>
+</div>

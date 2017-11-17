@@ -1,0 +1,17 @@
+.signup-container {
+  align-items: center !important;
+  align-content: center !important;
+}
+
+.username-container,
+.password-container, .repassword-container, button {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.passwords-container {
+  width: 100%;
+  max-width: 400px;
+}

@@ -4,11 +4,12 @@
     <mat-error *ngIf="invalidUsername">Username vacío</mat-error>
   </mat-form-field>
   <mat-form-field class="password-container">
-    <input matInput [(ngModel)]="user.password" placeholder="Contraseña" [formControl]="passwordFormControl">
+    <input matInput type="password" [(ngModel)]="user.password" placeholder="Contraseña" [formControl]="passwordFormControl">
     <mat-error *ngIf="invalidPassword">Contraseña vacía</mat-error>
   </mat-form-field>
   <button mat-raised-button 
           [disabled]="invalidUsername || invalidPassword" 
           (click)="signIn()"> Iniciar sesión
   </button>
+  <a [routerLink]="['/sign-up']">¿ No tienes cuenta ?</a>
 </div>

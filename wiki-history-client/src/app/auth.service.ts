@@ -23,4 +23,15 @@ export class AuthService {
                     });
   }
 
+  signUp(username: string, password: string) {
+    return this.http.post(`${environment.API_URL}/sign-up`, {username, password})
+                    .toPromise()
+                    .then(res => {
+                      const obj: ISignIn = res.json();
+                      // store token
+                      window.localStorage.setItem('auth_token', obj.access_token);
+                      return obj;
+                    });
+  }
+
 }

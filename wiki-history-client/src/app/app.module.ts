@@ -11,6 +11,7 @@ import { MaterialComponentsModule } from './material-components.module';
 import { ArticlesComponent } from './articles.component';
 import { ArticleComponent } from './article.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 import { AuthService } from './auth.service';
 
@@ -29,7 +30,8 @@ import { AuthService } from './auth.service';
     AppComponent,
     ArticlesComponent,
     ArticleComponent,
-    SignInComponent
+    SignInComponent,
+    SignUpComponent
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
