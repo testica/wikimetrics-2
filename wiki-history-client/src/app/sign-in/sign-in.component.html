@@ -1,0 +1,14 @@
+<div class="signin-container" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <mat-form-field class="username-container">
+    <input matInput [(ngModel)]="user.username" placeholder="Username" [formControl]="usernameFormControl">
+    <mat-error *ngIf="invalidUsername">Username vacío</mat-error>
+  </mat-form-field>
+  <mat-form-field class="password-container">
+    <input matInput [(ngModel)]="user.password" placeholder="Contraseña" [formControl]="passwordFormControl">
+    <mat-error *ngIf="invalidPassword">Contraseña vacía</mat-error>
+  </mat-form-field>
+  <button mat-raised-button 
+          [disabled]="invalidUsername || invalidPassword" 
+          (click)="signIn()"> Iniciar sesión
+  </button>
+</div>
