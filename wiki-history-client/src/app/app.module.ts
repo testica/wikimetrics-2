@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -12,8 +12,10 @@ import { ArticlesComponent } from './articles.component';
 import { ArticleComponent } from './article.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 
 import { AuthService } from './auth.service';
+import { WikipediaService } from './wikipedia.service';
 
 @NgModule({
   imports: [
@@ -24,16 +26,21 @@ import { AuthService } from './auth.service';
     AppRoutingModule,
     FlexLayoutModule,
     MaterialComponentsModule,
-    HttpModule
+    HttpModule,
+    JsonpModule
   ],
   declarations: [
     AppComponent,
     ArticlesComponent,
     ArticleComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    SearchSuggestComponent
   ],
-  providers: [AuthService],
+  entryComponents: [
+    SearchSuggestComponent
+  ],
+  providers: [AuthService, WikipediaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

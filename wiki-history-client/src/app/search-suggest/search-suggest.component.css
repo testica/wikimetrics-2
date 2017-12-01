@@ -1,0 +1,14 @@
+.suggest-input {
+  width: 80%;
+}
+
+.locale-input {
+  width: 15%;
+}
+
+.suggest-options {
+  cursor: pointer;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

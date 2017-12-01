@@ -1,0 +1,15 @@
+
+<mat-form-field class="suggest-input">
+  <input matInput placeholder="Buscar nuevo artículo" [(ngModel)]="suggestSelected" (keyup)="searchSuggest(suggestSelected)">
+</mat-form-field>
+<mat-form-field class="locale-input">
+  <mat-select placeholder="Idioma" [(value)]="localeSelected" (change)="changeLocale()">
+    <mat-option *ngFor="let locale of locales" [value]="locale">
+      {{ locale }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<ng-container *ngIf="suggests$ | async as suggest">
+  <div class="suggest-options" *ngFor="let result of suggest" (click)="selectSuggest(result)"> {{ result }} </div>
+</ng-container>
+<button mat-raised-button [disabled]="!isSuggestSelected" (click)="addArticle()">Agregar</button>

@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://wiki-history-api.herokuapp.com'
+  API_URL: 'https://wiki-history-api.herokuapp.com',
+  WIKIPEDIA_API: 'https://{locale}.wikipedia.org/w/api.php?action=opensearch&format=json&callback=JSONP_CALLBACK',
+  LOCALES: ['en', 'es']
 };

@@ -8,5 +8,8 @@
     fxFlex="30" fxFlex.sm="50" fxFlex.xs="100"
     (click)="gotoDetail(article.title)">{{article.title}}
   </mat-card>
-  <mat-card  class="new-article" fxFlex="30" fxFlex.sm="50" fxFlex.xs="100">Agregar Nuevo</mat-card>
+  <mat-card
+    class="new-article"
+    fxFlex="30" fxFlex.sm="50" fxFlex.xs="100"
+    (click)="openDialog()">Agregar Nuevo</mat-card>
 </div>

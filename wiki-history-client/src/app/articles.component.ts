@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
 // Observable operators
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 
 interface IArticles {
   title: string;
@@ -32,7 +34,10 @@ export class ArticlesComponent implements OnInit {
 
   private searchTerms = new Subject<string>();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.searchTerms
@@ -49,6 +54,14 @@ export class ArticlesComponent implements OnInit {
 
   gotoDetail(title: string): void {
     this.router.navigate(['/articles', title]);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(SearchSuggestComponent, { width: '50%' });
+
+    dialogRef.afterClosed().subscribe( (res: { title: string, locale: string } | undefined) => {
+      // extract article when res is not undefined using res.title and res.locale
+    });
   }
 
 
