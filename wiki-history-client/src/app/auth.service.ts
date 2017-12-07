@@ -12,6 +12,10 @@ export class AuthService {
     return window.localStorage.getItem('auth_token');
   }
 
+  isSigned() {
+    return !!this.token;
+  }
+
   get authHeader() {
     return new Headers({'Authorization': `Bearer ${this.token}`});
   }

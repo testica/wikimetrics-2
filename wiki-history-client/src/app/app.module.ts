@@ -19,6 +19,7 @@ import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
 import { WikimetricsService } from './wikimetrics.service';
 import { ArticleService } from './article.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ArticleService } from './article.service';
     SearchSuggestComponent
   ],
   providers: [
+    AuthGuard,
     AuthService,
     WikipediaService,
     WikimetricsService,
