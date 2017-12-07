@@ -5,13 +5,12 @@ import { Subject } from 'rxjs/Subject';
 
 // Observable operators
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
-
-interface IArticles {
-  title: string;
-  id: number;
-}
+import { WikimetricsService } from './wikimetrics.service';
+import { ArticleService, Article } from './article.service';
 
 @Component({
   selector: 'app-articles',
@@ -22,20 +21,15 @@ interface IArticles {
 
 export class ArticlesComponent implements OnInit {
 
-  fakeArticles: IArticles[] = [
-    { id: 1, title: 'El precio de la historia'},
-    { id: 2, title: 'La primera batalla'},
-    { id: 3, title: 'Programación funcional'},
-    { id: 4, title: 'Algoritmos genéticos'},
-    { id: 6, title: 'Venezuela'}
-  ];
 
-  articles = this.fakeArticles;
+  articles: Article[] = [];
 
   private searchTerms = new Subject<string>();
 
   constructor(
     private router: Router,
+    private wikimetricsSvc: WikimetricsService,
+    private articleSvc: ArticleService,
     public dialog: MatDialog
   ) {}
 
@@ -44,7 +38,7 @@ export class ArticlesComponent implements OnInit {
     .debounceTime(300)
     .distinctUntilChanged()
     .subscribe((terms) => {
-      this.articles = this.fakeArticles.filter(ar => ar.title.toLowerCase().search(terms) > -1);
+      this.articles = this.articles.filter(ar => ar.title.toLowerCase().search(terms) > -1);
     });
   }
 
@@ -59,10 +53,15 @@ export class ArticlesComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(SearchSuggestComponent, { width: '50%' });
 
-    dialogRef.afterClosed().subscribe( (res: { title: string, locale: string } | undefined) => {
-      // extract article when res is not undefined using res.title and res.locale
+    dialogRef.afterClosed()
+    .filter<Article>( (res: Article | null) => !!res)
+    .switchMap(res => this.articleSvc.add(res))
+    .switchMap(article => {
+      this.articles.push(article);
+      return this.articleSvc.updateStatus(article);
+    }).subscribe(article  => {
+      this.articles.pop();
+      this.articles.push(article);
     });
   }
-
-
 }

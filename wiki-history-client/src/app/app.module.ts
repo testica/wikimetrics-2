@@ -16,6 +16,8 @@ import { SearchSuggestComponent } from './search-suggest/search-suggest.componen
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
+import { WikimetricsService } from './wikimetrics.service';
+import { ArticleService } from './article.service';
 
 @NgModule({
   imports: [
@@ -40,7 +42,12 @@ import { WikipediaService } from './wikipedia.service';
   entryComponents: [
     SearchSuggestComponent
   ],
-  providers: [AuthService, WikipediaService],
+  providers: [
+    AuthService,
+    WikipediaService,
+    WikimetricsService,
+    ArticleService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

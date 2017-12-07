@@ -52,7 +52,7 @@ export class SignUpComponent {
                 subscription.unsubscribe();
             });
     }
-      return (confirmField && control.value === confirmField.value) ? null : { notSame: true };
+      return (confirmField && control.value === confirmField.value) ? { } : { notSame: true };
     };
   }
 
