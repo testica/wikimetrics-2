@@ -48,4 +48,10 @@ export class ArticleService {
       throw Observable.throw(null);
     }
   }
+
+  getAll() {
+    const path = `${environment.API_URL}/articles`;
+    return this.http.get(path, { headers: this.authSvc.authHeader })
+    .map(response => response.json() as Article[]);
+  }
 }

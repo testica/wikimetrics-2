@@ -1,10 +1,7 @@
-<div fxLayout="row wrap" fxLayoutGap="10px">
-  <div>Artículos</div>
-  <input #searchBox placeholder="Buscar" (keyup)="search(searchBox.value.toLowerCase().trim())" type="search">
-</div>
+<div>Artículos</div>
 <div class="container" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px" fxLayoutGap.xs="0">
   <mat-card
-    *ngFor="let article of articles"
+    *ngFor="let article of articles$ | async"
     fxFlex="30" fxFlex.sm="50" fxFlex.xs="100"
     (click)="gotoDetail(article.title)">{{article.title}}
   </mat-card>

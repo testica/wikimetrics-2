@@ -3,11 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap
-} from 'rxjs/operators';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 
 import { WikipediaService } from '../wikipedia.service';

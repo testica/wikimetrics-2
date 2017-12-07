@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
 
-// Observable operators
-import 'rxjs/add/operator/debounceTime';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 import { WikimetricsService } from './wikimetrics.service';
 import { ArticleService, Article } from './article.service';
@@ -19,31 +17,17 @@ import { ArticleService, Article } from './article.service';
 })
 
 
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent {
 
-
-  articles: Article[] = [];
-
-  private searchTerms = new Subject<string>();
+  articles$: Observable<Article[]>;
 
   constructor(
     private router: Router,
     private wikimetricsSvc: WikimetricsService,
     private articleSvc: ArticleService,
     public dialog: MatDialog
-  ) {}
-
-  ngOnInit(): void {
-    this.searchTerms
-    .debounceTime(300)
-    .distinctUntilChanged()
-    .subscribe((terms) => {
-      this.articles = this.articles.filter(ar => ar.title.toLowerCase().search(terms) > -1);
-    });
-  }
-
-  search(term: string): void {
-    this.searchTerms.next(term);
+  ) {
+    this.articles$ = this.articleSvc.getAll();
   }
 
   gotoDetail(title: string): void {
@@ -57,11 +41,9 @@ export class ArticlesComponent implements OnInit {
     .filter<Article>( (res: Article | null) => !!res)
     .switchMap(res => this.articleSvc.add(res))
     .switchMap(article => {
-      this.articles.push(article);
       return this.articleSvc.updateStatus(article);
     }).subscribe(article  => {
-      this.articles.pop();
-      this.articles.push(article);
+      this.articles$ = this.articleSvc.getAll();
     });
   }
 }
