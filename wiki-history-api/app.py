@@ -119,7 +119,7 @@ def new_article():
 def update_article(title, locale, status):
   current_username = get_jwt_identity()
   
-  if status != 'pending' and status != 'failure' and status != 'success':
+  if status != 'pending' and status != 'failure' and status != 'success' and status != 'in progress':
     abort(400)
 
   # check if exists
