@@ -86,38 +86,64 @@ def get_articles():
   return jsonify(config['articles'])
 
 # new article
-# https://es.wiktionary.org/w/api.php?action=opensearch&format=json&search=Vene&namespace=0&limit=10
-# https://es.wiktionary.org/w/api.php?action=query&format=json&titles=Venezuela
-@app.route('/articles', methods=['POST'])
+@app.route('/article', methods=['POST'])
 @jwt_required
 def new_article():
   current_username = get_jwt_identity()
   
-  if not request.json or not 'title' in request.json or not 'pageid' in request.json or not 'url' in request.json:
+  if (not request.json or
+      not 'title' in request.json or
+      not 'locale' in request.json or
+      not 'extract' in request.json or not 'id' in request.json['extract']):
     abort(400)
 
   title = request.json['title']
-  pageid = request.json['pageid']
-  url = request.json['url'] 
+  locale = request.json['locale']
+  extract_id = request.json['extract']['id']
 
   # check if exists
-  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'pageid': pageid}}})
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
   if article_exist is not None:
-    abort(404)
-  config = mongo.configurations.update({'user.username': current_username}, {'$push': {'articles': {'title': title, 'pageid': pageid, 'url': url}}})
+    abort(409)
+  config = mongo.configurations.update(
+    {'user.username': current_username}, {'$push': {'articles': {'title': title, 'locale': locale, 'extract': { 'id': extract_id, 'status': 'pending' }}}}
+  )
   if config['nModified'] == 1:
-    return jsonify({'title': title, 'pageid': pageid, 'url': url}), 201
+    return jsonify({'title': title, 'locale': locale, 'extract': { 'id': extract_id, 'status': 'pending' }}), 201
+  abort(409)
 
-# remove article
-@app.route('/articles/<int:id>', methods=['DELETE'])
+
+# update article status
+@app.route('/article/<string:title>/<string:locale>/status/<string:status>', methods=['PATCH'])
 @jwt_required
-def delete_article(id):
+def update_article(title, locale, status):
   current_username = get_jwt_identity()
+  
+  if status != 'pending' and status != 'failure' and status != 'success':
+    abort(400)
+
   # check if exists
-  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'pageid': id}}})
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
   if article_exist is None:
     abort(404)
-  config = mongo.configurations.update({'user.username': current_username}, {'$pull': {'articles': { 'pageid': id}}})
+  config = mongo.configurations.update({'user.username': current_username, 'articles.title': title, 'articles.locale': locale }, {'$set': {'articles.$.extract.status': status}})
+  # get specific article
+  article_exist = (item for item in article_exist['articles'] if item['title'] == title and item['locale'] == locale).next()
+  if config['nModified'] == 1:
+    article_exist['extract']['status'] = status
+    return jsonify(article_exist), 201
+  return jsonify(article_exist), 200
+
+# remove article
+@app.route('/article/<string:title>/<string:locale>', methods=['DELETE'])
+@jwt_required
+def delete_article(title, locale):
+  current_username = get_jwt_identity()
+  # check if exists
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
+  if article_exist is None:
+    abort(404)
+  config = mongo.configurations.update({'user.username': current_username}, {'$pull': {'articles': { 'title': title, 'locale': locale }}})
   if config['nModified'] == 1:
     return '', 204
 
