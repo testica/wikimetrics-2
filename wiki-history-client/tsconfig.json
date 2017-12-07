@@ -3,6 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

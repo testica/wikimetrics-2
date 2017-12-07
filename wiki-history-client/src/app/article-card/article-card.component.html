@@ -1,0 +1,18 @@
+<mat-card [ngClass]="{'pending': isPending(), 'ready': isReady(), 'failure': isFailure()}" (click)="gotoDetail()">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>{{language | uppercase}}</mat-card-subtitle>
+  </mat-card-header>
+  <div *ngIf="isPending()" fxLayout="row wrap" fxLayoutAlign="start center">
+    <div class="spinner"></div>
+    <span class="status">EXTRACTING...</span>
+  </div>
+  <div *ngIf="isReady()" fxLayout="row wrap" fxLayoutAlign="start center">
+    <mat-icon>check</mat-icon>
+    <span class="status">EXTRACTED</span>
+  </div>
+  <div *ngIf="isFailure()" fxLayout="row wrap" fxLayoutAlign="start center">
+      <mat-icon>cancel</mat-icon>
+      <span class="status">FAILED</span>
+    </div>
+</mat-card>

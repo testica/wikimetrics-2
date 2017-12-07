@@ -13,6 +13,7 @@ import { ArticleComponent } from './article.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
+import { ArticleCardComponent } from './article-card/article-card.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -37,7 +38,8 @@ import { ArticleService } from './article.service';
     ArticleComponent,
     SignInComponent,
     SignUpComponent,
-    SearchSuggestComponent
+    SearchSuggestComponent,
+    ArticleCardComponent
   ],
   entryComponents: [
     SearchSuggestComponent

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Jsonp } from '@angular/http';
-import { pullAt, zipObject, flatten } from 'lodash';
+import { Jsonp } from '@angular/http';
+import { pullAt, flatten } from 'lodash';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';

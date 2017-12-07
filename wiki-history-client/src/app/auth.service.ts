@@ -6,11 +6,7 @@ import { ISignIn } from './resource';
 @Injectable()
 export class AuthService {
 
-  private loggedIn = false;
-
-  constructor(private http: Http) {
-    this.loggedIn = !!window.localStorage.getItem('auth_token');
-  }
+  constructor(private http: Http) {}
 
   get token() {
     return window.localStorage.getItem('auth_token');

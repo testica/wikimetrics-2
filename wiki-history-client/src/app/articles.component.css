@@ -1,8 +1,7 @@
-.container > mat-card {
+.container > app-article-card {
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
-  cursor: pointer;
 }
 
 .new-article {

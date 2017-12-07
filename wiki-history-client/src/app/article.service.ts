@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers} from '@angular/http';
+import { Http } from '@angular/http';
 
-import { split, last, head } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
@@ -40,9 +39,9 @@ export class ArticleService {
 
   updateStatus(article: Article) {
     if (article.extract && article.extract.id && article.extract.status) {
-      const path = `${environment.API_URL}/article/${article.title}/${article.locale}/status/${article.extract.status}`;
+      const path = `${environment.API_URL}/article/${article.title}/${article.locale}/status`;
       return this.wikimetricsSvc.status(article.extract.id)
-      .switchMap(status => this.http.patch(path, {}, {headers: this.authSvc.authHeader}))
+      .switchMap((status) => this.http.patch(`${path}/${status.toLocaleLowerCase()}`, {}, {headers: this.authSvc.authHeader}))
       .map(response => (response.json() as Article));
     } else {
       throw Observable.throw(null);
