@@ -37,6 +37,13 @@ export class ArticleService {
     .map((response) => (response.json() as Article));
   }
 
+  get(article: Article) {
+    const path = `${environment.API_URL}/articles/${article.title}/${article.locale}`;
+
+    return this.http.get(path, { headers: this.authSvc.authHeader })
+    .map(response => response.json() as Article);
+  }
+
   updateStatus(article: Article) {
     if (article.extract && article.extract.id && article.extract.status) {
       const path = `${environment.API_URL}/article/${article.title}/${article.locale}/status`;

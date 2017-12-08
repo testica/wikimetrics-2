@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
 import { NavbarService } from './navbar/navbar.service';
+import { Article, ArticleService } from './article.service';
 
 @Component({
   selector: 'app-article',
@@ -13,20 +14,23 @@ import { NavbarService } from './navbar/navbar.service';
 })
 
 export class ArticleComponent implements OnInit {
-  article$: Observable<string>;
+  article$: Observable<Article>;
 
   constructor(
     private route: ActivatedRoute,
-    private navbarSvc: NavbarService
+    private navbarSvc: NavbarService,
+    private articleSvc: ArticleService
   ) {}
 
   ngOnInit(): void {
     // listen title from url
-    this.article$ = this.route.paramMap.switchMap(params => params.getAll('title'));
+    this.article$ = this.route.paramMap.switchMap(params => {
+      return this.articleSvc.get({title: params.get('title'), locale: params.get('locale')} as Article);
+    });
 
-    this.article$.subscribe(title => {
+    this.article$.subscribe(art => {
       // setting navbar
-      this.navbarSvc.config$.next({title, button: 'Nueva Visualización', showUser: true});
+      this.navbarSvc.config$.next({title: art.title, button: 'Nueva Visualización', showUser: true});
     });
   }
 }
