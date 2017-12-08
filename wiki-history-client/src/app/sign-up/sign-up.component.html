@@ -13,7 +13,7 @@
       <mat-error *ngIf="invalidRepassword">Contraseña no coincide</mat-error>
     </mat-form-field>
   </div>
-  <button mat-raised-button 
+  <button mat-raised-button
           [disabled]="invalidUsername || invalidPassword || invalidRepassword" 
           (click)="signUp()"> Registrarse
   </button>

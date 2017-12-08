@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { environment } from '../environments/environment';
 import { ISignIn } from './resource';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http: Http) {}
+  constructor(
+    private http: Http,
+    private router: Router
+  ) {}
 
   get token() {
     return window.localStorage.getItem('auth_token');
@@ -40,6 +44,11 @@ export class AuthService {
                       window.localStorage.setItem('auth_token', obj.access_token);
                       return obj;
                     });
+  }
+
+  signOut() {
+    window.localStorage.removeItem('auth_token');
+    this.router.navigate(['/sign-in']);
   }
 
 }

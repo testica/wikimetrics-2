@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
 
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 import { ArticleService, Article } from './article.service';
+import { NavbarService } from './navbar/navbar.service';
+
 
 @Component({
   selector: 'app-articles',
@@ -14,16 +17,30 @@ import { ArticleService, Article } from './article.service';
   styleUrls: ['./articles.component.css']
 })
 
-
-export class ArticlesComponent {
+export class ArticlesComponent implements OnDestroy {
 
   articles$: Observable<Article[]>;
+  onclick$: Subscription;
 
   constructor(
     private articleSvc: ArticleService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private navbarSvc: NavbarService
   ) {
+    // fetching articles
     this.articles$ = this.articleSvc.getAll();
+
+    // setting navbar
+    this.navbarSvc.config$.next({title: 'Artículos', button: 'Nuevo Artículo', showUser: true});
+
+    // subscribe to onclick of navbar button
+    this.onclick$ = this.navbarSvc.onClick().subscribe(() => {
+      this.openDialog();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.onclick$.unsubscribe();
   }
 
   openDialog() {

@@ -4,6 +4,7 @@ import { FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl } fr
 
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs/Subscription';
+import { NavbarService, DEFAULT_CONFIG } from '../navbar/navbar.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,8 +23,11 @@ export class SignUpComponent {
   constructor(
     private authSvc: AuthService,
     private router: Router,
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private navbarSvc: NavbarService
+  ) {
+    this.navbarSvc.config$.next(DEFAULT_CONFIG);
+  }
 
   get invalidUsername() {
     return this.usernameFormControl.hasError('required');

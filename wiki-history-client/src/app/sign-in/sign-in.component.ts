@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
+import { NavbarService, DEFAULT_CONFIG } from '../navbar/navbar.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -19,8 +20,11 @@ export class SignInComponent {
 
   constructor(
     private authSvc: AuthService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private navbarSvc: NavbarService
+  ) {
+    this.navbarSvc.config$.next(DEFAULT_CONFIG);
+  }
 
   signIn() {
     this.authSvc.signIn(this.user.username, this.user.password)
