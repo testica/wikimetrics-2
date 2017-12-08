@@ -85,6 +85,21 @@ def get_articles():
   
   return jsonify(config['articles'])
 
+
+# get article
+@app.route('/articles/<string:title>/<string:locale>', methods=['GET'])
+@jwt_required
+def get_article(title, locale):
+  current_username = get_jwt_identity()
+  # check if exists
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
+  if article_exist is None:
+    abort(404)
+    # get specific article
+  article_exist = (item for item in article_exist['articles'] if item['title'] == title and item['locale'] == locale).next()
+  return jsonify(article_exist)
+
+
 # new article
 @app.route('/article', methods=['POST'])
 @jwt_required
