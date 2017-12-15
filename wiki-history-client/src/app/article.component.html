@@ -1,0 +1,14 @@
+<div *ngIf="revisions$ | async as revisions" class="main" fxLayout="row" fxLayoutAlign="start center">
+  <app-visualization
+    chartTitle="Ultimas 20 ediciones"
+    chartYTitle="Tamaño (bytes)"
+    chartType="scatter" [chartX]="timestamps(revisions)" [chartY]="sizes(revisions)" 
+    fxFlex="60" fxLayout="column">
+  </app-visualization>
+  <div class="detail-info" fxFlex="40" fxLayout="column">
+    <span *ngIf="count$ | async as count"><strong>Numero de ediciones:</strong> {{count}}</span>
+    <span><strong>Fecha de última edición:</strong> {{lastTimestamp(revisions[0])}}</span>
+    <span><strong>Usuario de última edición:</strong> {{lastAuthor(revisions[0])}}</span>
+    <span><strong>Tamaño de artículo:</strong> {{size(revisions[0])}} (bytes)</span>
+  </div>
+</div>

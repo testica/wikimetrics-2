@@ -15,6 +15,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -43,7 +44,8 @@ import { NavbarService } from './navbar/navbar.service';
     SignUpComponent,
     SearchSuggestComponent,
     ArticleCardComponent,
-    NavbarComponent
+    NavbarComponent,
+    VisualizationComponent
   ],
   entryComponents: [
     SearchSuggestComponent
