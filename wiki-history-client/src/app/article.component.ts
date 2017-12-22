@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DateTime } from 'luxon';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/shareReplay';
 
 import { NavbarService } from './navbar/navbar.service';
 import { Article, ArticleService } from './article.service';
@@ -31,7 +32,7 @@ export class ArticleComponent implements OnInit {
     // listen title from url
     this.article$ = this.route.paramMap.switchMap(params => {
       return this.articleSvc.get({title: params.get('title'), locale: params.get('locale')} as Article);
-    });
+    }).shareReplay();
 
     this.article$.subscribe(art => {
       // setting navbar
@@ -45,6 +46,7 @@ export class ArticleComponent implements OnInit {
     this.count$ = this.article$.switchMap(art =>
       this.wikimetricsSvc.count({locale: art.locale, title: art.title})
     );
+
   }
 
   timestamps(revs: WikimetricsRevision[]) {
@@ -62,4 +64,6 @@ export class ArticleComponent implements OnInit {
   lastAuthor(rev: WikimetricsRevision) { return rev.user; }
 
   size(rev: WikimetricsRevision) { return rev.size; }
+
+  getLink(art: Article) { return `https://${art.locale}.wikipedia.org/wiki/${art.title}`; }
 }

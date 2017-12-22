@@ -10,5 +10,6 @@
     <span><strong>Fecha de última edición:</strong> {{lastTimestamp(revisions[0])}}</span>
     <span><strong>Usuario de última edición:</strong> {{lastAuthor(revisions[0])}}</span>
     <span><strong>Tamaño de artículo:</strong> {{size(revisions[0])}} (bytes)</span>
+    <a *ngIf="article$ | async as article" href="{{getLink(article)}}" target="_blank">Ir al artículo en Wikipedia</a>
   </div>
 </div>
