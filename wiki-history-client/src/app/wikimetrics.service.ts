@@ -19,6 +19,7 @@ export interface WikimetricsRevision {
   userid: number;
   user: string;
   title: string;
+  '*': string;
 }
 
 @Injectable()
