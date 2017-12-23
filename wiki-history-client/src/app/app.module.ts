@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { UrlSerializer } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +26,7 @@ import { WikimetricsService } from './wikimetrics.service';
 import { ArticleService } from './article.service';
 import { AuthGuard } from './auth-guard.service';
 import { NavbarService } from './navbar/navbar.service';
+import CustomUrlSerializer from './custom-url-serializer';
 
 @NgModule({
   imports: [
@@ -60,7 +62,8 @@ import { NavbarService } from './navbar/navbar.service';
     WikipediaService,
     WikimetricsService,
     ArticleService,
-    NavbarService
+    NavbarService,
+    { provide: UrlSerializer, useClass: CustomUrlSerializer }
   ],
   bootstrap: [AppComponent]
 })
