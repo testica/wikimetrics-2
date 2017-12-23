@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 
 import { includes } from 'lodash';
 
@@ -23,6 +23,13 @@ export class VisualizationComponent implements AfterViewInit {
   @Input() chartFixed = true;
 
   gd;
+
+  @HostListener('window:resize') onResize() {
+
+    if (this.gd) {
+      Plotly.Plots.resize(this.gd);
+    }
+  }
 
   constructor(private elementRef: ElementRef) {}
 
@@ -64,8 +71,6 @@ export class VisualizationComponent implements AfterViewInit {
     }
 
     Plotly.plot(this.gd, data, layout, {displayModeBar: false});
-
-    window.onresize = () => { Plotly.Plots.resize(this.gd); };
   }
 
 }
