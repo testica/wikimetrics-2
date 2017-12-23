@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/combineLatest';
 
 import { NavbarService } from './navbar/navbar.service';
 import { Article, ArticleService } from './article.service';
@@ -20,6 +21,8 @@ export class ArticleComponent implements OnInit {
   article$: Observable<Article>;
   revisions$: Observable<WikimetricsRevision[]>;
   count$: Observable<number>;
+
+  loading$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,11 +44,13 @@ export class ArticleComponent implements OnInit {
 
     this.revisions$ = this.article$.switchMap(art =>
       this.wikimetricsSvc.revisions({locale: art.locale, title: art.title,  page_size: 20, sort: 'desc'})
-    );
+    ).shareReplay();
 
     this.count$ = this.article$.switchMap(art =>
       this.wikimetricsSvc.count({locale: art.locale, title: art.title})
-    );
+    ).shareReplay();
+
+    this.loading$ = this.revisions$.combineLatest(this.count$, (r, c) => !!r && !!c);
 
   }
 

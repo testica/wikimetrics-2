@@ -17,6 +17,7 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VisualizationComponent } from './visualization/visualization.component';
 import { HistoryFlowVisualizationComponent } from './history-flow-visualization/history-flow-visualization.component';
+import { LoadingComponent } from './loading/loading.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -47,7 +48,8 @@ import { NavbarService } from './navbar/navbar.service';
     ArticleCardComponent,
     NavbarComponent,
     VisualizationComponent,
-    HistoryFlowVisualizationComponent
+    HistoryFlowVisualizationComponent,
+    LoadingComponent
   ],
   entryComponents: [
     SearchSuggestComponent

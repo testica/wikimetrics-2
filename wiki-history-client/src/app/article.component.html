@@ -13,3 +13,4 @@
     <a *ngIf="article$ | async as article" href="{{getLink(article)}}" target="_blank">Ir al artículo en Wikipedia</a>
   </div>
 </div>
+<app-loading *ngIf="!(loading$ | async)"></app-loading>

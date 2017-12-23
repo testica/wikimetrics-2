@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/shareReplay';
 
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
 import { ArticleService, Article } from './article.service';
@@ -22,13 +23,17 @@ export class ArticlesComponent implements OnDestroy {
   articles$: Observable<Article[]>;
   onclick$: Subscription;
 
+  loading$: Observable<boolean>;
+
   constructor(
     private articleSvc: ArticleService,
     public dialog: MatDialog,
     private navbarSvc: NavbarService
   ) {
     // fetching articles
-    this.articles$ = this.articleSvc.getAll();
+    this.articles$ = this.articleSvc.getAll().shareReplay();
+
+    this.loading$ = this.articles$.map(arts => !!arts);
 
     // setting navbar
     this.navbarSvc.config$.next({title: 'Artículos', button: 'Nuevo Artículo', showUser: true});
