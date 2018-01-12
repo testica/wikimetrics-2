@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 import { DateTime } from 'luxon';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+
+import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/combineLatest';
@@ -10,6 +14,7 @@ import 'rxjs/add/operator/combineLatest';
 import { NavbarService } from './navbar/navbar.service';
 import { Article, ArticleService } from './article.service';
 import { WikimetricsService, WikimetricsRevision } from './wikimetrics.service';
+import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
 
 @Component({
   selector: 'app-article',
@@ -17,18 +22,20 @@ import { WikimetricsService, WikimetricsRevision } from './wikimetrics.service';
   styleUrls: ['./article.component.css']
 })
 
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
   article$: Observable<Article>;
   revisions$: Observable<WikimetricsRevision[]>;
   count$: Observable<number>;
 
   loading$: Observable<boolean>;
+  onclick$: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private navbarSvc: NavbarService,
     private articleSvc: ArticleService,
-    private wikimetricsSvc: WikimetricsService
+    private wikimetricsSvc: WikimetricsService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +59,20 @@ export class ArticleComponent implements OnInit {
 
     this.loading$ = this.revisions$.combineLatest(this.count$, (r, c) => !!r && !!c);
 
+    // subscribe to onclick of navbar button
+    this.onclick$ = this.navbarSvc.onClick().subscribe(() => {
+      this.openDialog();
+    });
+  }
+
+  ngOnDestroy() {
+    this.onclick$.unsubscribe();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(NewVisualizationComponent, { data: this.article$, width: '50%' });
+
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   timestamps(revs: WikimetricsRevision[]) {

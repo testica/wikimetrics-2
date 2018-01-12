@@ -1,0 +1,8 @@
+<mat-form-field class="title-input">
+  <input matInput placeholder="Titulo de la visualización" [(ngModel)]="title">
+</mat-form-field>
+<mat-form-field class="description-input">
+  <textarea matInput placeholder="Descripción la visualización" [(ngModel)]="description"></textarea>
+</mat-form-field>
+<button mat-raised-button (click)="close()">Cancelar</button>
+<button mat-raised-button color="primary" [disabled]="disable" (click)="addVisualization()">Continuar</button>

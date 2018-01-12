@@ -19,6 +19,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { VisualizationComponent } from './visualization/visualization.component';
 import { HistoryFlowVisualizationComponent } from './history-flow-visualization/history-flow-visualization.component';
 import { LoadingComponent } from './loading/loading.component';
+import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -26,6 +27,7 @@ import { WikimetricsService } from './wikimetrics.service';
 import { ArticleService } from './article.service';
 import { AuthGuard } from './auth-guard.service';
 import { NavbarService } from './navbar/navbar.service';
+import { VisualizationService } from './visualization.service';
 import CustomUrlSerializer from './custom-url-serializer';
 
 @NgModule({
@@ -51,10 +53,12 @@ import CustomUrlSerializer from './custom-url-serializer';
     NavbarComponent,
     VisualizationComponent,
     HistoryFlowVisualizationComponent,
-    LoadingComponent
+    LoadingComponent,
+    NewVisualizationComponent
   ],
   entryComponents: [
-    SearchSuggestComponent
+    SearchSuggestComponent,
+    NewVisualizationComponent
   ],
   providers: [
     AuthGuard,
@@ -63,6 +67,7 @@ import CustomUrlSerializer from './custom-url-serializer';
     WikimetricsService,
     ArticleService,
     NavbarService,
+    VisualizationService,
     { provide: UrlSerializer, useClass: CustomUrlSerializer }
   ],
   bootstrap: [AppComponent]
