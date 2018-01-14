@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { Router } from '@angular/router';
+
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../environments/environment';
 import { ISignIn } from './resource';
-import { Router } from '@angular/router';
+
+
 
 @Injectable()
 export class AuthService {
