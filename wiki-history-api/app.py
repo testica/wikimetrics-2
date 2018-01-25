@@ -189,20 +189,73 @@ def create_visualization(title, locale):
   else:
     query_vis = request.json['query']
 
+  if (not 'type' in request.json):
+    type_vis = ''
+  else:
+    type_vis = request.json['type']
+
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
-    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations': { '$elemMatch': { 'title': title_vis }}}}
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
   })
   if vis_exist is not None:
-    abort(406)
+    abort(409)
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
-    {'$push': { 'articles.$.visualizations': { 'title': title_vis, 'description': description_vis, 'query': query_vis } } }
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
   )
   if config['nModified'] == 1:
     return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis}), 201
+  abort(409)
+
+# update visualization
+@app.route('/article/<string:title>/<string:locale>/visualization', methods=['patch'])
+@jwt_required
+def update_visualization(title, locale):
+  current_username = get_jwt_identity()
+
+  if not request.json or not 'title' in request.json or not 'description' in request.json or not 'query' in request.json or not 'type' in request.json:
+    abort(400)
+
+  # check if exists
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
+  if article_exist is None:
+    abort(404)
+
+  title_vis = request.json['title']
+
+  if (not 'description' in request.json):
+    description_vis = ''
+  else:
+    description_vis = request.json['description']
+
+  if (not 'query' in request.json):
+    query_vis = ''
+  else:
+    query_vis = request.json['query']
+
+  if (not 'type' in request.json):
+    type_vis = ''
+  else:
+    type_vis = request.json['type']
+
+  # check if exists
+  vis_exist = mongo.configurations.find_one({
+    'user.username': current_username,
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
+  })
+  if vis_exist is None:
+    abort(409)
+
+  config = mongo.configurations.update(
+    {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
+  )
+
+  if config['nModified'] == 1:
+    return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis}), 201
   abort(409)
 
 
