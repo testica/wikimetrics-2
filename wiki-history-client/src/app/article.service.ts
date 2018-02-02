@@ -11,11 +11,14 @@ import 'rxjs/add/operator/switchMap';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
 import { WikimetricsService } from './wikimetrics.service';
+import { Visualization } from './visualization.service';
+import { has, forIn, set } from 'lodash';
 
 export interface Article {
   title: string;
   locale: string;
   extract?: { id?: string, status?: string };
+  visualizations?: Visualization[];
 }
 
 @Injectable()
@@ -41,7 +44,17 @@ export class ArticleService {
     const path = `${environment.API_URL}/articles/${article.title}/${article.locale}`;
 
     return this.http.get(path, { headers: this.authSvc.authHeader })
-    .map(response => response.json() as Article);
+    .map(response => {
+     const res = response.json();
+      if (has(res, 'visualizations')) {
+        const vis: Visualization[] = [];
+        forIn(res.visualizations, (value , key: string) => {
+          vis.push({ title: key, description: value.description, query: value.query, type: value.type });
+        });
+        set(res, 'visualizations', vis);
+      }
+      return res;
+    });
   }
 
   updateStatus(article: Article) {

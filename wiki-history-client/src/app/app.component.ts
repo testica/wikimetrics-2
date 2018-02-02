@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Settings } from 'luxon';
+
+Settings.defaultLocale = 'es';
 
 @Component({
   selector: 'app-root',

@@ -3,7 +3,7 @@
     <app-visualization
       chartTitle="Ultimas 20 ediciones"
       chartYTitle="Tamaño (bytes)"
-      chartType="scatter" [chartX]="timestamps(revisions)" [chartY]="sizes(revisions)" 
+      chartType="line" [chartX]="timestamps(revisions)" [chartY]="sizes(revisions)" 
       fxFlex="60" fxLayout="column">
     </app-visualization>
     <div class="detail-info" fxFlex="40" fxLayout="column">
@@ -18,7 +18,7 @@
   <div fxLayout="row wrap" fxLayoutAlign="space-between start">
     <div class="my-vis" fxFlex="100" fxFlex.gt-sm="48">
       <div class="vis-title"> Mis Visualizaciones</div>
-      <mat-card *ngFor="let vis of article.visualizations">
+      <mat-card (click)="goToEdit(vis.title)" *ngFor="let vis of article.visualizations">
         <mat-card-header>
             <div mat-card-avatar><mat-icon>insert_chart</mat-icon></div>
             <mat-card-title>{{vis.title}}</mat-card-title>

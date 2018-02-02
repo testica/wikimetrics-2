@@ -1,0 +1,75 @@
+<div class="selector" fxFlex="100" fxLayout="row">
+	<!-- Filter -->
+		<div class="filter-selector" fxFlex="40" fxLayout="column">
+			<div class="filter-selector-label" fxLayout="row wrap" (click)="openFilterSelector = !openFilterSelector">
+				<span fxFlex="80">Filtrar por:</span><mat-icon class="arrow" fxFlex="20">keyboard_arrow_down</mat-icon>
+				<div class="filter-selector-value">
+					<mat-chip-list *ngIf="selectedFilters">
+						<mat-chip *ngFor="let item of selectedFilters; let i = index" color="primary" selected="true" [removable]="true" (remove)="removeFilter(i)">
+							{{item.filterName}}: {{item.subFilterName}} {{ item.input ? item.input : ''}}
+							<mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+						</mat-chip>
+					</mat-chip-list>
+				</div>
+			</div>
+			<div *ngIf="!selectedFilter" class="filter-selector-option" fxLayout="column" [ngClass]="{'show': openFilterSelector}">
+				<div *ngFor="let item of filterOptions" (click)="selectedFilter = item">{{item.name}}</div>
+			</div>
+			<div *ngIf="selectedFilter" class="filter-selector-sub-option" fxLayout="column" [ngClass]="{'show': openFilterSelector}">
+				<div class="filter-selector-sub-option-header">
+					<mat-icon class="arrow-back" (click)="backToMainFilter()">keyboard_arrow_left</mat-icon>
+					<span (click)="backToMainFilter()">{{selectedFilter.name}}</span>
+				</div>
+				<div class="filter-selector-sub-option-content" fxLayout="column" fxLayoutAlign="center center">
+					<mat-form-field>
+						<mat-select [(value)]="selectedSubFilter" placeholder="Escoge una condición">
+							<mat-option *ngFor="let item of selectedFilter.value.subOptions" [value]="item">{{item.name}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field *ngIf="!isDate && selectedFilter.value.inputType">
+						<input matInput [type]="selectedFilter.value.inputType" [(ngModel)]="inputSubFilter" placeholder="Escribe el valor">
+					</mat-form-field>
+					<mat-form-field *ngIf="isDate">
+						<input matInput [matDatepicker]="picker" [(ngModel)]="inputSubFilter" placeholder="Escoge una fecha">
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi="true" #picker></mat-datepicker>
+					</mat-form-field>
+				</div>
+				<button mat-raised-button color="primary" [disabled]="!isSubFilterSet" (click)="addFilter()">Aplicar</button>
+			</div>
+		</div>
+	<!-- View -->
+	<div class="view-selector" fxFlex="20" fxLayout="column">
+		<div class="view-selector-label" fxLayout="row wrap" (click)="openViewSelector = !openViewSelector">
+			<span fxFlex="80">Vista:</span><mat-icon class="arrow" fxFlex="20">keyboard_arrow_down</mat-icon>
+			<div class="view-selector-value">
+				<mat-chip-list>
+					<mat-chip *ngIf="selectedView" color="primary" selected="true" [removable]="true" (remove)="removeView()">
+						{{selectedView.name}}
+						<mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+					</mat-chip>
+				</mat-chip-list>
+			</div>
+		</div>
+		<div class="view-selector-option" fxLayout="column" [ngClass]="{'show': openViewSelector}">
+			<div *ngFor="let item of viewOptions" (click)="addView(item)">{{item.name}}</div>
+		</div>
+	</div>
+	<!-- Group -->
+	<div class="group-selector" fxFlex="20" fxLayout="column">
+		<div class="group-selector-label" fxLayout="row wrap" (click)="openGroupSelector = !openGroupSelector">
+			<span fxFlex="80">Agrupar por:</span><mat-icon class="arrow" fxFlex="20">keyboard_arrow_down</mat-icon>
+			<div class="group-selector-value">
+				<mat-chip-list>
+					<mat-chip *ngIf="selectedGroup" color="primary" selected="true" [removable]="true" (remove)="removeGroup()">
+						{{selectedGroup.name}}
+						<mat-icon matChipRemove *ngIf="true">cancel</mat-icon>
+					</mat-chip>
+				</mat-chip-list>
+			</div>
+		</div>
+		<div class="group-selector-option" fxLayout="column" [ngClass]="{'show': openGroupSelector}">
+			<div *ngFor="let item of groupOptions" (click)="addGroup(item)">{{item.name}}</div>
+		</div>
+	</div>
+</div>

@@ -1,20 +1,27 @@
-import { Component, Input, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import {
+  Component, Input, ElementRef,
+  ChangeDetectionStrategy, OnChanges,
+  NgZone, SimpleChanges
+} from '@angular/core';
 
 import { includes } from 'lodash';
+import { Subscription } from 'rxjs/Subscription';
+import { ResizeService } from '../resize.service';
+import { OnInit, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+
 
 declare let Plotly: any;
 
 @Component({
   selector: 'app-visualization',
   templateUrl: './visualization.component.html',
-  styleUrls: ['./visualization.component.css']
+  styleUrls: ['./visualization.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class VisualizationComponent implements AfterViewInit {
+export class VisualizationComponent implements OnInit, OnChanges, OnDestroy {
 
-  @Input() chartType: 'pie' | 'bar' | 'scatter' | 'scattergl';
-  @Input() chartLabels: string[];
-  @Input() chartValues: number[];
+  @Input() chartType: 'pie' | 'bar' | 'scatter' | 'scattergl' | 'line' | 'area';
   @Input() chartX: string[] | number[];
   @Input() chartY: string[] | number[];
   @Input() chartXTitle = '';
@@ -24,53 +31,93 @@ export class VisualizationComponent implements AfterViewInit {
 
   gd;
 
-  @HostListener('window:resize') onResize() {
+  resizeSubscription: Subscription;
 
-    if (this.gd) {
-      Plotly.Plots.resize(this.gd);
+  constructor(
+    private elementRef: ElementRef,
+    private zone: NgZone,
+    private resizeService: ResizeService) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if ( changes.chartType && changes.chartType.currentValue !== changes.chartType.previousValue ||
+        changes.chartX && changes.chartX.currentValue !== changes.chartX.previousValue ||
+        changes.chartY && changes.chartY.currentValue !== changes.chartY.previousValue) {
+      this.onInit();
     }
   }
 
-  constructor(private elementRef: ElementRef) {}
+  ngOnInit() {
+    this.resizeSubscription = this.resizeService.onResize$.subscribe(() => Plotly.Plots.resize(this.gd));
+    this.onInit();
+  }
 
-  ngAfterViewInit() {
-    this.gd = Plotly.d3.select(this.elementRef.nativeElement).style({width: '100%'}).node();
-    let data;
-
-    if (this.chartType === 'pie' && (!this.chartValues || !this.chartLabels)) {
-      throw new Error('Attributes chart-type and chart-labels are required');
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
     }
+  }
 
-    if (includes(['bar', 'scatter', 'scattergl'], this.chartType) && (!this.chartX || !this.chartY)) {
-      throw new Error('Attributes chart-x and chart-y are required');
-    }
+  onInit() {
+    this.zone.runOutsideAngular( () => {
+      if (this.gd) { Plotly.purge(this.gd); }
+      this.gd = Plotly.d3.select(this.elementRef.nativeElement).style({width: '100%'}).node();
+      let data;
 
-    const layout = {
-      title: this.chartTitle,
-      xaxis: { title: this.chartXTitle, fixedrange: this.chartFixed},
-      yaxis: { title: this.chartYTitle, fixedrange: true}
-    };
+      if (includes(['bar', 'scatter', 'scattergl', 'pie'], this.chartType) && (!this.chartX || !this.chartY)) {
+        throw new Error('Attributes chart-x and chart-y are required');
+      }
 
-    switch (this.chartType) {
-      case 'pie':
-        data = [{
-          values: this.chartValues,
-          labels: this.chartLabels,
-          type: this.chartType
-        }];
-        break;
-      case 'bar':
-      case 'scatter':
-      case 'scattergl':
-      default:
-        data = [{
-          x: this.chartX,
-          y: this.chartY,
-          type: this.chartType
-        }];
-    }
+      const layout = {
+        title: this.chartTitle,
+        xaxis: { title: this.chartXTitle, fixedrange: this.chartFixed},
+        yaxis: { title: this.chartYTitle, fixedrange: true},
+        margin: { b: 120 }
+      };
 
-    Plotly.plot(this.gd, data, layout, {displayModeBar: false});
+      switch (this.chartType) {
+        case 'pie':
+          data = [{
+            values: this.chartY,
+            labels: this.chartX,
+            type: this.chartType
+          }];
+          break;
+        case 'line':
+          data = [{
+            x: this.chartX,
+            y: this.chartY,
+            type: 'scatter',
+            mode: 'lines'
+          }];
+          break;
+        case 'area':
+          data = [{
+            x: this.chartX,
+            y: this.chartY,
+            fill: 'tozeroy',
+            type: 'scatter'
+          }];
+          break;
+        case 'bar':
+          data = [{
+            x: this.chartX,
+            y: this.chartY,
+            type:  this.chartType
+          }];
+          break;
+        case 'scatter':
+        case 'scattergl':
+        default:
+          data = [{
+            x: this.chartX,
+            y: this.chartY,
+            type: this.chartType,
+            mode: 'markers'
+          }];
+      }
+
+      Plotly.plot(this.gd, data, layout, {displayModeBar: false});
+    });
   }
 
 }

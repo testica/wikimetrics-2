@@ -1,0 +1,20 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center">
+  <app-query-selector fxFlex="100" [query]="query$ | async" (queryChange)="refreshQuery($event)"></app-query-selector>
+  <mat-form-field fxFlex="10" *ngIf="query$ | async as query">
+    <mat-select [(value)]="selectedTypeVis" placeholder="Tipo de visualización">
+      <mat-option *ngFor="let item of visType" [value]="item.value" [disabled]="item.requireGroup && !hasGroupResult(query)">{{item.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button fxFlex="10" fxLayout="row" mat-raised-button color="primary" [disabled]="!selectedTypeVis" (click)="doQuery()">Aplicar</button>
+
+  <app-visualization
+    fxFlex="100"
+    *ngIf="queryResponse$ | async as queryResponse"
+    [chartType]="selectedTypeVis"
+    [chartY]="queryResponse.y_values"
+    [chartX]="queryResponse.x_values"
+    [chartXTitle]="queryResponse.x_label"
+    [chartYTitle]="queryResponse.y_label"
+    >
+  </app-visualization>
+</div>

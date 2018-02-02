@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DateTime } from 'luxon';
@@ -19,7 +19,8 @@ import { NewVisualizationComponent } from './new-visualization/new-visualization
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css']
+  styleUrls: ['./article.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ArticleComponent implements OnInit, OnDestroy {
@@ -32,6 +33,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private navbarSvc: NavbarService,
     private articleSvc: ArticleService,
     private wikimetricsSvc: WikimetricsService,
@@ -84,7 +86,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   lastTimestamp(rev: WikimetricsRevision) {
-    return DateTime.fromISO(rev.timestamp).setLocale('es').toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
+    return DateTime.fromISO(rev.timestamp).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS);
   }
 
   lastAuthor(rev: WikimetricsRevision) { return rev.user; }
@@ -92,4 +94,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   size(rev: WikimetricsRevision) { return rev.size; }
 
   getLink(art: Article) { return `https://${art.locale}.wikipedia.org/wiki/${art.title}`; }
+
+  goToEdit(visTitle: string) {
+    this.router.navigate(['edit', visTitle], { relativeTo: this.route });
+  }
 }

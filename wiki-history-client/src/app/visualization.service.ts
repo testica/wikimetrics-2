@@ -11,6 +11,7 @@ export interface Visualization {
   title: string;
   description?: string;
   query?: string;
+  type?: string;
 }
 
 @Injectable()
@@ -24,6 +25,12 @@ export class VisualizationService {
     const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization`;
 
     return this.http.post(path, vis, {headers: this.authSvc.authHeader})
+    .map((response) => (response.json() as Visualization));
+  }
+
+  update(article: Article, vis: Visualization) {
+    const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization`;
+    return this.http.patch(path, vis, {headers: this.authSvc.authHeader})
     .map((response) => (response.json() as Visualization));
   }
 }

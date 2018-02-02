@@ -20,6 +20,8 @@ import { VisualizationComponent } from './visualization/visualization.component'
 import { HistoryFlowVisualizationComponent } from './history-flow-visualization/history-flow-visualization.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
+import { EditVisualizationComponent } from './edit-visualization/edit-visualization.component';
+import { QuerySelectorComponent } from './query-selector/query-selector.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -29,6 +31,7 @@ import { AuthGuard } from './auth-guard.service';
 import { NavbarService } from './navbar/navbar.service';
 import { VisualizationService } from './visualization.service';
 import CustomUrlSerializer from './custom-url-serializer';
+import { ResizeService } from './resize.service';
 
 @NgModule({
   imports: [
@@ -54,7 +57,9 @@ import CustomUrlSerializer from './custom-url-serializer';
     VisualizationComponent,
     HistoryFlowVisualizationComponent,
     LoadingComponent,
-    NewVisualizationComponent
+    EditVisualizationComponent,
+    NewVisualizationComponent,
+    QuerySelectorComponent
   ],
   entryComponents: [
     SearchSuggestComponent,
@@ -68,6 +73,7 @@ import CustomUrlSerializer from './custom-url-serializer';
     ArticleService,
     NavbarService,
     VisualizationService,
+    ResizeService,
     { provide: UrlSerializer, useClass: CustomUrlSerializer }
   ],
   bootstrap: [AppComponent]

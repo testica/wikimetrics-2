@@ -1,0 +1,45 @@
+.filter-selector, .group-selector, .view-selector {
+  max-height: max-content;
+  
+}
+
+.filter-selector-label, .group-selector-label, .view-selector-label {
+  margin-right: 5px;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+mat-icon.arrow {
+  text-align: end;
+}
+
+.filter-selector-option, .group-selector-option, .view-selector-option, .filter-selector-sub-option {
+  margin-right: 5px;
+  display: none !important;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 2px;
+}
+
+.filter-selector-sub-option-header {
+  color: gray;
+}
+
+.filter-selector-sub-option-header mat-icon {
+  cursor: pointer;
+}
+.filter-selector-sub-option-header span{
+  cursor: pointer;
+  vertical-align: super;
+}
+
+.filter-selector-option div:hover, .group-selector-option div:hover, .view-selector-option div:hover {
+  background-color: #adc6ff;
+  cursor: pointer;
+}
+
+.show {
+  display: flex !important;
+}
