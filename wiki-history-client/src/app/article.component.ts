@@ -15,6 +15,7 @@ import { NavbarService } from './navbar/navbar.service';
 import { Article, ArticleService } from './article.service';
 import { WikimetricsService, WikimetricsRevision } from './wikimetrics.service';
 import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
+import { Visualization } from './visualization.service';
 
 @Component({
   selector: 'app-article',
@@ -74,7 +75,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
   openDialog() {
     const dialogRef = this.dialog.open(NewVisualizationComponent, { data: this.article$, width: '50%' });
 
-    dialogRef.afterClosed().subscribe(() => {});
+    dialogRef.afterClosed().subscribe((vis: Visualization) => {
+      if (vis) { this.goToEdit(vis.title); }
+    });
   }
 
   timestamps(revs: WikimetricsRevision[]) {
