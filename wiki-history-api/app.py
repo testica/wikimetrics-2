@@ -260,4 +260,6 @@ def update_visualization(title, locale):
 
 
 if __name__ == '__main__':
-  app.run(debug=True)
+  # TODO: check better for production case
+  # app.run(debug=True)
+  app.run(threaded=True)
