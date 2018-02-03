@@ -30,7 +30,7 @@ export class QuerySelectorComponent implements OnChanges {
   selectedSubFilter: Options | null = null;
   selectedFilters: { filterName: string, subFilterName: string, value: any, input?: any }[] = [];
   inputSubFilter: string | null = null;
-  selectedView: Options | null = {name: 'Tabla', value: null };
+  selectedView: Options | null;
 
   filterColumn = {
     anon: 'Edición Anónima',
@@ -89,7 +89,6 @@ export class QuerySelectorComponent implements OnChanges {
   ];
 
   viewOptions: Options[] = [
-    {name: 'Tabla', value: null},
     {name: 'Cuenta', value: { '$sum': 1 } },
     {name: 'Suma de tamaño de edición', value: { '$sum': '$size' } },
     {name: 'Promedio de tamaño de edición', value: { '$avg': '$size' } },
@@ -223,7 +222,7 @@ export class QuerySelectorComponent implements OnChanges {
         if (q.$group.result) {
           // extract view
           const view = this.viewOptions.find(v => isEqual(v.value, q.$group!.result));
-          this.selectedView = view ? view : {name: 'Tabla', value: null };
+          this.selectedView = view ? view : null;
         }
       }
     });

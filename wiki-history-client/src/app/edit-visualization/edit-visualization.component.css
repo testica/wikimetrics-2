@@ -1,3 +1,10 @@
 app-visualization {
   height: 400px;
 }
+
+div.number {
+  text-align: center;
+  font-size: 50px;
+  /* semi-bold */
+  font-weight: 500;
+}

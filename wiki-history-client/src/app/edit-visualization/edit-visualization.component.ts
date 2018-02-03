@@ -36,7 +36,7 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
   onclick$: Subscription;
 
   visType = [
-    {name: 'Tabla', value: 'raw', requireGroup: false},
+    {name: 'Número', value: 'number', requireGroup: false},
     {name: 'Linea', value: 'line', requireGroup: true},
     {name: 'Barra', value: 'bar', requireGroup: true},
     {name: 'Área', value: 'area', requireGroup: true},
@@ -159,6 +159,8 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
     const obj: WikimetricsQuery | undefined = find(query, item => item.$group);
     return !!obj && !!obj.$group && !!obj.$group._id;
   }
+
+  get isNumber() { return this.selectedTypeVis === 'number'; }
 
   IsJSONString(str) {
     try {
