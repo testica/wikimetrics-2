@@ -31,7 +31,7 @@ export class ArticleService {
   ) {}
 
   add(article: Article) {
-    const path = `${environment.API_URL}/article`;
+    const path = `${environment.API_URL}/articles`;
 
     // extracting from wikimetrics
     return this.wikimetricsSvc.extract(article.title, article.locale)
@@ -41,7 +41,7 @@ export class ArticleService {
   }
 
   get(article: Article) {
-    const path = `${environment.API_URL}/articles/${article.title}/${article.locale}`;
+    const path = `${environment.API_URL}/articles/${article.locale}/${article.title}`;
 
     return this.http.get(path, { headers: this.authSvc.authHeader })
     .map(response => {
@@ -59,7 +59,7 @@ export class ArticleService {
 
   updateStatus(article: Article) {
     if (article.extract && article.extract.id && article.extract.status) {
-      const path = `${environment.API_URL}/article/${article.title}/${article.locale}/status`;
+      const path = `${environment.API_URL}/articles/${article.locale}/${article.title}/status`;
       return this.wikimetricsSvc.status(article.extract.id)
       .switchMap((status) => this.http.patch(`${path}/${status.toLocaleLowerCase()}`, {}, {headers: this.authSvc.authHeader}))
       .map(response => (response.json() as Article));
@@ -75,7 +75,7 @@ export class ArticleService {
   }
 
   delete(article: Article) {
-    const path = `${environment.API_URL}/article/${article.title}/${article.locale}`;
+    const path = `${environment.API_URL}/articles/${article.locale}/${article.title}`;
     return this.http.delete(path, { headers: this.authSvc.authHeader });
   }
 }

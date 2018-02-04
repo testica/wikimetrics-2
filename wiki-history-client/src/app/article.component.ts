@@ -110,7 +110,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   getLink(art: Article) { return `https://${art.locale}.wikipedia.org/wiki/${art.title}`; }
 
   goToEdit(visTitle: string) {
-    this.router.navigate(['edit', visTitle], { relativeTo: this.route });
+    this.router.navigate(['visualizations', visTitle, 'edit'], { relativeTo: this.route });
   }
 
   goToHistoryFlow() {

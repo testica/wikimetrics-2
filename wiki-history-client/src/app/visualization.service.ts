@@ -22,20 +22,20 @@ export class VisualizationService {
   ) {}
 
   add(article: Article, vis: Visualization) {
-    const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization`;
+    const path = `${environment.API_URL}/articles/${article.locale}/${article.title}/visualizations`;
 
     return this.http.post(path, vis, {headers: this.authSvc.authHeader})
     .map((response) => (response.json() as Visualization));
   }
 
   update(article: Article, vis: Visualization) {
-    const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization`;
+    const path = `${environment.API_URL}/articles/${article.locale}/${article.title}/visualizations`;
     return this.http.patch(path, vis, {headers: this.authSvc.authHeader})
     .map((response) => (response.json() as Visualization));
   }
 
   delete(article: Article, vis: Visualization) {
-    const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization/${vis.title}`;
+    const path = `${environment.API_URL}/articles/${article.locale}/${article.title}/visualizations/${vis.title}`;
     return this.http.delete(path, { headers: this.authSvc.authHeader });
   }
 }

@@ -61,7 +61,7 @@ export class ArticleCardComponent implements OnInit {
 
   gotoDetail() {
     if (this.isReady()) {
-      this.router.navigate(['/articles', this.title, this.language]);
+      this.router.navigate(['/articles', this.language, this.title]);
     }
   }
 

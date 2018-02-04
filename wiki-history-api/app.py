@@ -87,9 +87,9 @@ def get_articles():
 
 
 # get article
-@app.route('/articles/<string:title>/<string:locale>', methods=['GET'])
+@app.route('/articles/<string:locale>/<string:title>', methods=['GET'])
 @jwt_required
-def get_article(title, locale):
+def get_article(locale, title):
   current_username = get_jwt_identity()
   # check if exists
   article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
@@ -101,7 +101,7 @@ def get_article(title, locale):
 
 
 # new article
-@app.route('/article', methods=['POST'])
+@app.route('/articles', methods=['POST'])
 @jwt_required
 def new_article():
   current_username = get_jwt_identity()
@@ -129,9 +129,9 @@ def new_article():
 
 
 # update article status
-@app.route('/article/<string:title>/<string:locale>/status/<string:status>', methods=['PATCH'])
+@app.route('/articles/<string:locale>/<string:title>/status/<string:status>', methods=['PATCH'])
 @jwt_required
-def update_article(title, locale, status):
+def update_article(locale, title, status):
   current_username = get_jwt_identity()
   
   if status != 'pending' and status != 'failure' and status != 'success' and status != 'in progress':
@@ -150,9 +150,9 @@ def update_article(title, locale, status):
   return jsonify(article_exist), 200
 
 # remove article
-@app.route('/article/<string:title>/<string:locale>', methods=['DELETE'])
+@app.route('/articles/<string:locale>/<string:title>', methods=['DELETE'])
 @jwt_required
-def delete_article(title, locale):
+def delete_article(locale, title):
   current_username = get_jwt_identity()
   # check if exists
   article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
@@ -163,9 +163,9 @@ def delete_article(title, locale):
     return '', 204
 
 # create visualization
-@app.route('/article/<string:title>/<string:locale>/visualization', methods=['POST'])
+@app.route('/articles/<string:locale>/<string:title>/visualizations', methods=['POST'])
 @jwt_required
-def create_visualization(title, locale):
+def create_visualization(locale, title):
   current_username = get_jwt_identity()
 
   if not request.json or not 'title' in request.json:
@@ -211,9 +211,9 @@ def create_visualization(title, locale):
   abort(409)
 
 # update visualization
-@app.route('/article/<string:title>/<string:locale>/visualization', methods=['patch'])
+@app.route('/articles/<string:locale>/<string:title>/visualizations', methods=['patch'])
 @jwt_required
-def update_visualization(title, locale):
+def update_visualization(locale, title):
   current_username = get_jwt_identity()
 
   if not request.json or not 'title' in request.json or not 'description' in request.json or not 'query' in request.json or not 'type' in request.json:
@@ -260,9 +260,9 @@ def update_visualization(title, locale):
   abort(409)
 
 # remove visualization
-@app.route('/article/<string:title>/<string:locale>/visualization/<string:title_vis>', methods=['DELETE'])
+@app.route('/articles/<string:locale>/<string:title>/visualizations/<string:title_vis>', methods=['DELETE'])
 @jwt_required
-def remove_visualization(title, locale, title_vis):
+def remove_visualization(locale, title, title_vis):
   current_username = get_jwt_identity()
 
   # check if exists
