@@ -27,7 +27,7 @@ export class VisualizationComponent implements OnInit, OnChanges, OnDestroy {
   @Input() chartXTitle = '';
   @Input() chartYTitle = '';
   @Input() chartTitle = '';
-  @Input() chartFixed = true;
+  @Input() chartZoom = false;
 
   gd;
 
@@ -69,7 +69,7 @@ export class VisualizationComponent implements OnInit, OnChanges, OnDestroy {
 
       const layout = {
         title: this.chartTitle,
-        xaxis: { title: this.chartXTitle, fixedrange: this.chartFixed},
+        xaxis: { title: this.chartXTitle, fixedrange: !this.chartZoom},
         yaxis: { title: this.chartYTitle, fixedrange: true},
         margin: { b: 120 }
       };
