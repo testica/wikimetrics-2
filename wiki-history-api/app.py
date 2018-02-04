@@ -246,8 +246,9 @@ def update_visualization(title, locale):
     'user.username': current_username,
     'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
   })
+
   if vis_exist is None:
-    abort(409)
+    abort(404)
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
@@ -258,6 +259,33 @@ def update_visualization(title, locale):
     return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis}), 201
   abort(409)
 
+# remove visualization
+@app.route('/article/<string:title>/<string:locale>/visualization/<string:title_vis>', methods=['DELETE'])
+@jwt_required
+def remove_visualization(title, locale, title_vis):
+  current_username = get_jwt_identity()
+
+  # check if exists
+  article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
+  if article_exist is None:
+    abort(404)
+
+  # check if exists
+  vis_exist = mongo.configurations.find_one({
+    'user.username': current_username,
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
+  })
+
+  if vis_exist is None:
+    abort(404)
+
+  config = mongo.configurations.update(
+    {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
+    {'$unset': { 'articles.$.visualizations.{0}'.format(title_vis): 1 } }
+  )
+
+  if config['nModified'] == 1:
+    return '', 204
 
 if __name__ == '__main__':
   # TODO: check better for production case

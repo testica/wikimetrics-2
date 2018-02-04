@@ -33,4 +33,9 @@ export class VisualizationService {
     return this.http.patch(path, vis, {headers: this.authSvc.authHeader})
     .map((response) => (response.json() as Visualization));
   }
+
+  delete(article: Article, vis: Visualization) {
+    const path = `${environment.API_URL}/article/${article.title}/${article.locale}/visualization/${vis.title}`;
+    return this.http.delete(path, { headers: this.authSvc.authHeader });
+  }
 }

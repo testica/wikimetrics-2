@@ -19,6 +19,7 @@
     <div class="my-vis" fxFlex="100" fxFlex.gt-sm="48">
       <div class="vis-title"> Mis Visualizaciones</div>
       <mat-card (click)="goToEdit(vis.title)" *ngFor="let vis of article.visualizations">
+        <div class="delete" (click)="delete(article, vis); $event.stopPropagation()"><mat-icon>delete</mat-icon></div>
         <mat-card-header>
             <div mat-card-avatar><mat-icon>insert_chart</mat-icon></div>
             <mat-card-title>{{vis.title}}</mat-card-title>

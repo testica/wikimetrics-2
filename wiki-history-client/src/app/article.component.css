@@ -26,3 +26,17 @@ div mat-icon {
   margin: 20px;
 }
 
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+}
+
+.delete mat-icon {
+  margin-top: 10px;
+  margin-right: 10px;
+  color: gray;
+  font-size: 20px;
+}
+

@@ -3,19 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DateTime } from 'luxon';
+
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
+
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
-import 'rxjs/add/operator/combineLatest';
 
 import { NavbarService } from './navbar/navbar.service';
 import { Article, ArticleService } from './article.service';
 import { WikimetricsService, WikimetricsRevision } from './wikimetrics.service';
 import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
-import { Visualization } from './visualization.service';
+import { Visualization, VisualizationService } from './visualization.service';
 
 @Component({
   selector: 'app-article',
@@ -28,7 +31,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   article$: Observable<Article>;
   revisions$: Observable<WikimetricsRevision[]>;
   count$: Observable<number>;
-
+  refresh$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   loading$: Observable<boolean>;
   onclick$: Subscription;
 
@@ -38,12 +41,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
     private navbarSvc: NavbarService,
     private articleSvc: ArticleService,
     private wikimetricsSvc: WikimetricsService,
+    private visSvc: VisualizationService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     // listen title from url
-    this.article$ = this.route.paramMap.switchMap(params => {
+    this.article$ = combineLatest(this.route.paramMap, this.refresh$).switchMap(([params]) => {
       return this.articleSvc.get({title: params.get('title'), locale: params.get('locale')} as Article);
     }).shareReplay();
 
@@ -70,6 +74,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onclick$.unsubscribe();
+    this.refresh$.unsubscribe();
+  }
+
+  delete(article: Article, vis: Visualization) {
+    this.visSvc.delete(article, vis).subscribe(() => {
+      this.refresh$.next(undefined);
+    });
   }
 
   openDialog() {
