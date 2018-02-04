@@ -112,4 +112,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   goToEdit(visTitle: string) {
     this.router.navigate(['edit', visTitle], { relativeTo: this.route });
   }
+
+  goToHistoryFlow() {
+    this.router.navigate(['visualizations', 'history-flow'], { relativeTo: this.route });
+  }
 }

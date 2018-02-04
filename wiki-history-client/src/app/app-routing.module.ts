@@ -7,12 +7,14 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { EditVisualizationComponent } from './edit-visualization/edit-visualization.component';
 import { AuthGuard } from './auth-guard.service';
+import { HistoryFlowComponent } from './history-flow/history-flow.component';
 
 const routes: Routes = [
   { path: '', component: ArticlesComponent, canActivate: [AuthGuard]},
   { path: 'sign-in', component: SignInComponent},
   { path: 'sign-up', component: SignUpComponent},
   { path: 'articles/:title/:locale', component: ArticleComponent, canActivate: [AuthGuard]},
+  { path: 'articles/:title/:locale/visualizations/history-flow', component: HistoryFlowComponent, canActivate: [AuthGuard]},
   { path: 'articles/:title/:locale/edit/:vtitle', component: EditVisualizationComponent, canActivate: [AuthGuard]}
 ];
 

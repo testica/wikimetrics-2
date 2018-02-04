@@ -1,0 +1,7 @@
+<app-history-flow-visualization
+*ngIf="revisions$ | async as revisions"
+[revisions]="revisions"
+(loaded)="loading($event)"
+></app-history-flow-visualization>
+
+<app-loading *ngIf="!(visualizationLoaded$ | async)"></app-loading>

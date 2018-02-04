@@ -17,7 +17,8 @@ import { SearchSuggestComponent } from './search-suggest/search-suggest.componen
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { VisualizationComponent } from './visualization/visualization.component';
-import { HistoryFlowVisualizationComponent } from './history-flow-visualization/history-flow-visualization.component';
+import { HistoryFlowComponent } from './history-flow/history-flow.component';
+import { HistoryFlowVisualizationComponent } from './history-flow/history-flow-visualization.component';
 import { LoadingComponent } from './loading/loading.component';
 import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
 import { EditVisualizationComponent } from './edit-visualization/edit-visualization.component';
@@ -55,6 +56,7 @@ import { ResizeService } from './resize.service';
     ArticleCardComponent,
     NavbarComponent,
     VisualizationComponent,
+    HistoryFlowComponent,
     HistoryFlowVisualizationComponent,
     LoadingComponent,
     EditVisualizationComponent,

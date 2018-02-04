@@ -1,7 +1,6 @@
-import { Component, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 import * as d3 from 'd3';
-import { sortBy } from 'lodash';
 import * as Diff from 'text-diff';
 
 import { WikimetricsRevision } from '../wikimetrics.service';
@@ -15,6 +14,7 @@ import { WikimetricsRevision } from '../wikimetrics.service';
 export class HistoryFlowVisualizationComponent implements AfterViewInit {
 
   @Input() revisions: WikimetricsRevision[] = [];
+  @Output() loaded = new EventEmitter<boolean>(false);
 
   constructor(
     private elemRef: ElementRef
@@ -30,10 +30,7 @@ export class HistoryFlowVisualizationComponent implements AfterViewInit {
 
     let lastContent = '';
 
-    // Sorting revisions by date
-    const revsOrderByDate = sortBy(this.revisions, ['timestamp', 'asc']);
-
-    revsOrderByDate.forEach(rev => {
+    this.revisions.forEach(rev => {
       // storing max size
       if (rev.size > maxSize) {
         maxSize = rev.size;
@@ -42,6 +39,8 @@ export class HistoryFlowVisualizationComponent implements AfterViewInit {
       distanceRevs.push(diff.levenshtein(diff.main(lastContent, rev['*'])));
       lastContent = rev['*'];
     });
+
+    this.loaded.emit(true);
 
     // first revison always has 0 distance beacause doesn't exists the previous rev
     distanceRevs[0] = 0;
@@ -53,7 +52,7 @@ export class HistoryFlowVisualizationComponent implements AfterViewInit {
 
     d3.select(this.elemRef.nativeElement)
     .selectAll('div.bar')
-    .data(revsOrderByDate)
+    .data(this.revisions)
     .enter().append('div').attr('class', 'bar')
     .style('width', (_, i) => `calc(${((1 / totalRev) * 100)}% + ${distanceRevs[i]}px)`)
     .style('height', rev => `${(rev.size / maxSize) * 100}%`)

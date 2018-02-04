@@ -28,7 +28,15 @@
       </mat-card>
     </div>
     <div class="special-vis" fxFlex="100" fxFlex.gt-sm="48">
-      <div class="vis-title">Visualizaciones Especiales</div>      
+      <div class="vis-title">Visualizaciones Especiales</div>
+      <!-- History Flow -->
+      <mat-card (click)="goToHistoryFlow()">
+        <mat-card-header>
+            <div mat-card-avatar><mat-icon>star</mat-icon></div>
+            <mat-card-title>Wiki History Flow</mat-card-title>
+            <mat-card-subtitle>Descubre la diferencia, tamaño y usuario de cada edición</mat-card-subtitle>
+          </mat-card-header>
+      </mat-card>      
     </div>
   </div>
 </ng-container>
