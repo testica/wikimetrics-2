@@ -1,4 +1,5 @@
 <mat-card [ngClass]="{'pending': isPending(), 'ready': isReady(), 'failure': isFailure()}" (click)="gotoDetail()">
+  <div class="delete" (click)="delete(); $event.stopPropagation()"><mat-icon>delete</mat-icon></div>
   <mat-card-header>
     <mat-card-title>{{title}}</mat-card-title>
     <mat-card-subtitle>{{language | uppercase}}</mat-card-subtitle>

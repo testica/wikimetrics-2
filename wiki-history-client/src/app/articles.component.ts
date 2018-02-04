@@ -48,6 +48,10 @@ export class ArticlesComponent implements OnDestroy {
     this.onclick$.unsubscribe();
   }
 
+  refreshArticles() {
+    this.articles$ = this.articleSvc.getAll().shareReplay();
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(SearchSuggestComponent, { width: '50%' });
 

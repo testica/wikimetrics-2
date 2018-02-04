@@ -1,5 +1,5 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="start center">
   <app-article-card *ngFor="let article of articles$ | async"
-  fxFlex="30" fxFlex.sm="50" fxFlex.xs="100" [article]="article"></app-article-card>
+  fxFlex="30" fxFlex.sm="50" fxFlex.xs="100" [article]="article" (refresh)="refreshArticles()"></app-article-card>
 </div>
 <app-loading *ngIf="!(loading$ | async)"></app-loading>

@@ -73,4 +73,9 @@ export class ArticleService {
     return this.http.get(path, { headers: this.authSvc.authHeader })
     .map(response => response.json() as Article[]);
   }
+
+  delete(article: Article) {
+    const path = `${environment.API_URL}/article/${article.title}/${article.locale}`;
+    return this.http.delete(path, { headers: this.authSvc.authHeader });
+  }
 }
