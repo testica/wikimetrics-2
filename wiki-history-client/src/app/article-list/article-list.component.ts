@@ -7,18 +7,18 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
 
-import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
-import { ArticleService, Article } from './article.service';
-import { NavbarService } from './navbar/navbar.service';
+import { SearchSuggestComponent } from '../search-suggest/search-suggest.component';
+import { ArticleService, Article } from '../article.service';
+import { NavbarService } from '../navbar/navbar.service';
 
 
 @Component({
-  selector: 'app-articles',
-  templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.css']
+  selector: 'app-article-list',
+  templateUrl: './article-list.component.html',
+  styleUrls: ['./article-list.component.css']
 })
 
-export class ArticlesComponent implements OnDestroy {
+export class ArticleListComponent implements OnDestroy {
 
   articles$: Observable<Article[]>;
   onclick$: Subscription;

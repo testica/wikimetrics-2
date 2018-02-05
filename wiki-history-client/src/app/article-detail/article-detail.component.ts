@@ -14,20 +14,20 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
 
-import { NavbarService } from './navbar/navbar.service';
-import { Article, ArticleService } from './article.service';
-import { WikimetricsService, WikimetricsRevision } from './wikimetrics.service';
-import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
-import { Visualization, VisualizationService } from './visualization.service';
+import { NavbarService } from '../navbar/navbar.service';
+import { Article, ArticleService } from '../article.service';
+import { WikimetricsService, WikimetricsRevision } from '../wikimetrics.service';
+import { NewVisualizationComponent } from '../new-visualization/new-visualization.component';
+import { Visualization, VisualizationService } from '../visualization.service';
 
 @Component({
-  selector: 'app-article',
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css'],
+  selector: 'app-article-detail',
+  templateUrl: './article-detail.component.html',
+  styleUrls: ['./article-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ArticleComponent implements OnInit, OnDestroy {
+export class ArticleDetailComponent implements OnInit, OnDestroy {
   article$: Observable<Article>;
   revisions$: Observable<WikimetricsRevision[]>;
   count$: Observable<number>;

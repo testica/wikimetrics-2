@@ -9,8 +9,8 @@ import { UrlSerializer } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialComponentsModule } from './material-components.module';
-import { ArticlesComponent } from './articles.component';
-import { ArticleComponent } from './article.component';
+import { ArticleListComponent } from './article-list/article-list.component';
+import { ArticleDetailComponent } from './article-detail/article-detail.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SearchSuggestComponent } from './search-suggest/search-suggest.component';
@@ -48,8 +48,8 @@ import { ResizeService } from './resize.service';
   ],
   declarations: [
     AppComponent,
-    ArticlesComponent,
-    ArticleComponent,
+    ArticleListComponent,
+    ArticleDetailComponent,
     SignInComponent,
     SignUpComponent,
     SearchSuggestComponent,
