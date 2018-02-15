@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
@@ -20,7 +21,7 @@ import { NavbarService } from '../navbar/navbar.service';
 
 export class ArticleListComponent implements OnDestroy {
 
-  articles$: Observable<Article[]>;
+  articles$ = new ReplaySubject<Article[]>(1);
   onclick$: Subscription;
 
   loading$: Observable<boolean>;
@@ -28,10 +29,10 @@ export class ArticleListComponent implements OnDestroy {
   constructor(
     private articleSvc: ArticleService,
     public dialog: MatDialog,
-    private navbarSvc: NavbarService
+    private navbarSvc: NavbarService,
   ) {
     // fetching articles
-    this.articles$ = this.articleSvc.getAll().shareReplay();
+    this.articleSvc.getAll().subscribe(articles => this.articles$.next(articles));
 
     this.loading$ = this.articles$.map(arts => !!arts);
 
@@ -45,11 +46,16 @@ export class ArticleListComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onclick$.unsubscribe();
+    if (this.onclick$) {
+      this.onclick$.unsubscribe();
+    }
+    if (this.articles$) {
+      this.articles$.unsubscribe();
+    }
   }
 
   refreshArticles() {
-    this.articles$ = this.articleSvc.getAll().shareReplay();
+    this.articleSvc.getAll().subscribe(articles => this.articles$.next(articles));
   }
 
   openDialog() {
@@ -61,7 +67,7 @@ export class ArticleListComponent implements OnDestroy {
     .switchMap(article => {
       return this.articleSvc.updateStatus(article);
     }).subscribe(() => {
-      this.articles$ = this.articleSvc.getAll();
+      this.articleSvc.getAll().subscribe(articles => this.articles$.next(articles));
     });
   }
 }

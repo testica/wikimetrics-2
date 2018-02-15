@@ -2,7 +2,6 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { Article, ArticleService } from '../article.service';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/do';
 
 @Component({
@@ -12,10 +11,8 @@ import 'rxjs/add/operator/do';
 })
 
 export class ArticleCardComponent implements OnInit {
-  @Input() article = <Article> {};
+  @Input() article: Article;
   @Output() refresh = new EventEmitter<void>();
-
-  refreshStatus$: BehaviorSubject<Article>;
 
   statusChanged = false;
 
@@ -25,22 +22,20 @@ export class ArticleCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.refreshStatus$ = new BehaviorSubject(this.article);
+    this.refreshStatus(this.article);
+  }
 
-    this.refreshStatus$
-    .do((art) => {
-      if (this.statusChanged && art.extract!.status === 'success') {
-        this.refresh.emit();
-      }
-    })
-    .filter(art => art.extract!.status === 'pending' || art.extract!.status === 'in progress')
-    .switchMap(art => this.articleSvc.updateStatus(art))
-    .subscribe((art) => {
-      this.statusChanged = true;
-      setTimeout(() => { this.refreshStatus$.next(art); }, 10000);
-    });
-
-
+  refreshStatus(art: Article) {
+    if (art.extract!.status === 'pending' || art.extract!.status === 'in progress') {
+      this.articleSvc.updateStatus(art).subscribe(article => {
+        setTimeout(() => {
+          this.statusChanged = true;
+          this.refreshStatus(article);
+        }, 10000);
+      });
+    } else if (this.statusChanged) {
+      this.refresh.emit();
+    }
   }
 
   get title() { return this.article.title; }
