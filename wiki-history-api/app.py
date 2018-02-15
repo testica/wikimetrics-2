@@ -141,7 +141,7 @@ def update_article(locale, title, status):
   article_exist = mongo.configurations.find_one({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale }}})
   if article_exist is None:
     abort(404)
-  config = mongo.configurations.update({'user.username': current_username, 'articles.title': title, 'articles.locale': locale }, {'$set': {'articles.$.extract.status': status}})
+  config = mongo.configurations.update({'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } } , {'$set': {'articles.$.extract.status': status}})
   # get specific article
   article_exist = (item for item in article_exist['articles'] if item['title'] == title and item['locale'] == locale).next()
   if config['nModified'] == 1:
@@ -203,7 +203,7 @@ def create_visualization(locale, title):
     abort(409)
 
   config = mongo.configurations.update(
-    {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
+    {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
     {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
   )
   if config['nModified'] == 1:
@@ -251,7 +251,7 @@ def update_visualization(locale, title):
     abort(404)
 
   config = mongo.configurations.update(
-    {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
+    {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
     {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
   )
 
@@ -280,7 +280,7 @@ def remove_visualization(locale, title, title_vis):
     abort(404)
 
   config = mongo.configurations.update(
-    {'user.username': current_username, 'articles.title': title, 'articles.locale': locale },
+    {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
     {'$unset': { 'articles.$.visualizations.{0}'.format(title_vis): 1 } }
   )
 
