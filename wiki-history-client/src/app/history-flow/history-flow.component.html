@@ -1,7 +1,22 @@
-<app-history-flow-visualization
-*ngIf="revisions$ | async as revisions"
-[revisions]="revisions"
-(loaded)="loading($event)"
-></app-history-flow-visualization>
+<mat-form-field>
+  <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="fromDate" placeholder="Desde">
+  <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+  <mat-datepicker #pickerFrom></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+  <input matInput [matDatepicker]="pickerTo" [(ngModel)]="toDate" placeholder="Hasta">
+  <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+  <mat-datepicker #pickerTo></mat-datepicker>
+</mat-form-field>
+<button mat-raised-button (click)="apply()">Aplicar</button>
+
+<ng-container *ngIf="revisions$ | async as revisions">
+  <app-history-flow-visualization
+  *ngIf="!destroy"
+  [revisions]="revisions"
+  (loaded)="loading($event)"
+  ></app-history-flow-visualization>
+</ng-container>
 
 <app-loading *ngIf="!(visualizationLoaded$ | async)"></app-loading>
