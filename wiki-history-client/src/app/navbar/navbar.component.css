@@ -9,9 +9,33 @@ a {
   text-decoration: none;
 }
 
+a.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 button {
   color: black;
   margin-right: 50px;
+}
+
+button.session {
+  margin-right: 0;
+}
+
+button.mobile {
+  margin-right: 10px;
+  font-size: 12px;
+  line-height: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+button.mobile ::ng-deep span {
+  white-space: normal;
 }
 
 .spacer {

@@ -1,13 +1,13 @@
 <mat-toolbar color="primary">
   <ng-container *ngIf="config$ | async as config">
-    <a [routerLink]="['/']">{{config.title}}</a>
+    <a class="title" [routerLink]="['/']">{{config.title}}</a>
     <span class="spacer"></span>
-    <button mat-raised-button *ngIf="!!config.button" (click)="clickButton()">{{config.button}}</button>
+    <button ngClass.xs="mobile" mat-raised-button *ngIf="!!config.button" (click)="clickButton()">{{config.button}}</button>
     <ng-container *ngIf="config.showUser">
       <mat-menu #appMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item (click)="signOut()"> Cerrar sesión </button>
       </mat-menu>
-      <button mat-icon-button [matMenuTriggerFor]="appMenu" >
+      <button class="session" mat-icon-button [matMenuTriggerFor]="appMenu" >
         <mat-icon class="user">person</mat-icon>
         <mat-icon class="user arrow">keyboard_arrow_down</mat-icon>
       </button>
