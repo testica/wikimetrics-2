@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Article, ArticleService } from '../article.service';
 import { Router } from '@angular/router';
 
@@ -10,11 +10,13 @@ import 'rxjs/add/operator/do';
   styleUrls: ['./article-card.component.css']
 })
 
-export class ArticleCardComponent implements OnInit {
+export class ArticleCardComponent implements OnInit, OnDestroy {
   @Input() article: Article;
   @Output() refresh = new EventEmitter<void>();
 
   statusChanged = false;
+
+  destroy = false;
 
   constructor(
     private router: Router,
@@ -22,19 +24,22 @@ export class ArticleCardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.destroy = false;
     this.refreshStatus(this.article);
   }
 
   refreshStatus(art: Article) {
-    if (art.extract!.status === 'pending' || art.extract!.status === 'in progress') {
-      this.articleSvc.updateStatus(art).subscribe(article => {
-        setTimeout(() => {
-          this.statusChanged = true;
-          this.refreshStatus(article);
-        }, 10000);
-      });
-    } else if (this.statusChanged) {
-      this.refresh.emit();
+    if (!this.destroy) {
+      if (art.extract!.status === 'pending' || art.extract!.status === 'in progress') {
+        this.articleSvc.updateStatus(art).subscribe(article => {
+          setTimeout(() => {
+            this.statusChanged = true;
+            this.refreshStatus(article);
+          }, 10000);
+        });
+      } else if (this.statusChanged) {
+        this.refresh.emit();
+      }
     }
   }
 
@@ -52,6 +57,10 @@ export class ArticleCardComponent implements OnInit {
     this.articleSvc.delete(this.article).subscribe(() => {
       this.refresh.emit();
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy = true;
   }
 
   gotoDetail() {
