@@ -64,6 +64,10 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
     .switchMap(([art, params]) => {
       const vis: Visualization | undefined = find(art.visualizations, o => o.title ===  params.get('vtitle'));
       if (vis) {
+        // setting navbar
+        this.navbarSvc.config$.next({
+          title: `Editar Visualización: ${vis.title}`, subtitle: art.title, button: 'Guardar cambios', showUser: true
+        });
         return of(vis);
       }
       return _throw('No se encuenta la visualización');
@@ -76,9 +80,6 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
       this.query$.next(JSON.parse(vis.query!));
       this.doQuery();
     });
-
-    // setting navbar
-    this.navbarSvc.config$.next({title: 'Editar Visualización', button: 'Guardar cambios', showUser: true});
 
     // subscribe to onclick of navbar button
     this.onclick$ = this.navbarSvc.onClick()

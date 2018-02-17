@@ -10,9 +10,22 @@ a {
 }
 
 a.title {
+  overflow: hidden;
+}
+
+a span.title {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+a span.sub-title {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+  padding-left: 5px;
 }
 
 button {
@@ -27,11 +40,9 @@ button.session {
 button.mobile {
   margin-right: 10px;
   font-size: 12px;
+  padding: 0;
   line-height: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 0;
-  padding-right: 0;
+  height: 35px;
 }
 
 button.mobile ::ng-deep span {

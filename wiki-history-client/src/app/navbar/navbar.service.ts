@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 
 export interface NavbarConfig {
   title?: string;
+  subtitle?: string;
   button?: string;
   showUser?: boolean;
 }

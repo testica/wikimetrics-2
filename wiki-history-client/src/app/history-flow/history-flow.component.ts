@@ -9,6 +9,7 @@ import { NavbarService } from '../navbar/navbar.service';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { DateTime } from 'luxon';
+import { has } from 'lodash';
 
 
 @Component({
@@ -49,11 +50,11 @@ export class HistoryFlowComponent implements OnInit {
     .subscribe(revs => {
       this.fromDate = DateTime.fromJSDate(new Date(revs[0].timestamp)).toISODate();
       this.toDate = DateTime.fromJSDate(new Date(revs[revs.length - 1].timestamp)).toISODate();
-      this.revisions$.next(revs);
+      this.revisions$.next(revs.filter(rev => has(rev, '*')));
     });
 
     // setting navbar
-    this.navbarSvc.config$.next({ title: 'Wiki History Flow', showUser: true });
+    this.navbarSvc.config$.next({ title: 'Wiki History Flow', subtitle: this.article.title, showUser: true });
   }
 
   apply() {
@@ -74,7 +75,7 @@ export class HistoryFlowComponent implements OnInit {
     ])
     .subscribe((revs: any[]) => {
       revs.map(rev => rev.timestamp = DateTime.fromJSDate(new Date(rev.timestamp.$date)).toISODate());
-      this.revisions$.next(revs);
+      this.revisions$.next(revs.filter(rev => has(rev, '*')));
       this.destroy = false;
     });
   }
