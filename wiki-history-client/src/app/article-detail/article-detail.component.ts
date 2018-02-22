@@ -120,8 +120,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['visualizations', visTitle, 'edit'], { relativeTo: this.route });
   }
 
-  filterByPreview(vis: Visualization[]) {
-    return vis.filter(v => !!v.preview);
+  filterByPreview(vis: Visualization[] | undefined) {
+    return vis ? vis.filter(v => !!v.preview) : [];
   }
 
   goToHistoryFlow() {
