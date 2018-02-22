@@ -34,7 +34,7 @@ export interface WikimetricsQuery {
   '$limit'?: number;
 }
 
-interface WikimetricsQueryResponse {
+export interface WikimetricsQueryResponse {
   '_id': any;
   result?: any;
   x_value?: any;

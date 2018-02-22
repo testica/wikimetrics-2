@@ -85,7 +85,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   }
 
   showPreview(article: Article, vis: Visualization, value: MatSlideToggleChange) {
-    this.visSvc.update(article, {... vis, preview: value.checked }).subscribe();
+    this.visSvc.update(article, {... vis, preview: value.checked }).subscribe(() => {
+      this.refresh$.next(undefined);
+    });
   }
 
   openDialog() {
@@ -116,6 +118,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   goToEdit(visTitle: string) {
     this.router.navigate(['visualizations', visTitle, 'edit'], { relativeTo: this.route });
+  }
+
+  filterByPreview(vis: Visualization[]) {
+    return vis.filter(v => !!v.preview);
   }
 
   goToHistoryFlow() {

@@ -2,14 +2,6 @@ app-visualization {
   height: 400px;
 }
 
-.separator {
-  width: 100%;
-  height: 1px;
-  margin-top: 10px;
-  margin-bottom: 10px; 
-  background-color: gray;
-}
-
 mat-card {
   cursor: pointer;
   margin-bottom: 5px;
@@ -44,4 +36,13 @@ mat-slide-toggle ::ng-deep span {
   text-transform: uppercase;
   font-size: 10px;
   font-weight: bold;
+}
+
+app-preview-visualization {
+  cursor: pointer;
+}
+
+.previews {
+  background-color: #3f51b514;
+  padding: 10px;
 }

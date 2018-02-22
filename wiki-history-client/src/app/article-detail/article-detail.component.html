@@ -15,7 +15,16 @@
         <a href="{{getLink(article)}}" target="_blank">Ir al artículo en Wikipedia</a>
       </div>
     </div>
-    <div class="separator"></div>
+    <div class="previews" fxLayout="row wrap" fxLayoutAlign="start center">
+      <app-preview-visualization
+        (click)="goToEdit(vis.title)"
+        fxFlex.xs="100"
+        fxFlex.sm="50"
+        fxFlex.gt-sm="33"
+        *ngFor="let vis of filterByPreview(article.visualizations)"
+        [data]="{ article: article, visualization: vis }">
+      </app-preview-visualization>
+    </div>
     <div fxLayout="row wrap" fxLayoutAlign="space-between start">
       <div class="my-vis" fxFlex="100" fxFlex.gt-sm="48">
         <div class="vis-title"> Mis Visualizaciones</div>

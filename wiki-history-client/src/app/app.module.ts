@@ -23,6 +23,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { NewVisualizationComponent } from './new-visualization/new-visualization.component';
 import { EditVisualizationComponent } from './edit-visualization/edit-visualization.component';
 import { QuerySelectorComponent } from './query-selector/query-selector.component';
+import { PreviewVisualizationComponent } from './preview-visualization/preview-visualization.component';
 
 import { AuthService } from './auth.service';
 import { WikipediaService } from './wikipedia.service';
@@ -61,7 +62,8 @@ import { ResizeService } from './resize.service';
     LoadingComponent,
     EditVisualizationComponent,
     NewVisualizationComponent,
-    QuerySelectorComponent
+    QuerySelectorComponent,
+    PreviewVisualizationComponent
   ],
   entryComponents: [
     SearchSuggestComponent,
