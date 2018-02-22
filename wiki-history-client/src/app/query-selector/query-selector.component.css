@@ -1,26 +1,46 @@
-.filter-selector, .group-selector, .view-selector {
-  max-height: max-content;
-  
+:host {
+  user-select: none;
 }
 
-.filter-selector-label, .group-selector-label, .view-selector-label {
+.filter-selector, .group-selector, .view-selector {
+  max-height: max-content;
+  position: relative;
+}
+
+.filter-selector-value, .group-selector-value, .view-selector-value {
   margin-right: 5px;
   padding: 5px;
   border: 1px solid gray;
   border-radius: 2px;
-  cursor: pointer;
+}
+
+.filter-selector-label, .group-selector-label, .view-selector-label {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px;
 }
 
 mat-icon.arrow {
   text-align: end;
+  margin: 5px;
+  background: #3f51b5;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .filter-selector-option, .group-selector-option, .view-selector-option, .filter-selector-sub-option {
+  top: 72px;
+  z-index: 1;
+  width: calc(100% - 5px);
+  position: absolute;
   margin-right: 5px;
   display: none !important;
   padding: 5px;
   border: 1px solid gray;
   border-radius: 2px;
+  background: white;
 }
 
 .filter-selector-sub-option-header {
@@ -42,4 +62,16 @@ mat-icon.arrow {
 
 .show {
   display: flex !important;
+}
+
+mat-chip {
+  border-radius: 4px !important;
+}
+
+mat-chip-list {
+  overflow: auto;
+}
+
+mat-chip-list ::ng-deep .mat-chip-list-wrapper {
+  width: max-content;
 }

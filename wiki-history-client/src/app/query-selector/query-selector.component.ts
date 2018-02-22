@@ -154,6 +154,7 @@ export class QuerySelectorComponent implements OnChanges {
     });
     this.queryChange.emit(this.buildQuery());
     this.backToMainFilter();
+    this.openFilterSelector = false;
   }
 
   removeFilter(index: number) {

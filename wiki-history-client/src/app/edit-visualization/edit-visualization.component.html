@@ -1,11 +1,13 @@
-<div fxLayout="row wrap" fxLayoutAlign="start center">
-  <app-query-selector fxFlex="100" [query]="query$ | async" (queryChange)="refreshQuery($event)"></app-query-selector>
-  <mat-form-field fxFlex="10" *ngIf="query$ | async as query">
-    <mat-select [(value)]="selectedTypeVis" placeholder="Tipo de visualización">
-      <mat-option *ngFor="let item of visType" [value]="item.value" [disabled]="item.requireGroup && !hasGroupResult(query)">{{item.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <button fxFlex="10" fxLayout="row" mat-raised-button color="primary" [disabled]="!selectedTypeVis" (click)="doQuery()">Aplicar</button>
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <app-query-selector [query]="query$ | async" (queryChange)="refreshQuery($event)"></app-query-selector>
+  <div class="type-vis" *ngIf="query$ | async as query">
+    <mat-form-field>
+      <mat-select [(value)]="selectedTypeVis" placeholder="Tipo de visualización">
+        <mat-option *ngFor="let item of visType" [value]="item.value" [disabled]="item.requireGroup && !hasGroupResult(query)">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!selectedTypeVis" (click)="doQuery()">Aplicar</button>
+  </div>
   <ng-container *ngIf="queryResponse$ | async as queryResponse">
     <!-- display charts -->
     <app-visualization
