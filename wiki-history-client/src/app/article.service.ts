@@ -49,7 +49,7 @@ export class ArticleService {
       if (has(res, 'visualizations')) {
         const vis: Visualization[] = [];
         forIn(res.visualizations, (value , key: string) => {
-          vis.push({ title: key, description: value.description, query: value.query, type: value.type });
+          vis.push({ title: key, description: value.description, query: value.query, type: value.type, preview: value.preview });
         });
         set(res, 'visualizations', vis);
       }

@@ -12,6 +12,7 @@ export interface Visualization {
   description?: string;
   query?: string;
   type?: string;
+  preview?: boolean;
 }
 
 @Injectable()

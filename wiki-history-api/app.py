@@ -194,6 +194,11 @@ def create_visualization(locale, title):
   else:
     type_vis = request.json['type']
 
+  if (not 'preview' in request.json):
+    preview_vis = False
+  else:
+    preview_vis = request.json['preview'] 
+
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
@@ -204,10 +209,10 @@ def create_visualization(locale, title):
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
-    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
   )
   if config['nModified'] == 1:
-    return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis}), 201
+    return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis}), 201
   abort(409)
 
 # update visualization
@@ -241,6 +246,11 @@ def update_visualization(locale, title):
   else:
     type_vis = request.json['type']
 
+  if (not 'preview' in request.json):
+    preview_vis = False
+  else:
+    preview_vis = request.json['preview']
+
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
@@ -252,11 +262,11 @@ def update_visualization(locale, title):
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
-    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis } } }
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
   )
 
   if config['nModified'] == 1:
-    return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis}), 201
+    return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis}), 201
   abort(409)
 
 # remove visualization

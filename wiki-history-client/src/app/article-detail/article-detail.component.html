@@ -26,6 +26,7 @@
               <mat-card-title>{{vis.title}}</mat-card-title>
               <mat-card-subtitle>{{vis.description? vis.description : 'Sin descripción'}}</mat-card-subtitle>
             </mat-card-header>
+            <mat-slide-toggle color="primary" [checked]="vis.preview" (change)="showPreview(article, vis, $event)" (click)="$event.stopPropagation()">Preview</mat-slide-toggle>
         </mat-card>
       </div>
       <div class="special-vis" fxFlex="100" fxFlex.gt-sm="48">

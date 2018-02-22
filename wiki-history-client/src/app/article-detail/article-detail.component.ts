@@ -19,6 +19,7 @@ import { Article, ArticleService } from '../article.service';
 import { WikimetricsService, WikimetricsRevision } from '../wikimetrics.service';
 import { NewVisualizationComponent } from '../new-visualization/new-visualization.component';
 import { Visualization, VisualizationService } from '../visualization.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-article-detail',
@@ -81,6 +82,10 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.visSvc.delete(article, vis).subscribe(() => {
       this.refresh$.next(undefined);
     });
+  }
+
+  showPreview(article: Article, vis: Visualization, value: MatSlideToggleChange) {
+    this.visSvc.update(article, {... vis, preview: value.checked }).subscribe();
   }
 
   openDialog() {
