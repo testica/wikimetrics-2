@@ -202,14 +202,14 @@ def create_visualization(locale, title):
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
-    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis.encode('utf-8')): { '$exists': True }  }}
   })
   if vis_exist is not None:
     abort(409)
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
-    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis.encode('utf-8')): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
   )
   if config['nModified'] == 1:
     return jsonify({'title': title_vis, 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis}), 201
@@ -254,7 +254,7 @@ def update_visualization(locale, title):
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
-    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis.encode('utf-8')): { '$exists': True }  }}
   })
 
   if vis_exist is None:
@@ -262,7 +262,7 @@ def update_visualization(locale, title):
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
-    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
+    {'$set': { 'articles.$.visualizations.{0}'.format(title_vis.encode('utf-8')): { 'description': description_vis, 'query': query_vis, 'type': type_vis, 'preview': preview_vis } } }
   )
 
   if config['nModified'] == 1:
@@ -283,7 +283,7 @@ def remove_visualization(locale, title, title_vis):
   # check if exists
   vis_exist = mongo.configurations.find_one({
     'user.username': current_username,
-    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis): { '$exists': True }  }}
+    'articles': { '$elemMatch': { 'title': title, 'locale': locale, 'visualizations.{0}'.format(title_vis.encode('utf-8')): { '$exists': True }  }}
   })
 
   if vis_exist is None:
@@ -291,7 +291,7 @@ def remove_visualization(locale, title, title_vis):
 
   config = mongo.configurations.update(
     {'user.username': current_username, 'articles': { '$elemMatch': { 'title': title, 'locale': locale } } },
-    {'$unset': { 'articles.$.visualizations.{0}'.format(title_vis): 1 } }
+    {'$unset': { 'articles.$.visualizations.{0}'.format(title_vis.encode('utf-8')): 1 } }
   )
 
   if config['nModified'] == 1:
