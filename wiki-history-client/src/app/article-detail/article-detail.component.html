@@ -8,8 +8,14 @@
         fxFlex="60" fxLayout="column">
       </app-visualization>
       <div class="detail-info" fxFlex="40" fxLayout="column">
-        <span *ngIf="count$ | async as count"><strong>Numero de ediciones:</strong> {{count}}</span>
+        <ng-container *ngIf="count$ | async as count">
+          <span><strong>Numero de ediciones:</strong> {{count}}</span>
+          <span *ngIf="countMinor$ | async as countMinor">
+            <strong>Numero de ediciones menores:</strong> {{countMinor}} ({{((countMinor/count) * 100).toFixed(2)}}%)
+          </span>
+        </ng-container>
         <span><strong>Fecha de última edición:</strong> {{lastTimestamp(revisions[0])}}</span>
+        <span *ngIf="countDistinctUser$ | async as countDistinctUser"><strong>Número de editores:</strong> {{countDistinctUser}}</span>        
         <span><strong>Usuario de última edición:</strong> {{lastAuthor(revisions[0])}}</span>
         <span><strong>Tamaño de artículo:</strong> {{size(revisions[0])}} (bytes)</span>
         <a href="{{getLink(article)}}" target="_blank">Ir al artículo en Wikipedia</a>

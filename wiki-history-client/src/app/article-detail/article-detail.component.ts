@@ -13,6 +13,7 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/map';
 
 import { NavbarService } from '../navbar/navbar.service';
 import { Article, ArticleService } from '../article.service';
@@ -32,6 +33,8 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
   article$: Observable<Article>;
   revisions$: Observable<WikimetricsRevision[]>;
   count$: Observable<number>;
+  countMinor$: Observable<number>;
+  countDistinctUser$: Observable<number>;
   refresh$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
   loading$: Observable<boolean>;
   onclick$: Subscription;
@@ -64,6 +67,27 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.count$ = this.article$.switchMap(art =>
       this.wikimetricsSvc.count({locale: art.locale, title: art.title})
     ).shareReplay();
+
+    this.countMinor$ = this.article$.switchMap(art =>
+      this.wikimetricsSvc.customQuery(art, [
+        {
+          '$match': { 'minor': { '$exists': true } }
+        },
+        {
+          '$group': { '_id': null , 'result': { '$sum': 1 } }
+        }
+      ])
+      .map(r => r[0].result)
+    );
+
+    this.countDistinctUser$ = this.article$.switchMap(art =>
+      this.wikimetricsSvc.customQuery(art, [
+        {
+          '$group': { '_id': '$userid' , 'result': { '$sum': 1 } }
+        }
+      ])
+      .map(r => r.length)
+    );
 
     this.loading$ = this.revisions$.combineLatest(this.count$, (r, c) => !!r && !!c);
 
