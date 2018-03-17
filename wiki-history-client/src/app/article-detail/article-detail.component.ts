@@ -83,6 +83,9 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
     this.countDistinctUser$ = this.article$.switchMap(art =>
       this.wikimetricsSvc.customQuery(art, [
         {
+          '$match': {}
+        },
+        {
           '$group': { '_id': '$userid' , 'result': { '$sum': 1 } }
         }
       ])
