@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 import { DateTime } from 'luxon';
 
@@ -20,7 +21,7 @@ import { Article, ArticleService } from '../article.service';
 import { WikimetricsService, WikimetricsRevision } from '../wikimetrics.service';
 import { NewVisualizationComponent } from '../new-visualization/new-visualization.component';
 import { Visualization, VisualizationService } from '../visualization.service';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Visualizations } from '../default-visualization/defaults';
 
 @Component({
   selector: 'app-article-detail',
@@ -153,5 +154,13 @@ export class ArticleDetailComponent implements OnInit, OnDestroy {
 
   goToHistoryFlow() {
     this.router.navigate(['visualizations', 'history-flow'], { relativeTo: this.route });
+  }
+
+  get defaultVisualizations() {
+    return Visualizations;
+  }
+
+  goToDefaultVisualization(visTitle: string) {
+    this.router.navigate(['visualizations', visTitle, 'show'], { relativeTo: this.route });
   }
 }

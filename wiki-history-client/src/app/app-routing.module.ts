@@ -6,6 +6,7 @@ import { ArticleDetailComponent } from './article-detail/article-detail.componen
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { EditVisualizationComponent } from './edit-visualization/edit-visualization.component';
+import { DefaultVisualizationComponent } from './default-visualization/default-visualization.component';
 import { AuthGuard } from './auth-guard.service';
 import { HistoryFlowComponent } from './history-flow/history-flow.component';
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'sign-up', component: SignUpComponent},
   { path: 'articles/:locale/:title', component: ArticleDetailComponent, canActivate: [AuthGuard]},
   { path: 'articles/:locale/:title/visualizations/history-flow', component: HistoryFlowComponent, canActivate: [AuthGuard]},
-  { path: 'articles/:locale/:title/visualizations/:vtitle/edit', component: EditVisualizationComponent, canActivate: [AuthGuard]}
+  { path: 'articles/:locale/:title/visualizations/:vtitle/edit', component: EditVisualizationComponent, canActivate: [AuthGuard]},
+  { path: 'articles/:locale/:title/visualizations/:vtitle/show', component: DefaultVisualizationComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

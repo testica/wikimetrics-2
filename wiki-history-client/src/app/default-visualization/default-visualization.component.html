@@ -1,0 +1,16 @@
+<ng-container *ngIf="queryResponse$ | async as queryResponse">
+
+  <!-- display charts -->
+  <app-visualization
+    fxFlex="100"
+    *ngIf="!isNumber"
+    [chartType]="visualization.type"
+    [chartY]="queryResponse.y_values"
+    [chartX]="queryResponse.x_values"
+    [chartXTitle]="queryResponse.x_label"
+    [chartYTitle]="queryResponse.y_label"
+    >
+  </app-visualization>
+  <!-- display number -->
+  <div *ngIf="isNumber" fxFlex="100" class="number">{{queryResponse.y_values[0].toFixed(2)}}</div>
+</ng-container>

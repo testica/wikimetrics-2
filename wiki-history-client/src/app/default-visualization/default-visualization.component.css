@@ -1,0 +1,11 @@
+
+div.number {
+  text-align: center;
+  font-size: 50px;
+  /* semi-bold */
+  font-weight: 500;
+}
+
+app-visualization {
+  height: 400px;
+}
