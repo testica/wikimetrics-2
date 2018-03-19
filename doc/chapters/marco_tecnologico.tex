@@ -1,32 +1,135 @@
+Este capítulo cubre la investigación y evaluación dada sobre herramientas de apoyo posibles a usar en el trabajo para simplificar el desarrollo. El capítulo inicia introduciendo aquellas herramientas que facilitan las construcción de las visualizaciones sobre los datos. Por último, el capítulo presenta las herramientas que soportan, optimizan y simplifican el desarrollo general de la aplicación web.
+
+\section{Tecnologías para la visualización de datos en web}
+Para comenzar, hay que saber que las visualizaciones para este caso se construirán en el ámbito web, haciendo uso de HTML \cite{MozHTML} y JavaScript \cite{MozJS}. De las bibliotecas que nos apoyaremos, algunas construyen la gráfica utilizando el componente Canvas \cite{MozCanvas} de HTML5 y otras utilizando el estándar SVG \cite{W3SVG} (Scalable Vector Graphics).
+
+\subsection[SVG vs Canvas]{SVG vs Canvas \cite{OperaSVGCanvas}}
+El elemento Canvas es literalmente, un lienzo donde se va a pintar la gráfica, el proceso de construcción es más complejo y manual ya que la manera para dibujar consiste en pintar pixel por pixel, por lo que el cambio de resoluciones afecta lo dibujado. El elemento SVG (Scalable Vector Graphics) representa un vector escalable, donde cada elemento de la gráfica, ya sea una caja, círculo, texto, o imagen representa un sub-elemento del SVG general. Adicionalmente SVG permite el manejo de eventos y los cambios de resoluciones no afectan la visualización, esto hace que sea más fácil trabajar y personalizar los elementos de la gráfica a dibujar.
+
+Como usaremos bibliotecas para la creación de las gráficas no debemos preocuparnos por la dificultad que toma la construcción con Canvas comparado con SVG, ya que la biblioteca lo hará por nosotros. El punto importante es que Canvas tiene un rendimiento mayor que el SVG cuando la gráfica maneja muchos objetos, debido a que cada objeto de la gráfica es un elemento que impacta en el DOM \cite{W3DOM} del HTML y esto hace que más memoria RAM sea consumida.
+
+\subsection{Bibliotecas basadas en Canvas}
+A continuación se presentará una lista de bibliotecas que construyen las gráficas haciendo uso de Canvas, acompañada de una lista de las gráficas principales que incluyen:
+
+\begin{itemize}
+\item\textbf{Processing.js\footnote{\url{http://processingjs.org/}}:}
+Es un lenguaje de programación visual. Al ser un lenguaje de programación visual queda claro que su objetivo es general y no únicamente gráficas, por lo que nos permite elaborar desde animaciones hasta juegos. Basta con aprender sus definiciones propias para poder usarlo.
+\item\textbf{Chartjs\footnote{\url{http://www.chartjs.org/}}:}
+Biblioteca con aporte de 5 tipo de gráficas: gráfica de línea, barra, área polar, circular (dona), dispersión. En particular, las gráficas de esta biblioteca presentan un buen diseño adaptativo a distintos tipos de pantalla que pueden ser personalizado, incluyendo animaciones. Adicionalmente, podemos extender las funcionalidades descargando y configurando \textit{plugins} elaborados por otras personas.
+\item\textbf{Echarts\footnote{\url{https://ecomfe.github.io/echarts-doc/public/en/index.html}}:}
+Posee una gran variedad de gráficas personalizables y dando la posibilidad de habilitar animaciones. Ofrece soporte para la mayoría de los navegadores web y buena usabilidad para los dispositivos móviles, tanto rendimiento como adaptabilidad a la pantalla. La biblioteca con todas las gráficas y componentes incluidos ocupa alrededor de 500KB, pero es posible solo descargar algunos tipos de gráficas para reducir el tamaño de la biblioteca. Entre las gráficas disponibles se tienen: gráfica de línea, barra, área, mapa, circular (dona), dispersión, velas, grafos, boxplot, paralela, embudo y \textit{themeriver} (variación temática sobre el tiempo).
+\end{itemize}
+
+\subsection{Bibliotecas basadas en SVG}
+A continuación se presentará una lista de bibliotecas que construyen las gráficas haciendo uso de SVG, acompañada de una lista de las gráficas principales que incluyen:
+
+\begin{itemize}
+\item\textbf{Raphael.js\footnote{\url{http://dmitrybaranovskiy.github.io/raphael/}}:}
+Es una pequeña biblioteca \textit{cross-browser}, es decir, soportada por las mayoría de los navegadores web, con la capacidad de ofrecernos herramientas para elaborar cualquier visualización con vectores. No está orientada solo a la elaboración de gráficas, por lo que podemos crear cualquier visualización, ya sea juegos, alguna especie de arte o animación.
+\item\textbf{Google Chart\footnote{\url{https://developers.google.com/chart/}}:}
+Biblioteca elaborada por Google, donde ofrecen aproximadamente 29 tipos de gráficas, animadas, con un estilo minimalista y soporte para muchos navegadores, incluyendo versiones viejas. Además, nos permite configurar y personalizar las gráficas a nuestro gusto. La biblioteca solo ocupa 70 KB. Entre los tipos de gráficas disponibles destacan: gráfica de línea, barra, área, mapa, circular (dona), dispersión, intervalos, boxplot, velas, treemap y línea en el tiempo.
+\item\textbf{Plotly.js\footnote{\url{https://github.com/plotly/plotly.js/}}:}
+Es una biblioteca que está basada (construida) con ayuda de la biblioteca D3 y stackgl\footnote{Es un ecosistema para WebGL \url{http://stack.gl/}}. Tiene 20 tipos de gráficas, incluyendo en 3D (tres dimensiones) con un diseño agradable y con una cómoda caja de herramientas flotante para interactuar con la gráfica. Entre los tipos gráficas disponibles se tienen: gráfica de línea, barra, área, circular (dona), mapa, dispersión, boxplot, velas, treemap e histogramas (2D y 3D).
+\end{itemize}
+
+
+\subsection{D3 (Data-Driven Documents)}
+D3 (Data-Driven Documents)\footnote{\url{https://d3js.org/}} es considerada una de las bibliotecas más potentes para la manipulación de datos, con varios años en desarrollo y con una comunidad bastante activa. Con esta biblioteca se puede llegar a construir casi cualquier tipo de gráfica deseable en SVG o HTML Canvas, gracias a que tenemos un control total sobre la construcción y diseño de la gráfica. También se dispone de \textit{plugins} y gran cantidad de ejemplos aportados por otras personas que pueden ayudarnos a facilitar la programación de la gráfica. La biblioteca tiene un tamaño base de 230 KB aproximadamente en su versión actual (v4.7.3).
+Para hacer posible la construcción de una gráfica, D3 incluye los siguientes elementos claves:
+
+\begin{itemize}
+\item\textbf{Selecciones}: modificar elementos de manera imperativa, siendo menos tediosa a la tradicional
+\begin{minted}[linenos]{js}
+    d3.selectAll('p').style('color', 'white');
+\end{minted}
+Podemos modificar atributos o estilos, registrar eventos, agregar, eliminar nodos logrando cambiar HTML o texto contenido.
+
+\item\textbf{Propiedades dinámicas}: los estilos, atributos y otras propiedades pueden ser especificadas como funciones de datos, es decir no siempre reciben constantes.
+\begin{minted}[linenos]{js}
+d3.selectAll("p").style("color", function() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+});
+\end{minted}
+
+\item\textbf{Entrar y salir}: facilita agregar y/o remover elementos en un grupo de datos.
+\begin{minted}[linenos]{js}
+var p = d3.select("body")
+  .selectAll("p")
+  .data([4, 8, 15, 16, 23, 42])
+    .text(function(d) { return d; });
+
+// Entrar
+p.enter().append("p")
+    .text(function(d) { return d; });
+
+// Salir
+p.exit().remove();
+\end{minted}
+En casos donde se busca optimizar esta sección es útil debido a que podemos establecer una navegación en la visualización y solo mostrar un grupo de elementos donde el resto se elimina, de tal forma que se vayan agregando y eliminando elementos a medida que se realicen acciones sobre la gráfica. 
+
+\item\textbf{Transiciones}: existen controles para las animaciones, como la duración y tiempo de aplazo.
+\begin{minted}[linenos]{js}
+d3.selectAll("circle").transition()
+    .duration(750)
+    .delay(function(d, i) { return i * 10; })
+    .attr("r", function(d) { return Math.sqrt(d * scale); });
+\end{minted}
+\end{itemize}
+La biblioteca D3 no introduce una nueva representación visual como hace Raphael.js y Processing.js (bibliotecas mencionadas anteriormente), debido a que se trabaja directamente con estándares web (HTML, CSS \cite{MozCSS}, SVG), por ejemplo, podemos crear una gráfica en SVG y luego darle estilo con un archivo externo CSS. Sin embargo, estas tres (3) bibliotecas por el hecho de darnos una libertad total al construir visualizaciones requieren un tiempo considerado para aprender y poder usarlas debidamente.
+
+\subsection{Evaluación de Bibliotecas}
+Es importante saber que para nuestro caso todas las bibliotecas mencionadas anteriormente son las que mejor se adaptan según las necesidades, aún así se realizaron ciertas evaluaciones para decidir cuál utilizar. Para la evaluación se consideró lo siguiente:
+
+\begin{itemize}
+\item \textbf{Variedad de gráficas}
+
+Para nuestro trabajo es necesario varios tipos de gráficas, ya que se realizarán visualizaciones con cantidad y tipo de datos distintos, por lo tanto es indispensable que existan diferentes tipos de gráficas para cada situación a visualizar en particular. Se revisó todos los tipos de gráficas que podían ofrecer cada una de las bibliotecas. Si es necesario un diseño o tipo de gráfica bastante particular probablemente para ese caso la mejor opción sería D3, Raphael.js o Processing.js.
+
+\item \textbf{Rendimiento}
+
+Definimos rendimiento como el comportamiento que toma la biblioteca al construir una gráfica considerablemente pesada (con inmensa cantidad de datos). El problema que podemos presentar al visualizar grandes cantidades de datos es que la vista donde está la gráfica se perciba con cierta lentitud y en el peor de los casos el navegador (browser) se detenga, es decir deje de trabajar. Afortunadamente, hay algunas bibliotecas que optimizan las gráfica y aplican un estilo de paginación, donde no dibujan todos los puntos a la vez, sino a medida que nos profundizamos en la gráfica.
+
+Se sometieron algunas de las bibliotecas a la creación de una gráfica desde 10.000 hasta 1.000.000 de datos. En la \textbf{Figura \ref{fig:library_comparison}} podemos apreciar una aproximación del resultado basado en la cantidad de objetos que pudieron soportar, en donde el eje 'y' corresponde al número de objetos, donde M representa el millón. Cabe destacar que D3, Processing y Raphael no fueron considerados ya que su rendimiento es totalmente relativo a como se programe la gráfica.
+\begin{center}
+    \bigbreak
+    \includegraphics[scale=0.45]{images/marco_tecnologico/library_comparison.png}
+    \captionof{figure}{Comparación de bibliotecas de visualización}
+    \label{fig:library_comparison}
+    \end{center}
+    \bigbreak
+\end{itemize}
+
+Al analizar la evaluación, quedamos con tres (3) candidatos: D3, Echarts y Plotly. Donde cada uno predomina en distintos escenarios necesarios para nuestro trabajo. Adicionalmente, D3 al ser una biblioteca que nos ofrece la mayor libertad para elaborar gráficas a nuestro gusto dará aquel soporte en gráficas sumamente específicas, también viene acompañada de muchos ejemplos elaborados por la comunidad que pueden servir de apoyo. Plotly a pesar de construir las visualizaciones en SVG logra un excelente rendimiento, aún mejor que el resto de las bibliotecas, además su diseño es agradable y nos ofrece una caja de herramientas para interactuar con la gráfica. Como último candidato a Echarts, por su gran variedad de ejemplos y los posibles tipos de gráficas que nos puede ofrecer, agregando que, dan soporte con gráficas que son usables en dispositivos móviles logrando además un buen rendimiento para aquellos sistemas de bajos recursos.
+
+\section{Tecnologías para el desarrollo web}
 Brindar una buena experiencia de usuario en una aplicación puede llegar a ser un gran desafío donde existen varios elementos que afectan directamente, como el \textbf{diseño}, ya que es importante jugar un buen estilo, de carácter agradable, y con animaciones amigables. El \textbf{rendimiento}, donde la aplicación debe desempeñar una buena fluidez de respuesta y \textbf{correctitud}, que se contemple una interfaz que tenga sentido con la funcionalidad de la misma.
 
 Cuando entramos en el área web, nuestro caso una aplicación web, llegan algunos desafíos adicionales como aplicar soporte de diseño para variedad de densidades de pantallas y versiones de navegadores web, esto se debe a que nuestra aplicación estará expuesta en la web, donde puede ser accedida desde tabletas, móviles, computadores de escritorio, televisores, y cualquier dispositivo que tenga conexión a internet y un navegador. También el peso de la aplicación, incluyendo códigos, fuentes e imágenes impacta considerablemente al tiempo de espera para conexiones lentas a internet.
 
 En este capítulo presentaremos herramientas que nos facilitarán el trabajo para lidiar las problemáticas mencionadas segmentando la aplicación por: arquitectura, diseño y utilidades extras a emplear. Cabe acotar que para el manejo de estas herramientas es necesario tener conocimiento sobre JavaScript, TypeScript\footnote{TypeScript \url{https://www.typescriptlang.org/}} (subconjunto de JavaScript con un sistema de tipos más robusto), CSS y HTML.
 
-\section{Arquitectura}
+\subsection{Arquitectura}
 
 La aplicación adoptará una arquitectura llamada \textit{Single-page Aplication} \cite{WikiSPA} (SPA) que significa aplicación de una página, donde se busca englobar toda la aplicación en una vista, logrando cargar la base de la aplicación completa y luego dinámicamente mediante JavaScript hacer la transición de las vistas. La gran ventaja que podemos sacar de SPA es la fluidez de la aplicación entre cambios de vistas, ya que todos estos elementos ya fueron cargados previamente. Por contraparte, la carga inicial suele ser pesada por traerse elementos de más, pero de igual forma esta puede optimizarse para traer solo los recursos necesarios.
 
 Mayormente nuestra aplicación tendrá comunicación casi constante con un API que nos ofrecerá cantidades de datos para nosotros transmitir visualmente, por lo tanto manejaremos peticiones HTTP\footnote{HTTP: es el protocolo de comunicación que permite las transferencias de información en la World Wide Web.} (Hypertext Transfer Protocol) con AJAX \cite{AJAX} (Asynchronous JavaScript And XML), cabe destacar que al ser asíncrono evitamos que afecte el flujo principal de la aplicación.
-\bigbreak
 \begin{center}
-\includegraphics[scale=0.6]{spa_lifecycle.png}
+\includegraphics[scale=0.6]{images/marco_tecnologico/spa_lifecycle.png}
 \captionof{figure}{Ciclo de vida de una aplicación SPA}
 \label{fig:spa_lifecycle}
 \end{center}
-\bigbreak
 El ciclo de una aplicación SPA como se muestra en la \textbf{Figura \ref{fig:spa_lifecycle}} requiere por lo general una primera petición para cargar las vistas, funciones y diseño, el resto de las peticiones se dirigen al API a través de AJAX para pedir los datos a visualizar.
 
 A continuación presentaremos dos (2) bibliotecas que nos permiten definir la aquitectura de la aplicación: Angular y jQuery.
 
-\subsection{Angular}
+\subsubsection{Angular}
 Angular\footnote{Angular 2 \url{https://angular.io/}} es un framework muy popular creado por Google destinado a construir aplicaciones web, donde se maneja la lógica de la aplicación con JavaScript. Para la versión 2 de Angular, que es la que se contempla para este proyecto, se logra una estructura modular en la aplicación, donde cada elemento es considerado un componente que se construye de manera aislada, por lo tanto no se ve afectado por el resto de los mismos. Claramente, el enfoque de Angular sigue la arquitectura SPA, donde logra optimizar y resolver posibles problemas con los estados de transiciones, carga inicial, caching y mejor manejo de peticiones HTTP.
 
 Es importante saber que Angular es una biblioteca con un catálogo inmenso de funcionalidades soportado por la mayoría de los navegadores, donde ofrece desde mecanismos de seguridad para evitar \textit{Cross-site scripting}\footnote{Cross-site scripting \url{https://es.wikipedia.org/wiki/Cross-site_scripting}} (XSS) hasta un paquete completo de animaciones.
 
 A continuación, se muestra un ejemplo de código representando un componente en Angular:
-\begin{lstlisting}
+\begin{minted}[linenos]{ts}
+
 // app.component
 import { Component } from '@angular/core';
 
@@ -35,11 +138,11 @@ import { Component } from '@angular/core';
   template: `<h1>Hola Mundo</h1>`
 })
 export class AppComponent { name = 'Angular'; }
-\end{lstlisting}
+\end{minted}
 
 Podemos observar que para declarar un componente es necesario importar primero el paquete de Angular y luego llamar al decorador \textbf{@Component({})}, en donde es pasado un objeto identificado por un \textbf{selector}, que corresponde a un alias del componente y el \textbf{template} que puede ser una ruta de un archivo HTML o este caso una pieza de código HTML.
 
-\begin{lstlisting}
+\begin{minted}[linenos]{ts}
 // app.module
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -51,7 +154,7 @@ import { AppComponent }  from './app.component';
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
-\end{lstlisting}
+\end{minted}
 
 Es indispensable al menos un módulo en Angular por lo tanto en el código anterior estamos definiendo un módulo con el decorador \textbf{@NgModule({})}, lo importante de aquí es que en dicho módulo declaramos el componente anteriormente creado.
 
@@ -61,63 +164,66 @@ Otras características que destacan a Angular son:
 \item\textbf{Directivas}
 
 Es una manera de lograr que las vistas sean dinámicas, es decir, los componentes HTML pueden tener atributos especiales de Angular para poder modificar elementos del DOM.
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <li *ngFor="let item of arrayItem"></li>
 <app-detail *ngIf="selectedItem"></app-detail>
-\end{lstlisting}
+\end{minted}
 La directiva \textbf{*ngFor} nos permite iterar en un ciclo, originando un <li> por cada elemento de arrayItem y \textbf{*ngIf} nos permite mostrar o no elementos mediante una condición.
 
 \item\textbf{Servicios}
 
 Pueden representar cualquier función, valor o características que la aplicación necesite. Mayormente los componentes son consumidores de estos servicios, por ejemplo: una configuración de la aplicación, un servicio que hace peticiones HTTP a un API, un servicio encargado de actualizar una barra de navegación, un servicio para mostrar mensajes estilo Logs, etc.
-\begin{lstlisting}
+\begin{minted}[linenos]{ts}
 // logger.service.ts
 export class Logger {
   log(msg: any)   { console.log(msg); }
   error(msg: any) { console.error(msg); }
   warn(msg: any)  { console.warn(msg); }
 }
-\end{lstlisting}
+\end{minted}
 El código de arriba representa un ejemplo de un servicio de Logs, en donde nos ofrece una clase con tres (3) variedades de avisos a consola.
 \end{itemize}
 
-\subsection{jQuery}
+\subsubsection{jQuery}
 jQuery\footnote{jQuery \url{https://jquery.com/}} es una biblioteca ligera y sencilla, que lleva bastante tiempo siendo usada. Su finalidad es ofrecer soluciones a funciones complejas de manera sencilla principalmente para la manipulación de elementos HTML y eventos, animaciones y AJAX. Considero jQuery como una opción manual al construir una aplicación SPA, ya que directamente no ofrece una solución completa, pero existen plugins y/o guías para lograr dicha arquitectura.
 
 \begin{itemize}
 
 \item\textbf{Manipulación de elementos}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
+
 $( "button.green" ).html( "Next" );
-\end{lstlisting}
+
+\end{minted}
 
 \item\textbf{Manejo de Eventos}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 var hiddenBox = $( "#banner-message" );
 $( "#button-container button" ).on( "click", function( event ) {
   hiddenBox.show();
 });
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Petición HTTP Asíncrona con AJAX}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 $.ajax({
   url: "/api/getWeather",
   data: {
     zipcode: 97201
   },
   success: function( result ) {
-    $( "#weather-temp" ).html( "<strong>" + result + "</strong> degrees" );
+    $( "#weather-temp" )
+    .html( "<strong>" + result + "</strong> degrees" );
   }
 });
-\end{lstlisting}
+\end{minted}
 \end{itemize}
 
-\section{Diseño}
+\subsection{Diseño}
 
 Es importante que nuestra aplicación presente un buen diseño, donde se simplifique la finalidad de la aplicación, además de ser capaz a adaptarse a distintos tamaños de pantallas. No hay un guion o estilo definido para el diseño, la idea es aplicar colores que combinen, componentes sencillos como: botones, selectores, barra de menú, diálogos, iconos, \textit{inputs} (entradas de información), texto y componentes no tan sencillos como las gráficas para visualizar los datos. Todos estos componentes harán posible una interfaz que sea capaz de representar un editor de visualizaciones, en donde recibiremos apoyo de bibliotecas que nos ofrecen estos componentes bien formados y listos para usar.
 
-\subsection{Angular Material}
+\subsubsection{Angular Material}
 
 Angular Material\footnote{Angular Material \url{https://material.angular.io/}} es una biblioteca que ofrece componentes siguiendo un diseño llamado Material (Material Design)\footnote{Material Design \url{https://material.io/}} creado por Google. Para poder integrar esta biblioteca es requerido Angular 2, por lo tanto, esta opción se ve atada a usar dicho framework. Lo que destaca de Angular Material es la variedad de componentes, que además son totalmente adaptativos gracias a una biblioteca incluida llamada \textit{Flex Layout}\footnote{Flex Layout \url{https://github.com/angular/flex-layout}} que nos ofrece propiedades sencillas de usar para corresponder el tamaño de los componentes en distintos escenarios. Adicionalmente, es soportado por la mayoría de los navegadores modernos.
 
@@ -127,40 +233,42 @@ Entre tantos componentes, se mostrará ejemplos de algunos a continuación:
 
 \begin{itemize}
 \item\textbf{Botones}
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <button md-raised-button>Raised button</button>
 <button md-fab><md-icon>check</md-icon></button>
-\end{lstlisting}
+\end{minted}
 En donde el atributo \textbf{md-raised-button} representa un botón con elevación, \textbf{md-fab} es un botón mayormente flotante con forma circular. Podemos observar que existe otro elemento \textbf{md-icon} que nos permite colocar un ícono a través de una fuente especial llamada \textit{Material Design Icons}\footnote{Material Design Icons \url{https://material.io/icons/}}, obteniéndola con el siguiente código desde nuestro archivo HTML.
-\begin{lstlisting}
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-\end{lstlisting}
+\begin{minted}[linenos]{html}
+<link
+href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+\end{minted}
 
 \item\textbf{Spinner de Progreso}
-\begin{lstlisting}
+\begin{minted}[linenos]{console}
 <md-progress-spinner
     class="example-margin"
     [attr.color]="color"
     [mode]="mode"
     [value]="value">
 </md-progress-spinner>
-\end{lstlisting}
+\end{minted}
 El \textit{spinner}, que hace referencia a un elemento circular con acción de progreso, se puede lograr usando \textbf{md-progress-spinner} en donde puede tener como atributo un color, un modo para representar si girará finitamente o infinitamente y un valor que representa el porcentaje de progreso actual.
 
 \item\textbf{Barra de Herramientas}
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <md-toolbar>My App</md-toolbar>
-\end{lstlisting}
+\end{minted}
 Con \textbf{md-toolbar} logramos crear una barra en donde podremos colocar texto e iconos con acciones, por ejemplo, la barra principal superior de la aplicación.
 \end{itemize}
 
 
-\subsection{Bootstrap}
+\subsubsection{Bootstrap}
 
 Bootstrap\footnote{Bootstrap \url{http://getbootstrap.com/}} ofrece un gran catálogo de componentes, desde distintos tipos de botones, formularios, barras de menú, hasta diálogos. Recientemente lanzaron la versión 4, en donde se reescribió la mayoría del proyecto corrigiendo bastantes errores, sin embargo esta versión se encuentra en fase alfa, esto quiere decir que no es estable. Bootstrap es una biblioteca elaborada por Twitter, donde es posible la construcción rápida de una interfaz tanto para escritorio como para móvil, ofreciendo gran soporte para la mayoría de los navegadores y también posibilidad de adaptarse a distintas dimensiones de pantallas. Para que Bootstrap funcione es necesario la biblioteca jQuery que anteriormente mencionamos.
 
 Bootstrap tienen su propio sistema \textit{grid} para escalar los componentes según cambie el tamaño de la pantalla, en donde se distinguen tres medidas: \textbf{lg} (largo), \textbf{md} (mediano), \textbf{sm} (pequeño) y \textbf{xs} (extra pequeño). Estas medidas pueden aplicarse a columnas o filas, representadas como \textbf{col} y \textbf{row}. Por cada fila puede haber doce (12) columnas, si este es superado el elemento faltante irá posicionado abajo.
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <div class="row">
   <div class="col-md-4">.col-md-4</div>
   <div class="col-md-4">.col-md-4</div>
@@ -170,38 +278,41 @@ Bootstrap tienen su propio sistema \textit{grid} para escalar los componentes se
   <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
   <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
 </div>
-\end{lstlisting}
+\end{minted}
 
 Entre los componentes considerados a usar:
 \begin{itemize}
 \item\textbf{Botones}
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <button type="button" class="btn btn-default">Default</button>
 <button type="button" class="btn btn-primary">Primary</button>
 <button type="button" class="btn btn-success">Success</button>
 <button type="button" class="btn btn-info">Info</button>
 <button type="button" class="btn btn-warning">Warning</button>
 <button type="button" class="btn btn-danger">Danger</button>
-\end{lstlisting}
+\end{minted}
 Bootstrap nos proporciona un abanico de botones con estilos definidos, en donde cada uno juega un color de fondo distinto.
 
 \item\textbf{Tipografía}
-\begin{lstlisting}
-<span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
-\end{lstlisting}
+\begin{minted}[linenos]{html}
+<span class="glyphicon glyphicon-star"
+aria-hidden="true"></span> Star
+\end{minted}
 Es posible incluir íconos gracias a que Bootstrap trae su propia tipografía.
 
 \item\textbf{Barra de Progreso}
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+  <div class="progress-bar" role="progressbar"
+  aria-valuenow="60" aria-valuemin="0"
+  aria-valuemax="100" style="width: 60%;">
     <span class="sr-only">60% Complete</span>
   </div>
 </div>
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Barra de Herramientas}
-\begin{lstlisting}
+\begin{minted}[linenos]{html}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -212,17 +323,17 @@ Es posible incluir íconos gracias a que Bootstrap trae su propia tipografía.
     </div>
   </div>
 </nav>
-\end{lstlisting}
+\end{minted}
 Es posible posicionar una barra superior de manera fija, con cualquier elemento adentro de ella, pero para ellos debes cumplir con los 3 primeros elementos padres: el primer \textbf{nav} y los dos siguientes \textbf{div}.
 
 \end{itemize}
 
 
-\section{Utilidades}
+\subsection{Utilidades}
 
 Existen distintas bibliotecas de propósito más específico cuyo uso se ha vuelto cotidiano, donde pueden solucionar tareas complejas o engorrosas de implementar en JavaScript, específicamente para nuestro proyecto existe la necesidad de preparar ciertos conjuntos de datos complejos para poder construir una gráfica, al igual que manejar varios formatos de fechas.
 
-\subsection[Lodash]{Lodash\footnote{Lodash \url{https://lodash.com/}}}
+\subsubsection[Lodash]{Lodash\footnote{Lodash \url{https://lodash.com/}}}
 
 La manipulación de ciertos objetos, arreglos y strings complejos pueden contemplar soluciones un tanto ilegible, por lo tanto la biblioteca Lodash nos otorga utilidades que resuelven dichos problemas de una manera simple. Adicionalmente, cuenta con funciones matemáticas y soluciones para manejar valores null, NaN y undefined. Todas sus funcionalidades son soportadas por la mayoría de los exploradores.
 
@@ -230,16 +341,16 @@ A continuación, se mostrarán unos ejemplos de las ventajas que puede traer lod
 
 \begin{itemize}
 \item\textbf{Verificar variable (no sea null ni undefined)}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // no-lodash
 if(a != null && a != undefined) {...}
 
 // lodash
 if(!_.isNill(a)) {...}
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Ciclos}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // no-lodash
 for(var i = 0; i < 5; i++) {
   ...
@@ -249,20 +360,20 @@ for(var i = 0; i < 5; i++) {
 _.times(5, function(){
   ...
 });
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Números aleatorios}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // no-lodash
 Math.floor(Math.random() * (max - min + 1)) + min;
 
 // lodash
 _.random(min, max);
 });
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Seleccionar elementos de un arreglo}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // no-lodash
 function pick(arr) {
     var _this = this;
@@ -278,10 +389,10 @@ objA.pick(['x', 'y'])
 // lodash
 _.pick(objA, ['x', 'y']);
 });
-\end{lstlisting}
+\end{minted}
 \end{itemize}
 
-\subsection[Moment]{Moment\footnote{Momentjs \url{https://momentjs.com/}}}
+\subsubsection[Moment]{Moment\footnote{Momentjs \url{https://momentjs.com/}}}
 
 La manipulación de fecha y tiempo en JavaScript suele ser confusa y consume muchas líneas de código, es probable que en nuestra aplicación tengamos que recibir fechas con un formato específico y de la misma forma representar este visualmente de otra. Moment es una biblioteca que tiene como finalidad analizar sintácticamente, validar, manipular y mostrar fechas/horas (tiempo) de la forma más simple posible. Adicionalmente, esta biblioteca ofrece extensiones para poder realizar ciertas funcionalidades más específicas.
 
@@ -289,28 +400,31 @@ A continuación mostraremos ejemplos de cosas interesantes que podemos lograr co
 
 \begin{itemize}
 \item\textbf{Obtener la fecha/hora de hoy con formato}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // date
 moment().format("DD/MM/YYYY");
 // time
 moment().format("HH:mm:ss");
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Agregar/Quitar tiempo}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // add
 moment().add(7, 'days');
 moment().add(1, 'week')
 // subtract
 moment().subtract(7, 'days');
 moment().subtract(1, 'week')
-\end{lstlisting}
+\end{minted}
 
 \item\textbf{Obtener unidad de tiempo específica}
-\begin{lstlisting}
+\begin{minted}[linenos]{js}
 // hours
 moment().hours();
 // month
 moment().month();
-\end{lstlisting}
+\end{minted}
 \end{itemize}
+
+\bigbreak
+Presentadas estas alternativas, tomaremos Angular para la arquitectura y Angular Material para el diseño respectivamente. Esta selección se justifica debido a que Angular como framework para el front-end tiene un enfoque total SPA, además tiene ciertas herramientas integradas, como un manejador de conexiones http que es de bastante utilidad para nuestro caso. También, Angular orienta a programar de manera modular, en donde se logra un código más organizado y reutilizable. Por el lado del diseño, Angular Material es una buena opción, debido a su compatibilidad con el framework, adicionalmente, posee una gran cantidad de vistas adaptativas totalmente controlables mediante directivas de Angular.

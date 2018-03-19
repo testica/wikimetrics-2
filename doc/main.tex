@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[12pt]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 \usepackage{graphicx}
@@ -13,6 +13,9 @@
 \usepackage[nottoc]{tocbibind}
 \usepackage[backend=biber,safeinputenc,sorting=none,backref=true]{biblatex}
 \usepackage[nodayofweek]{datetime}
+\usepackage{hyperref}
+\usepackage{minted}
+\usemintedstyle{colorful}
 \bibliography{references}
 \setlength\bibitemsep{0.5\baselineskip}
 
@@ -73,25 +76,42 @@
 	{\Large Autor: Leonardo Testa\par}
 	\vfill
 
-% Bottom of the page
   {\large Tutor: Eugenio Scalise\par}
 	{\large \mydate\today \par}
 \end{titlepage}
 
+% Resumen
+\chapter*{Resumen}
+\input{chapters/resumen.tex}
+
+% Índice
 \tableofcontents
+
+% Tabla de figuras
 \listoffigures
+
+% Introducción
 \chapter{Introducción}
-\input{chapters/chapter01}
-\chapter{Tecnologías para la visualización de datos en web}
-\input{chapters/chapter02}
-\chapter{Tecnologías para el desarrollo web}
-\input{chapters/chapter03}
-\chapter{Propuesta de Trabajo Especial de Grado}
-\input{chapters/chapter04}
+\input{chapters/introduccion.tex}
+
+% Marco Teórico
+\chapter{Marco Teórico}
+\input{chapters/marco_teorico.tex}
+
+% Marco Tecnológico
+\chapter{Marco Tecnológico}
+\input{chapters/marco_tecnologico.tex}
+
+% Marco Aplicativo
+\chapter{Marco Aplicativo}
+\input{chapters/marco_aplicativo.tex}
+
+% Conclusiones
+\chapter{Conclusiones}
+\input{chapters/conclusiones.tex}
 
 \clearpage
 
 \addcontentsline{toc}{chapter}{Bibliografía}
 \printbibliography
-
 \end{document}
