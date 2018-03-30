@@ -1,13 +1,13 @@
 <ng-container *ngIf="article$ | async as article">
   <ng-container *ngIf="revisions$ | async as revisions">
-    <div class="main" fxLayout="row" fxLayoutAlign="start center">
+    <div class="main" fxLayout="row wrap" fxLayoutAlign="start center">
       <app-visualization
         chartTitle="Ultimas 20 ediciones"
         chartYTitle="Tamaño (bytes)"
         chartType="line" [chartX]="timestamps(revisions)" [chartY]="sizes(revisions)" 
-        fxFlex="60" fxLayout="column">
+        fxFlex="60" fxFlex.xs="100" fxLayout="column">
       </app-visualization>
-      <div class="detail-info" fxFlex="40" fxLayout="column">
+      <div class="detail-info" fxFlex="40" fxFlex.xs="100" fxLayout="column">
         <ng-container *ngIf="count$ | async as count">
           <span><strong>Numero de ediciones:</strong> {{count}}</span>
           <span *ngIf="countMinor$ | async as countMinor">
