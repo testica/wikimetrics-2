@@ -1,11 +1,11 @@
-Este capítulo describe la metodología y la ejecución de la misma, explicando cada una de las tareas en orden cronológico de manera detallada y su resultado.
+Este capítulo describe la metodología utilizada para el desarrollo de la solución y la aplicación de la misma, explicando cada una de las tareas en orden cronológico de manera detallada y su resultado.
 
 \section{Metodología}
-Los objetivos específicos serán desglosados de manera técnica en pequeñas tareas ordenadas por prioridad. El control de estas asignaciones se manejará mediante la plataforma GitHub (aplicación web para alojar repositorios Git) en donde cada tarea será un \textit{issue} a resolver. Github nos permite proyectar estos \textit{issues} en una pizarra, con el fin de visualizar el estado de cada asignación, los estados definidos son: Por hacer, En progreso, Terminado. Puede verse un ejemplo en la \textbf{Figura \ref{fig:githubBoard}}
+Los objetivos específicos serán desglosados de manera técnica en pequeñas tareas ordenadas por prioridad. El control de estas asignaciones se manejará mediante la plataforma GitHub (aplicación web para alojar repositorios Git) en donde cada tarea será un \textit{issue} a resolver. Github permite proyectar estos \textit{issues} en una pizarra, con el fin de visualizar el estado de cada asignación, los estados definidos son: Por hacer, En progreso, Terminado. Puede verse un ejemplo en la \textbf{Figura \ref{fig:githubBoard}}
 
 \begin{itemize}
 \item\textbf{Por hacer:} representa aquellas tareas especificadas, que por el momentos son \textit{issues} sin resolver.
-\item\textbf{En progreso:} representa las tareas que están siendo desarrolladas, cabe destacar que cada asignación se resuelve en una rama distinta del repositorio git haciendo uso del \textit{pull request} para llevar un mayor control del desarrollo de la asignación.
+\item\textbf{En progreso:} representa las tareas que están siendo desarrolladas. Cabe destacar que cada asignación se resuelve en una rama distinta del repositorio git haciendo uso del \textit{pull request} para llevar un mayor control del desarrollo de la asignación.
 \item\textbf{Terminado:} representa aquellas tareas culminadas. Cuando se considera que una tarea está lista, esta tiene que ser mezclada a la rama principal del repositorio, llamada \textit{master}, luego cerrar el \textit{pull request} y el \textit{issue} asociado.
 \end{itemize}
 
@@ -17,55 +17,63 @@ Los objetivos específicos serán desglosados de manera técnica en pequeñas ta
     \bigbreak
 \end{center}
 
-La pizarra de Github es una herramienta de la metodología Kanban \cite{BookKanban}, en donde visualizar el flujo de trabajo y hacerlo visible es la base para comprender cómo avanza el trabajo. Sin comprender el flujo de trabajo, realizar los cambios adecuados es más difícil. Una forma común de visualizar el flujo de trabajo es el uso de columnas. Las columnas representan los diferentes estados o pasos en el flujo de trabajo. Kanban logra un desarrollo evolutivo e incremental, donde las soluciones de las asignaciones puede que no sean las mejores comenzando, pero a medida que se itera se va perfeccionando.
+La pizarra de Github, véase la \textbf{Figura \ref{fig:githubBoard}}, es una herramienta de la metodología Kanban \cite{BookKanban}, en donde visualizar el flujo de trabajo y hacerlo visible es la base para comprender cómo avanza el trabajo. Sin comprender el flujo de trabajo, realizar los cambios adecuados es más difícil. Una forma común de visualizar el flujo de trabajo es el uso de columnas. Las columnas representan los diferentes estados o pasos en el flujo de trabajo. Kanban logra un desarrollo evolutivo e incremental, donde las soluciones de las asignaciones puede que no sean las mejores comenzando, pero a medida que se itera se va perfeccionando.
 
 \section{Realización de tareas}
 A continuación, de listarán las tareas de mayor relevancia ordenadas cronológicamente, con la descripción del problema y el resultado.
 
 \begin{enumerate}
-  \item\textbf{Preparar entorno de desarrollo:}\\
-  
-  Antes de empezar el desarrollo es necesario instalar o preparar el ambiente para el uso de las herramientas:
+  \smallbreak
+  \item\textbf{Preparar entorno de desarrollo}
+  \smallbreak
+
+  Antes de empezar el desarrollo se necesita instalar o preparar el ambiente para el uso de las herramientas:
   \begin{itemize}
       \item Instalar Node\footnote{\url{https://nodejs.org}} para servir la aplicación web local.
-      \item Instalar NPM\footnote{\url{https://www.npmjs.com/}} (Node Package Manager) necesaria para instalar paquetes javascript como Angular y dependencias.
+      \item Instalar NPM\footnote{\url{https://www.npmjs.com/}} (Node Package Manager) necesaria para instalar paquetes JavaScript como Angular y dependencias.
       \item Instalar editor de texto inteligente, en preferencia personal, Visual Studio Code.
-      \item Instalar algún navegador moderno, Google Chrome o Firefox para reproducir la aplicación web.
+      \item Instalar navegadores modernos, principalmente Google Chrome y Firefox, para reproducir la aplicación web y asegurar el soporte de la misma.
   \end{itemize}
+
+  \smallbreak
+  \item\textbf{Elaborar estructura base de la aplicación}
+  \smallbreak
+  Lo principal es tener la estructura base del proyecto en código y tener la configuración del framework Angular lista.
   
-  \item\textbf{Elaborar estructura base de la aplicación:}\\
-  Lo principal es tener la estructura base del proyecto en código, tener la configuración del framework Angular lista.
-  
-  Afortunadamente, existe una herramienta llamada \textbf{angular-cli}, que nos facilita la creación de un proyecto en Angular poniendo lo siguiente en el terminal:
+  Afortunadamente, existe una herramienta llamada \textbf{angular-cli}, que facilita la creación de un proyecto en Angular poniendo lo siguiente en el terminal:
   \begin{minted}[linenos]{console}
     # instalar angular-cli
     npm install -g @angular/cli
     # crear proyecto
     ng new wiki-history-client
   \end{minted}
+
+  \smallbreak
+  \item\textbf{Investigar API de WikiMedia}
+  \smallbreak
   
-  \item\textbf{Investigar API de WikiMedia:}\\
+  Es necesario ofrecer los artículos del \textit{watchlist} de los usuarios para que posteriormente puedan analizarlos con la aplicación, dado esto se necesita saber cómo autenticar un usuario y obtener su \textit{watchlist} haciendo uso del API.
   
-  Necesitamos ofrecer los artículos del watchlist de los usuarios para que posteriormente puedan analizarlos con la aplicación, dado esto es necesario saber como autenticar un usuario y obtener su watchlist haciendo uso del API.
+  En el momento cuando se desempeñó esta tarea hubo un problema con el API de autenticación, debido a que estaban abandonando la manera tradicional y migrando a una más segura usando OAuth2\footnote{\url{https://oauth.net/2/}}, por motivos de privilegios no fue posible registrar la aplicación con el método nuevo de autenticación.
   
-  En el momento cuando se desempeñó esta tarea hubo un problema con el API de autenticación, debido a que estaban abandonando la manera tradicional y migrando a una más segura usando OAuth2\footnote{\url{https://oauth.net/2/}}, por temas de burocracia no fue posible registrar nuestra aplicación con su método nuevo de autenticación.
+  Debido a esto, no iba a ser posible extraer el \textit{watchlist} sin credenciales de usuarios, por lo que se optó la decisión de construir un API propia donde se gestionaran usuarios y ellos manualmente agregarían los artículos de interés.
   
-  Debido a esto, no iba a ser posible extraer el watchlist sin credenciales de usuarios, por lo que se optó la decisión de construir un API propia donde se gestionaran usuarios y ellos manualmente agregarían los artículos de interés.
-  
-  \item\textbf{Implementar vista de Artículos:}\\
+  \smallbreak
+  \item\textbf{Implementar vista de Artículos}
+  \smallbreak
   
   La vista principal de la aplicación sería una lista de artículos de interés.
   
-  Por el momento, los datos de los artículos se simularon en una variable, para probar que la vista funcionaba.
+  En la versión actual, los datos de los artículos se simularon en una variable, para probar que la vista funcionaba.
   \begin{center}
       \bigbreak
       \includegraphics[scale=0.2]{images/marco_aplicativo/lista_articulos.png}
       \captionof{figure}{Lista de artículos}
-      \label{fig:githubBoard}
+      \label{fig:article_list}
       \bigbreak
   \end{center}
   
-  Usamos un elemento de Angular Material llamado md-card, para formar el estilo de un artículo. La propiedad *ngFor es una directiva de angular que nos permite replicar ese elemento tanta veces como iteraciones tenga. Además hacemos uso de fxFlex que nos permite ajustar el tamaño del elemento dependiendo de las dimensiones de la pantalla.
+  Se usó un elemento de Angular Material llamado md-card, para formar el estilo de un artículo. La propiedad *ngFor es una directiva de angular que nos permite replicar ese elemento tanta veces como iteraciones tenga. Además hacemos uso de fxFlex que nos permite ajustar el tamaño del elemento dependiendo de las dimensiones de la pantalla, véase en la \textbf{Figura \ref{fig:article_list}} el resultado.
   \begin{minted}[linenos]{html}
     <md-card 
         *ngFor="let article of articles"
@@ -74,15 +82,20 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     </md-card>
   \end{minted}
   
-  \item\textbf{Implementar vista de detalle de  Artículo:}\\
+  \smallbreak
+  \item\textbf{Implementar vista de detalle de  Artículo}
+  \smallbreak
+  
   Al presionar un artículo de la lista nos tiene que  dirigir a un detalle para acceder a más información del mismo.
   
-  Por el momento simplemente mostraremos una vista blanca que representa el detalle. De esta forma, programamos que al pisar un artículo nos mande a la vista del detalle. La ruta del detalle se representa por: 
+  En la versión actual simplemente se mostrará una vista blanca que representa el detalle. De esta forma, se programó que al pisar un artículo direccione a la vista del detalle. La ruta del detalle se representa por: 
   \begin{minted}{console}
    /articles/<titulo_artículo>
   \end{minted}
   
-  \item\textbf{Implementar servicio (API) para manejar usuarios y configuraciones:}\\
+  \smallbreak
+  \item\textbf{Implementar servicio (API) para manejar usuarios y configuraciones}
+  \smallbreak
   
   Es necesario un servicio que delegue la autenticación y gestión de los recursos persistentes como usuarios y artículos.
   
@@ -100,7 +113,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   Para la autorización de recursos, se usó el mecanismo JWT\footnote{\url{https://jwt.io/}}(JSON Web Token), que consiste en la generación de un token resultado de datos cifrado con una clave privada. De esta forma podemos extraer del token el usuario y corroborar si la solicitud del recurso es válida.
   
   
-  Por los momentos, el modelo de cada usuario se verá representado de la siguiente manera:
+  En la versión actual, el modelo de cada usuario se verá representado de la siguiente manera:
   
   \begin{minted}{json}
   {
@@ -115,22 +128,26 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   }
   \end{minted}
   
-  Es importante acotar que las contraseñas se almacenan usando la función hash MD5\footnote{\url{https://en.wikipedia.org/wiki/MD5}}.
+  Es importante acotar que las contraseñas son almacenadas usando la función hash MD5\footnote{\url{https://en.wikipedia.org/wiki/MD5}}.
 
-  \item\textbf{Agregar documentación y dependecias de API:}\\
+  \smallbreak
+  \item\textbf{Agregar documentación y dependecias de API}
+  \smallbreak
   
-  A nivel de desarrollo es importante tener instrucciones de como hacer funcionar las cosas por si otro desarrollador continúa el trabajo, dado esto, se le agrego documentación y se fijaron las versiones de las dependencias para hacerla funcionar en cualquier momento.
+  A nivel de desarrollo es importante tener instrucciones de cómo hacer funcionar las cosas por si otro desarrollador continúa el trabajo, dado esto, se le agrego documentación y se fijaron las versiones de las dependencias para hacerla funcionar en cualquier momento.
   
-  \item\textbf{Componente Iniciar Sesión:}\\
+  \smallbreak
+  \item\textbf{Implementar vista para iniciar sesión}
+  \smallbreak
   
   Se requiere una vista para poder iniciar sesión con un usuario y contraseña.
   
-  Se implemento un formulario preguntando ambos requerimientos escuchando la ruta:
+  Se implementó un formulario pidiendo ambos requerimientos, que puede ser accedido bajo la ruta:
   \begin{minted}{console}
    /sign-in
   \end{minted}
   
-  Creamos un servicio de Angular para abstraer la comunicación con el API para hacer el inicio de sesión:
+  Se creó un servicio de Angular para abstraer la comunicación con el API para hacer el inicio de sesión:
   \begin{minted}[linenos]{ts}
     import { Injectable } from '@angular/core';
     import { Http } from '@angular/http';
@@ -163,29 +180,26 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     }
   \end{minted}
   
-  Un servicio es una instancia singleton, que puede ser inyectada y usada en cualquier parte de la aplicación, luego de crear el servicio podemos hacer inicio de sesión con:
+  Un servicio es una instancia \textit{singleton}, que puede ser inyectada y usada en cualquier parte de la aplicación, luego de crear el servicio podemos hacer inicio de sesión con:
   \begin{minted}[linenos]{ts}
   signIn("admin","1234").then();
   \end{minted}
 
-  \item\textbf{Implementar vista registrar usuario:}\\
+  \smallbreak
+  \item\textbf{Implementar vista para registrar un usuario}
+  \smallbreak
   
-  Es indispensable poder registrar un usuario para luego poder acceder a el.
+  Es indispensable poder registrar un usuario para luego poder acceder a él.
   
   Por lo tanto, se creó la vista usando un componente que proyecta un formulario similar al iniciar sesión.
-
-  \item\textbf{Implementar componente de sugerencia de artículos de wikipedia:}\\
   
-  Una vez creado un usuario, lo siguiente es preparar los artículos que queremos examinar, como no hay forma de obtener el watchlist tenemos que ofrecerle una manera de que busque los artículos de wikipedia a desear.
+  \smallbreak
+  \item\textbf{Implementar componente de sugerencia de artículos de Wikipedia}
+  \smallbreak
   
-  Se implementó un input que sugiere artículos de wikipedia a medida que escribes cualquier texto, además considera el idioma.
+  Una vez creado un usuario, lo siguiente es preparar los artículos que queremos examinar. Como no hay forma de obtener el watchlist se tiene que ofrecerle una manera de buscar los artículos de Wikipedia a desear.
   
-  Para esto se necesito hacer uso del API de Wikipedia, específicamente a este ruta:\\
-  \url{https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search="Venezuela"&limit=10}
-  
-  Donde el parámetro \textbf{search} hace referencia al título del artículo, y \textbf{limit} a la cantidad de sugerencias que queremos.
-  
-  Cada vez que escribimos se hace un request a esa ruta, cancelando el anterior si todavía está pendiente.
+  Se implementó un input que sugiere artículos de Wikipedia a medida que escribes cualquier texto, además se consideró el idioma, véase la \textbf{Figura \ref{fig:sugerencia_wikipedia}}.
   
   \begin{center}
       \bigbreak
@@ -195,35 +209,43 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center} 
   
-  \item\textbf{Implementar componente y servicio para agregar artículo:}\\
+  \smallbreak
+  \item\textbf{Implementar componente y servicio para agregar artículo}
+  \smallbreak
   
   Surge la necesidad de persistir los artículos agregados por los usuarios, por lo que se tiene que habilitar la opción para crear artículos y extraerlo asíncronamente usando el API de Wikimetrics 2.0.
   
-  Se abstrae el request a API para crear un artículo a través de un servicio, y se encapsula el componente de la tarea anterior en otro componente que interactué con el servicio.
+  Se abstrae la petición al API para crear un artículo a través de un servicio, y se encapsula el componente de la tarea anterior en otro componente que interactué con el servicio, véase la \textbf{Figura \ref{fig:nuevo_articulo_flujo}}.
   
   \begin{center}
       \bigbreak
       \includegraphics[scale=0.5]{images/marco_aplicativo/nuevo_articulo_flujo.png}
-      \captionof{figure}{Flujo del agregar artículo, en el punto (1) se accede al api de Wikipedia para obtener los artículos sugeridos, luego al presionar agregar sucede el punto (2) que hace un request al API nuestra de usuarios para agregar el artículo y luego en el punto (3) se hace un request en el API de Wikimetrics 2.0 para activar el proceso de extracción del artículo}
+      \captionof{figure}{Flujo del agregar artículo. En el punto (1) se accede al API de Wikipedia para obtener los artículos sugeridos, luego al presionar agregar sucede el punto (2) que hace un request al API nuestra de usuarios para agregar el artículo y luego en el punto (3) se hace un request en el API de Wikimetrics 2.0 para activar el proceso de extracción del artículo}
       \label{fig:nuevo_articulo_flujo}
       \bigbreak
   \end{center} 
   
-  \item\textbf{Implementar servicio para obtener lista de artículos:}\\
+  \smallbreak
+  \item\textbf{Implementar servicio para obtener lista de artículos}
+  \smallbreak
   
-  Hasta ahora se había trabajado con una lista de artículos falsa desde una variable, donde entra la necesidad de poder pedir la lista de artículos asociada a un usuario.
+  Para la versión actual, se estaba trabajado con una lista de artículos falsa. Por lo tanto surge la necesidad de poder pedir la lista real de artículos asociada a un usuario.
  
-  Se elabora el request a la ruta para pedir los artículos encapsulada en un servicio.
-
-  \item\textbf{Crear componente dedicado a la carta de artículos:}\\
+  Se implementa un servicio que abstrae la lógica de realizar la petición a la ruta para pedir los artículos.
+  
+  \smallbreak
+  \item\textbf{Crear componente dedicado para los artículos en el listado}
+  \smallbreak
   
   El estilo de los artículos en el listado es hasta ahora muy simple y vacío.
  
   Se encapsula la lógica de la carta de un artículo en un componente, para abstraer funcionalidades complejas y se muestra más información del mismo, con un mejor estilo.
-
-  \item\textbf{Actualizar estado del artículo cada cierto tiempo:}\\
   
-  Sabemos que tenemos hacer un proceso de extracción del artículo para que el API de Wikimetrics pueda ofrecernos luego datos a visualizar de este, pero actualmente no tenemos forma se saber si el artículo ya fue extraído o no, de alguna forma tenemos que darle esa información al usuario para que esté al tanto del proceso. Un artículo puede tardar varios minutos en extraerse, todo esto depende del tamaño y cantidad de ediciones.
+  \smallbreak
+  \item\textbf{Actualizar estado del artículo cada cierto tiempo}
+  \smallbreak
+  
+  Se sabe que se tiene que hacer un proceso de extracción del artículo para que el API de Wikimetrics pueda ofrecer datos a visualizar, pero actualmente no se tiene forma de saber si el artículo ya fue extraído o no, de alguna forma se tiene que comunicar esa información al usuario para que esté al tanto del proceso. Un artículo puede tardar varios minutos en extraerse, todo esto depende del tamaño y cantidad de ediciones.
  
   Cuando un artículo es mandado a extraer, este responde con un código que nos servirá para preguntar por su estado. Replicamos esta lógica en el lado del API de usuarios, guardando el código y su estado actual:
   \begin{minted}[linenos]{json}
@@ -237,7 +259,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     }
   \end{minted}
   
-  El proceso de extracción puede pasar por 4 estados: \textit{pending}, \textit{success}, \textit{failure}, \textit{in progress}.
+  El proceso de extracción puede pasar por 4 estados: \textit{pending} (\textbf{Figura \ref{fig:article_pending}}), \textit{success} (\textbf{Figura \ref{fig:article_success}}), \textit{failure}, \textit{in progress}.
   
   Para dar una interacción mas precisa al usuario, cada 10 segundos se hace un request para comprobar el estado y se actualiza en nuestra API, la condición de parada es que este \textit{success} o \textit{failure}
   
@@ -256,11 +278,13 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center} 
   
-  \item\textbf{Manejar autorización en las vistas:}\\
+  \smallbreak
+  \item\textbf{Manejar autorización en las vistas}
+  \smallbreak
   
-  Por lo momentos no hay ningún método que proteja las vistas que requieran autenticación, es decir anteriormente podemos intentar acceder a la vista del listado de artículos sin haber iniciado sesión, queda claro que al entrar a esta vista la petición daría error por seguridad del API.
+  Hasta este punto del desarrollo no hay ningún método que proteja las vistas que requieran autenticación, es decir anteriormente se puede intentar acceder a la vista del listado de artículos sin haber iniciado sesión, queda claro que al entrar a esta vista la petición daría error por seguridad del API.
   
-  Agregamos una capa más de seguridad a nivel de cliente, para que el usuario no puede entrar sin autenticación a dichas vistas. Para esto usaremos guardias de rutas, a continuación la definición del guardia:
+  Se agrega una capa más de seguridad a nivel de cliente, para que el usuario no puede entrar sin autenticación a dichas vistas. Para esto usaremos guardias de rutas, a continuación la definición del guardia:
   \begin{minted}[linenos]{ts}
     import { Injectable } from '@angular/core';
     import { CanActivate, Router } from '@angular/router';
@@ -284,13 +308,15 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   \end{minted}
   
   Podemos observar que antes de navegar a una ruta la función \textbf{canActivate()} se llamará, esto verifica si hay una sesión de usuario válida, en caso contrario redirige al inicio de sesión.
-
-  \item\textbf{Implementar barra superior (navbar):}\\
+  
+  \smallbreak
+  \item\textbf{Implementar barra superior (navbar)}
+  \smallbreak
 
   Es importante desplegar una barra superior que muestre información extra y despliegue acciones, principalmente navegación a vista principal y cerrar sesión.
   
   
-  Se implementó un componente para la barra y un servicio para cambiar sus configuraciones, como título, acciones y cierre de sesión.
+  Se implementó un componente para la barra y un servicio para cambiar sus configuraciones, como título, acciones y cierre de sesión, véase la \textbf{Figura \ref{fig:navbar}}.
   
   \begin{center}
       \bigbreak
@@ -300,22 +326,26 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center} 
   
-  \item\textbf{Implementar ruta en API para obtener un artículo en especifico:}\\
+  \smallbreak
+  \item\textbf{Implementar ruta en API para obtener un artículo en especifico:}
+  \smallbreak
 
-  Al entrar al detalle de un artículo necesitamos solicitar la información de ese artículo en particular.
+  Al entrar al detalle de un artículo se necesita solicitar la información de ese artículo en particular.
   
-  Implementamos en API la nueva ruta:
+  Se implementó en API la nueva ruta:
   \begin{minted}{console}
-   GET /articles/<idioma>/tituto
+   GET /articles/<idioma>/título
   \end{minted}
   
-  Luego la adaptamos al componente del detalle de artículo.
+  Luego se adapta al componente del detalle de artículo.
   
-  \item\textbf{Implementar servicio para pedir información sobre revisiones de un artículo:}\\
+  \smallbreak
+  \item\textbf{Implementar servicio para pedir información sobre revisiones de un artículo}
+  \smallbreak
 
-  En el detalle de artículo mostraremos cierta información básica sobre las ediciones, como el número total de ediciones y las últimas 20.
+  En el detalle de artículo se mostrará cierta información básica sobre las ediciones, como el número total de ediciones y las últimas 20.
   
-  Para tener el número total de ediciones tenemos que hacer uso de una ruta que wikimetrics nos provee:
+  Para tener el número total de ediciones se tiene que hacer uso de una ruta que Wikimetrics provee:
   
   \begin{minted}{console}
    GET /api/v1/count?locale=en&title=Venezuela
@@ -328,12 +358,14 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   \end{minted}
   
   Se encapsularon en el servicio de wikimetrics para abstraer su uso.
-
-  \item\textbf{Implementar componente de visualización:}\\
+  
+  \smallbreak
+  \item\textbf{Implementar componente de visualización}
+  \smallbreak
 
   Algo sumamente importante es la posibilidad de desplegar gráficas, en distintos casos, la aplicación necesitará de un componente que muestre gráficas variables.
   
-  Se abstraerá la visualización de un gráfica en un componente, apoyándonos de la biblioteca de Plotly. El componente acepta las siguientes entradas para variar su configuración:
+  Se abstraerá la visualización de un gráfica en un componente, apoyándose de la biblioteca Plotly. El componente acepta las siguientes entradas para variar su configuración:
   
   \begin{minted}[linenos]{ts}
   @Input() chartType: 'pie' | 'bar' | 'scatter'
@@ -348,7 +380,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   En donde \textbf{chartType} es para pasarle el tipo de gráfica que queremos desplegar, \textbf{chartX} y \textbf{chartY} correponde el set de datos para ambos ejes, \textbf{chartXTitle} y \textbf{chartYTitle} describe el título de ambos ejes y \textbf{chartTitle} hace referencia al título de la visualización.
   
   
-  Se consideró hacer el componente de tal forma que fuera reactivo al cambio dimensión de la pantalla, es decir, las visualizaciones son responsive.
+  Se consideró hacer el componente de tal forma que fuera reactivo al cambio dimensión de la pantalla, es decir, las visualizaciones son \textit{responsive}.
   
   \begin{minted}[linenos]{ts}
   this.resizeService.onResize$.subscribe(() =>
@@ -356,13 +388,15 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   );
   \end{minted}
   
-  Haciendo uso del patrón observador, con ayuda de la biblioteca ReactiveX \footnote{\url{http://reactivex.io/}}, cada ves que la pantalla cambia su posición nos enteramos mediante un servicio y ajustamos el tamaño de la visualización.
+  Haciendo uso del patrón \textit{observer}, con ayuda de la biblioteca ReactiveX \footnote{\url{http://reactivex.io/}}, cada vez que la pantalla cambia su posición se notifica mediante un servicio y se ajusta el tamaño de la visualización.
   
-  \item\textbf{Mostrar información especifica en el detalle del artículo:}\\
+  \smallbreak
+  \item\textbf{Mostrar información específica en el detalle del artículo}
+  \smallbreak
 
-  Al entrar al detalle del artículo nos tenemos que encontrar con información específica y que sume valor.
+  Al entrar al detalle del artículo hay que que encontrar información específica y que sume valor.
   
-  Por lo tanto, consideramos colocar el número de ediciones, fecha de última edición, autor de la última edición, tamaño del artículo y una visualización que considere el tamaño y fecha de las ultimas 20 ediciones.
+  Por lo tanto, se considera colocar el número de ediciones, fecha de última edición, autor de la última edición, tamaño del artículo y una visualización que considere el tamaño y fecha de las ultimas 20 ediciones, véase la \textbf{Figura \ref{fig:article_detail_main}}.
   
   \begin{center}
       \bigbreak
@@ -386,12 +420,13 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   
   Las función \textbf{timestamps(revisions)} extrae la fecha de edición y la función \textbf{sizes(revisions)} extrae el tamaño de cada edición
   
-  
-  \item\textbf{Implementar gráfica WikiHistoryFlow:}\\
+  \smallbreak
+  \item\textbf{Implementar gráfica WikiHistoryFlow}
+  \smallbreak
 
-  A nivel de visualizaciones, ofrecer la gráfica WikiHistoryFlow era un requerimiento principal. Con esta gráfica podemos identificar el comportamiento de un usuario, el estado del artículo en el tiempo y detectar patrones de vandalismo.
+  A nivel de visualizaciones, ofrecer la gráfica WikiHistoryFlow era un requerimiento principal. Con esta gráfica se puede identificar el comportamiento de un usuario, el estado del artículo en el tiempo y detectar patrones de vandalismo.
   
-  La visualización proviene principalmente de la herramienta de History Flow Visualization \cite{HistoryFlow}, que consta de barras laterales, donde cada barra representa una edición. La altura de la barra representa el tamaño, el color representa un usuario único y el ancho representa la distancia del texto del artículo de la versión anterior y la actual.
+  La visualización proviene principalmente de la herramienta de History Flow Visualization \cite{HistoryFlow}, que consta de barras laterales, donde cada barra representa una edición. La altura de la barra representa el tamaño, el color representa un usuario único y el ancho representa la distancia del texto del artículo de la versión anterior y la actual, véase la \textbf{Figura \ref{fig:history_flow}} y \textbf{Figura \ref{fig:history_flow_original}}.
   
   \begin{center}
       \bigbreak
@@ -409,7 +444,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center}
   
-  Para este trabajo por motivos de cómputos, se adaptara la visualización a una versión más simple, llamada History Graph \cite{HistoryGraph}.
+  Para este trabajo por motivos de cómputos, se adaptara la visualización a una versión más simple, llamada History Graph \cite{HistoryGraph}, véase la \textbf{Figura \ref{fig:history_graph}}.
   
   \begin{center}
       \bigbreak
@@ -421,9 +456,9 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   
   No hay manera de desplegar esta gráfica con la biblioteca Plotly dado que es bastante específica, por lo tanto para este caso se optó por la biblioteca D3 que nos permite libertad a la hora de construir visualizaciones.
   
-  Se encapsuló la visualización en un componente, en donde la primera tarea fue ordenar las ediciones por orden de creación de manera cronológica, luego se almacenó el valor de tamaño de edición máximo y se declaro un arreglo que contiene la distancia de cada edición contra la anterior (se asigno 0 para la primera edición). Para calcular la distancia entre dos textos se usó una biblioteca que aplica la distancia de Levenshtein.
+  Se encapsuló la visualización en un componente, en donde la primera tarea fue ordenar las ediciones por orden de creación de manera cronológica, luego se almacenó el valor de tamaño de edición máximo y se declaró un arreglo que contiene la distancia de cada edición contra la anterior (se asigno 0 para la primera edición). Para calcular la distancia entre dos textos se usó una biblioteca que aplica la distancia de Levenshtein.
   
-  Calculados los datos anteriores tenemos todo listo para graficar, en donde cada elemento del arreglo de revisiones ordenado cronológicamente representa una barra usando el elemento \textbf{div} de html.
+  Calculados los datos anteriores se tiene todo listo para graficar, en donde cada elemento del arreglo de revisiones ordenado cronológicamente representa una barra usando el elemento \textbf{div} de html.
   
   \begin{minted}[linenos]{ts}
     d3.select(this.elemRef.nativeElement)
@@ -432,7 +467,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     .enter().append('div').attr('class', 'bar')
   \end{minted} 
   
-  Para asignar el ancho, se usó del arreglo de distancias antes calculado. Adicionalmente, se tiene que conservar el tamaño de manera proporcional a la pantalla, por lo que se le asigno a cada barra un ancho base predeterminado. Para que no ocurrieran desbordamiento de píxeles se uso una función de css llamada \textbf{calc} para ajustar el ancho base mas la distancia.
+  Para asignar el ancho, se usó del arreglo de distancias antes calculado. Adicionalmente, se tiene que conservar el tamaño de manera proporcional a la pantalla, por lo que se le asigno a cada barra un ancho base predeterminado. Para que no ocurrieran desbordamiento de píxeles se uso una función de CSS llamada \textbf{calc} para ajustar el ancho base mas la distancia.
   
   \begin{minted}[linenos]{ts}
    .style('width', (_, i) => `calc(
@@ -454,6 +489,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     `${this.stringToColour(rev.user)}`
     )
   \end{minted}
+  
   \begin{minted}[linenos]{ts}
   stringToColour(str: string) {
     let hash = 0;
@@ -471,7 +507,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   }
   \end{minted} 
   
-  Como funcionalidad adicional, se agregó un tooltip que muestra nombre del usuario, fecha y tamaño de la edición cuando nos apoyamos sobre cualquier barra.
+  Como funcionalidad adicional, se agregó un \textit{tooltip} que muestra nombre del usuario, fecha y tamaño de la edición cuando nos apoyamos sobre cualquier barra, véase la \textbf{Figura \ref{fig:wiki_history_flow}}.
   
   \begin{center}
       \bigbreak
@@ -482,10 +518,11 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   \end{center}
   
   
-  
-  \item\textbf{Agregar enlace a wikipedia del artículo:}\\
+  \smallbreak
+  \item\textbf{Agregar enlace a wikipedia del artículo}
+  \smallbreak
 
-  En el detalle del artículo pude ser de gran utilidad tener un enlace que nos dirija al artículo en Wikipedia.
+  En el detalle del artículo pude ser de gran utilidad tener un enlace que dirija al artículo en Wikipedia, véase la \textbf{Figura \ref{fig:article_detail_link}}.
   
   \begin{center}
       \bigbreak
@@ -495,12 +532,14 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center}
   
-  \item\textbf{Implementar componente y servicio para crear nueva visualización:}\\
+  \smallbreak
+  \item\textbf{Implementar componente y servicio para crear nueva visualización}
+  \smallbreak
 
   Un requerimiento principal es poder crear nuestras visualizaciones sobre un artículo y poder editarlas, pero como primer paso necesitamos la creación de la misma preguntando información básica.
   
  
-  Se posicionó un botón en el navbar capaz de crear la visualización. Al pisarlo mostrará un dialogo preguntando el título y descripción que tendrá la visualización.
+  Se posicionó un botón en la barra de navegación capaz de crear la visualización. Al pisarse mostrará un dialogo preguntando el título y descripción que tendrá la visualización, véase la \textbf{Figura \ref{fig:create_vis_main}}.
 
   \begin{center}
       \bigbreak
@@ -510,7 +549,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center}
   
-  Dado esto, se manejó en base de datos un objeto de Visualizaciones donde la llave de cada atributo representa el título:
+  Dado esto, se manejó en base de datos un objeto de visualizaciones donde internamente cada visualización es referenciada por el título:
 
   \begin{minted}[linenos]{json}
    {
@@ -529,24 +568,28 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     }
    }
   \end{minted}
-
-  \item\textbf{Implementar componente y servicio para crear nueva visualización:}\\
+  
+  \smallbreak
+  \item\textbf{Implementar componente y servicio para crear nueva visualización}
+  \smallbreak
 
   Es necesario listar las visualizaciones creadas en el detalle de artículo, para luego ser accedidas.
  
   Se crearon dos listas, una de las visualizaciones creadas por el usuario y otra de visualizaciones predefinidas por la aplicación.
- 
-  \item\textbf{Implementar componente para seleccionar el query de la visualización:}\\
+  
+  \smallbreak
+  \item\textbf{Implementar componente para seleccionar el query de la visualización}
+  \smallbreak
 
   Creada una visualización es necesario empezar a editarla para construir la gráfica respectiva, por lo que necesitamos ofrecer la herramienta para seleccionar lo que se desear visualizar.
   
-  La herramienta constará de tres (3) selectores, el primero permite filtrar, el segundo ofrece operaciones de agrupaciones y el tercero permite agrupar.
+  La herramienta constará de tres (3) selectores, el primero permite filtrar, el segundo ofrece operaciones de agrupaciones y el tercero permite agrupar, véase la \textbf{Figura \ref{fig:query_selector}}.
   
   El selector de \textbf{filtro} ofrece filtrar por edición anónima, tamaño de la edición, id de usuario, nombre de usuario, edición menor y fecha de edición.
   
   El selector de \textbf{vista} ofrece operadores sobre agrupaciones como contar, sumar tamaño de ediciones, promediar tamaño de ediciones, máximo tamaño de ediciones y mínimo tamaño de ediciones.
   
-  El selector de \textbf{agrupar} ofrece la posibilidad de agrupar por edición anónima, id de edición, tamaño de edición, id de usuario, nombre de usuario, edición menor, fecha (mes), fecha (mes y año), fecha (día, mes y año).
+  El selector de \textbf{agrupar} ofrece la posibilidad de agrupar según edición anónima, id de edición, tamaño de edición, id de usuario, nombre de usuario, edición menor, fecha (mes), fecha (mes y año), fecha (día, mes y año).
   
   
   \begin{center}
@@ -557,7 +600,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center}
   
-  El valor de cada opción de los selectores referencia a parte del query de mongodb necesario. Por lo tanto se realizó una función para construir el query final a enviar al API de Wikimetrics:
+  El valor de cada opción de los selectores referencia la parte del query de MongoDB necesario. Por lo tanto se realizó una función para construir el query final a enviar al API de Wikimetrics:
   
   \begin{minted}[linenos]{ts}
   buildQuery(): WikimetricsQuery[] {
@@ -588,14 +631,16 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   
   En donde \textbf{obj} es el objeto con todos los filtros, \textbf{selectedGroup.value} el campo u objeto de la agrupación y \textbf{selectedView.value} el nombre del operador de agrupaciones.
   
-  Por último, si ya tenemos un query formado, necesitamos la función inversa que sería extraer del query los valores para rellenar los selectores. Esta funcionalidad es extensa por lo que se puede revisar en el código fuente del proyecto en el componente \textbf{query-selector.component.ts}.
+  Por último, si se tiene un query formado, se necesita la función inversa que sería extraer del query los valores para rellenar los selectores. Esta funcionalidad es extensa por lo que se puede revisar en el código fuente del proyecto en el componente \textbf{query-selector.component.ts}.
   
-  \item\textbf{Implementar componente para editar visualizaciones:}\\
+  \smallbreak
+  \item\textbf{Implementar componente para editar visualizaciones}
+  \smallbreak
 
-  Cuando obtenemos la respuesta del query, tenemos los datos pero no listos para visualizarlos, tenemos que darle un formato entendible para usarlo con el componente de visualización anteriormente creado, además tenemos que definir el tipo de visualización a mostrar.
+  Cuando se obtiene la respuesta del query, se tiene los datos pero no listos para visualizarlos, tiene que darse un formato entendible para usarlo con el componente de visualización anteriormente creado, además se tiene que definir el tipo de visualización a mostrar.
   
   
-  Se tuvo que condicionar cada uno de los casos posibles de las opciones, en el caso de edición menor, interpretar a 'No menor' y 'Menor', para usuario anónimo se interpretó como 'Anónimo' y 'No Anónimo'. En el caso de agrupación por fecha se usó la biblioteca luxon\footnote{\url{https://moment.github.io/luxon/}} (alternativa ligera de moment) para darle un mejor formato.
+  Se tuvo que condicionar cada uno de los casos posibles de las opciones, en el caso de edición menor, interpretar a 'No menor' y 'Menor', para usuario anónimo se interpretó como 'Anónimo' y 'No Anónimo'. En el caso de agrupación por fecha se usó la biblioteca luxon\footnote{\url{https://moment.github.io/luxon/}} (alternativa ligera de Momentjs) para darle un mejor formato, véase la \textbf{Figura \ref{fig:edit_vis}}.
   
   
   \begin{center}
@@ -606,9 +651,9 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       \bigbreak
   \end{center}
   
-  El selector de tipo visualizaciones ofrece los siguientes:
+  El selector de tipo visualizaciones ofrece las siguientes opciones:
   \begin{itemize}
-    \item\textbf{Número}: muestra un número total, solo es válido cuando no se aplica agrupación.
+    \item\textbf{Número}: muestra un número total, solo es válido cuando no se aplica agrupación, véase la \textbf{Figura \ref{fig:vis_number}}.
     
         \begin{center}
           \bigbreak
@@ -618,7 +663,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
           \bigbreak
         \end{center}
 
-    \item\textbf{Línea}: gráfica que consiste en trazar un línea entre cada par de puntos.
+    \item\textbf{Línea}: gráfica que consiste en trazar un línea entre cada par de puntos, véase la \textbf{Figura \ref{fig:vis_line}}.
         \begin{center}
           \bigbreak
           \includegraphics[scale=0.35]{images/marco_aplicativo/vis_line.png}
@@ -627,7 +672,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
           \bigbreak
         \end{center}
 
-    \item\textbf{Barra}: gráfica que consiste en proyectar barras.
+    \item\textbf{Barra}: gráfica que consiste en proyectar barras, véase la \textbf{Figura \ref{fig:vis_bar}}.
         \begin{center}
           \bigbreak
           \includegraphics[scale=0.35]{images/marco_aplicativo/vis_bar.png}
@@ -638,7 +683,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
 
     \item\textbf{Área}: gráfica similar a la de línea pero con el área pintada. Se puede observar en la \textbf{Figura \ref{fig:edit_vis}}.
     
-    \item\textbf{Torta}: gráfica circular en donde los datos son representados por proporción.
+    \item\textbf{Torta}: gráfica circular en donde los datos son representados por proporción, véase la \textbf{Figura \ref{fig:vis_pie}}.
         \begin{center}
           \bigbreak
           \includegraphics[scale=0.3]{images/marco_aplicativo/vis_pie.png}
@@ -647,7 +692,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
           \bigbreak
         \end{center}
         
-    \item\textbf{Dispersión}: gráfica donde cada dato es representado por un punto.
+    \item\textbf{Dispersión}: gráfica donde cada dato es representado por un punto, véase la \textbf{Figura \ref{fig:vis_scatter}}.
         \begin{center}
           \bigbreak
           \includegraphics[scale=0.35]{images/marco_aplicativo/vis_scatter.png}
@@ -657,15 +702,19 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
         \end{center}
   \end{itemize}
   
-  \item\textbf{Implementar borrar artículo y visualización:}\\
+  \smallbreak
+  \item\textbf{Implementar borrar artículo y visualización}
+  \smallbreak
   
   Hasta ahora podemos crear artículos y visualizaciones, pero no borrar.
   
-  Se implementaron las rutas en el API usando el método DELETE de HTTP para ambos recursos, cada servicio, el de visualizaciones y artículos se encapsuló el request. Por último, se habilitó la acción de eliminar en la interfaz para ambos casos.
+  Se implementaron las rutas en el API usando el método DELETE de HTTP para ambos recursos, cada servicio, el de visualizaciones y artículos encapsulando la petición. Por último, se habilitó la acción de eliminar en la interfaz para ambos casos.
   
-  \item\textbf{Agregar zoom a gráfica del editor de visualizaciones:}\\
+  \smallbreak
+  \item\textbf{Agregar zoom a gráfica del editor de visualizaciones}
+  \smallbreak
 
-  En el editor de visualizaciones puede que una visualización este tan cargada de datos que la información se resuma y no se muestre toda, por lo que no veremos todos los datos.
+  En el editor de visualizaciones puede que una visualización esté tan cargada de datos que la información se resuma y no se muestre toda, por lo que no será posible ver todos los datos.
   
   
   Plotly, automáticamente esconde la información para no sobrecargar la visualización, pero nos provee la funcionalidad de navegar en la visualización haciendo zoom.
@@ -677,15 +726,17 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
   };
   \end{minted}
   
-  La biblioteca nos permite pasarle un objeto con configuraciones al graficar. El atributo \textbf{xasis} hace referencia al eje 'x' y el atributo \textbf{yasis} al eje 'y'. Habilitaremos el zoom en el eje 'x' solamente y lo manejaremos con un input llamado \textbf{chartZoom}.
+  La biblioteca permite pasarle un objeto con configuraciones al graficar. El atributo \textbf{xasis} hace referencia al eje 'x' y el atributo \textbf{yasis} al eje 'y'. Se habilitará el zoom en el eje 'x' solamente y se manejará con un input llamado \textbf{chartZoom}.
   
-  \item\textbf{Agregar filtro de fecha en gráfica de Wiki History Flow:}\\
+  \smallbreak
+  \item\textbf{Agregar filtro de fecha en gráfica de Wiki History Flow}
+  \smallbreak
   
   La gráfica Wiki History Flow suele ser muy pesada, en artículos con muchas ediciones puede tomarse un tiempo considerable en cargar debido a la petición de la información y el algoritmo para extraer la distancia del contenido.
   
-  Como mecanismo para evitar larga espera, se implemento un filtro por rango de fecha, en donde se cargará solo las ediciones realizas en ese rango.
+  Como mecanismo para evitar larga espera, se implementó un filtro por rango de fecha, en donde se cargará solo las ediciones realizas en ese rango.
   
-  En la primera carga se definió un rango de fecha que involucren las 200 primeras ediciones del artículo.
+  En la primera carga se definió un rango de fecha que involucren las 200 primeras ediciones del artículo, véase la \textbf{Figura \ref{fig:date_range_wiki_history_flow}}.
 
   \begin{center}
     \bigbreak
@@ -695,39 +746,42 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     \bigbreak
   \end{center}
   
-  
-  \item\textbf{Agregar componente de preview de visualización:}\\
+  \smallbreak
+  \item\textbf{Agregar componente de \textit{preview} de visualización}
+  \smallbreak
 
-  Para poder observar una visualización es necesario entrar al detalle del artículo y seleccionar la que queremos editar en el listado. Surge la necesidad de observar la gráfica de la visualización sin necesidad de acceder al editor.
+  Para poder observar una visualización es necesario entrar al detalle del artículo y seleccionar la que se quiere editar en el listado. Surge la necesidad de observar la gráfica de la visualización sin necesidad de acceder al editor.
   
   
-  Se implementó una propiedad llamada \textit{preview}, donde cada elemento de la lista de visualizaciones proveerá la acción de habilitar o no el preview de dicha visualización.
+  Se implementó una propiedad llamada \textit{preview}, donde cada elemento de la lista de visualizaciones proveerá la acción de habilitar o no el \textit{preview} de dicha visualización, véase la \textbf{Figura \ref{fig:toggle_preview}}.
   
   \begin{center}
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/toggle_preview.png}
-    \captionof{figure}{Toggle para habilitar/deshabilitar preview.}
+    \captionof{figure}{Toggle para habilitar/deshabilitar \textit{preview}.}
     \label{fig:toggle_preview}
     \bigbreak
   \end{center}
   
-  Al habilitar el preview la gráfica de la visualización será mostrada en una sección del detalle de actividad haciendo uso del componente de visualización.
+  Al habilitar el preview la gráfica de la visualización será mostrada en una sección del detalle de actividad haciendo uso del componente de visualización, observe la \textbf{Figura \ref{fig:preview_vis}}.
   
   \begin{center}
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/vis_preview.png}
-    \captionof{figure}{Componente preview de visualización en detalle de artículo.}
-    \label{fig:toggle_preview}
+    \captionof{figure}{Componente \textit{preview} de visualización en detalle de artículo.}
+    \label{fig:preview_vis}
     \bigbreak
   \end{center}
   
-  El preview puede ser pisado y nos dirige al editor de la misma.
+  El \textit{preview} al ser pisado dirige al editor de la misma.
   
-  \item\textbf{Incluir número de ediciones menores (con porcentaje) y número de editores en detalle de artículo:}\\
+  \smallbreak
+  \item\textbf{Incluir número de ediciones menores (con porcentaje) y número de editores en detalle de artículo}
+  \smallbreak
   
   Se consideró agregar más información en el detalle del artículo, en donde el número de ediciones menores y número de editores pueden ser de utilidad.
   
-  Apoyándonos de la flexibilidad del API, para obtener el número de ediciones del artículo enviamos el siguiente query:
+  Apoyándose de la flexibilidad del API, para obtener el número de ediciones del artículo se envía el siguiente query:
   \begin{minted}[linenos]{json}
     [
       {
@@ -750,7 +804,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     ]
   \end{minted}
   
-  Para obtener el número de editores enviamos el siguiente query y calculábamos el tamaño de la respuesta:
+  Para obtener el número de editores se envía el siguiente query y se calcula el tamaño de la respuesta:
   \begin{minted}[linenos]{json}
     [
       {
@@ -769,21 +823,24 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
       }
     ]
   \end{minted}
-
-  \item\textbf{Definir e implementar gráficas generales en el detalle del artículo:}\\
   
-  Existen ciertas visualizaciones que seguramente sean de interés, por lo que podemos ofrecerlas de manera predeterminada y evitar que el usuario pierda tiempo en la creación de las mismas.
+  \smallbreak
+  \item\textbf{Definir e implementar gráficas generales en el detalle del artículo}
+  \smallbreak
   
-  En la lista de visualizaciones predeterminadas, en el detalle del artículo, se agregaron las siguientes visualizaciones: Ediciones menores, Usuario anónimos, Top 10 editores y Número de ediciones por mes y año.
+  Existen ciertas visualizaciones que seguramente sean de interés, por lo que se puede ofrecer de manera predeterminada y evitar que el usuario pierda tiempo en la creación de las mismas.
   
-  La información de estas visualizaciones se encuentran de manera estática por ahora dentro del código.
+  En la lista de visualizaciones predeterminadas, en el detalle del artículo, se agregaron las siguientes visualizaciones: ediciones menores (\textbf{Figura \ref{fig:minor_edit}}), usuario anónimos (\textbf{Figura \ref{fig:anon_user}}), top 10 editores (\textbf{Figura \ref{fig:top_10}}) y número de ediciones por mes y año (\textbf{Figura \ref{fig:count_month_year}}.
   
-  Se implementó un componente capaz de visualizarlas en una vista nueva, similar al preview y este fue el resultado:
+  La información de estas visualizaciones se encuentran de manera estática en la versión actual dentro del código.
+  
+  Se implementó un componente capaz de visualizarlas en una vista nueva, similar al \textit{preview} y este fue el resultado:
   
   \begin{center}
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/vis_default_minor_edit.png}
     \captionof{figure}{Visualización predefinida de total de ediciones menores vs. no menores del artículo 'Programación dirigida por eventos'}
+    \label{fig:minor_edit}
     \bigbreak
   \end{center}
   
@@ -791,6 +848,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/vis_default_anon_user.png}
     \captionof{figure}{Visualización predefinida de total de usuarios anónimos vs. no anónimos del artículo 'Programación dirigida por eventos'}
+    \label{fig:anon_user}
     \bigbreak
   \end{center}
 
@@ -798,6 +856,7 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/vis_default_top_10.png}
     \captionof{figure}{Visualización predefinida de Top 10 de usuarios con más ediciones del artículo 'Programación dirigida por eventos'}
+    \label{fig:top_10}
     \bigbreak
   \end{center}
 
@@ -805,9 +864,146 @@ A continuación, de listarán las tareas de mayor relevancia ordenadas cronológ
     \bigbreak
     \includegraphics[scale=0.7]{images/marco_aplicativo/vis_default_count_month_year.png}
     \captionof{figure}{Visualización predefinida de total de ediciones agrupadas por mes y año del artículo 'Programación dirigida por eventos'}
+    \label{fig:count_month_year}
     \bigbreak
   \end{center}
   
   
 
 \end{enumerate}
+
+\section{Arquitectura}
+Anteriormente se había mencionado que la aplicación web está construida con el framework Angular, que hace uso de distintos servicios web: API de Wikimetrics, API de Usuarios y API de Wikipedia. Todo este ecosistema es indispensable para que la aplicación funcione correctamente, véase la \textbf{Figura \ref{fig:ecosytem_architecture}}.
+
+\begin{center}
+    \bigbreak
+    \includegraphics[scale=0.7]{images/marco_aplicativo/ecosystem.png}
+    \captionof{figure}{Arquitectura general}
+    \label{fig:ecosytem_architecture}
+    \bigbreak
+\end{center}
+
+\subsection{Front-end}
+Angular esta formado por una arquitectura basada en componentes, los componentes son piezas que conforman una vista. Algo importante en la arquitectura de Angular son los servicios, que son los encargados de proveer funcionalidades que no están relacionadas directamente con la vista. Para que los componentes puedan usar otros componentes y servicios es necesario contenerlos en un módulo. Los módulos permiten agrupar artefactos de Angular (incluyendo componentes y servicios) para que los componentes tengan el acceso a los mismos.
+
+La aplicación desarrollada, tiene seis (6) componentes de ruta, que representan aquellos componentes que se \textit{renderizan} acorde a una ruta especificada en el navegador, véase la \textbf{Figura \ref{fig:tree_route_component}}. Cabe destacar que Angular necesita de un componente raíz que sea el encargado de encapsular los demás componentes, llamado \textbf{app-component}.
+
+
+\begin{center}
+    \bigbreak
+    \includegraphics[scale=0.9]{images/marco_aplicativo/tree_route_component.png}
+    \captionof{figure}{Componentes de ruta}
+    \label{fig:tree_route_component}
+    \bigbreak
+\end{center}
+
+Luego se tienen los otros componentes que son usados internamente en los componentes de ruta, en total tenemos los siguientes componentes:
+\begin{minted}[linenos]{console}
+article-card
+article-detail (componente ruta)
+article-list (componente ruta)
+default-visualization (componente ruta)
+edit-visualization (componente ruta)
+history-flow (componente ruta)
+loading
+navbar
+new-visualization
+preview-visualization
+query-selector
+search-suggest
+sign-in (componente ruta)
+sign-up (componente ruta)
+visualization
+
+\end{minted}
+
+A parte de los componentes propios, se usaron algunos componentes de Angular Material mencionados en ciertas tareas de la sección anterior.
+
+Los componentes requieren el apoyo de los siguientes servicios:
+\begin{minted}[linenos]{console}
+article.service
+auth-guard.service
+auth.service
+navbar.service
+resize.service
+visualization.service
+wikimetrics.service
+wikipedia.service
+\end{minted}
+
+Las dependencias del proyecto de angular se pueden encontrar en un archivo llamado \textbf{package.json} bajo el atributo \textit{dependencies}. Entre las dependencias se puede resaltar: D3, Luxon, Lodash y Text-diff. Cabe acotar que Plotly es una dependecia asíncrona que se descarga cuando el \textbf{index.html} se ejecuta por lo que no viene pre-cargada en el código de la aplicación.
+
+\subsection{Back-end}
+Para persistir la información de los usuarios es necesario implementar un servicio que provea y almacene los datos. De esta forma se implementó un servicio web RESTful, el cual trabaja en la existencia de recursos. Este servicio se construyó apoyándose del micro-framework Python Flask, que cubre las necesidades básicas, como recibir peticiones y manejar respuestas bajo los distintos métodos (GET, POST, PATCH y DELETE).
+
+En el caso de este proyecto, se tuvieron que usar algunas extensiones de Flask para habilitar CORS y manejar autorización de recursos en la sesión con JWT.
+
+Se implementaron las siguientes rutas en el API:
+\begin{minted}[linenos]{console}
+POST /sign-up
+POST /sign-in
+GET /articles
+GET /articles/<locale>/<title>
+POST /articles
+PATCH /articles/<locale>/<title>/status/<status>
+DELETE /articles/<locale>/<title>
+POST /articles/<locale>/<title>/visualizations
+PATCH /articles/<locale>/<title>/visualizations
+DELETE /articles/<locale>/<title>/visualizations/<title_vis>
+\end{minted}
+
+Para persistir los datos se usó MongoDB, que es un manejador de sistema de base de datos no relacional. Al ser información única por usuario no era necesario relacionarla con la información de los otros usuarios, por lo que se trató cada usuario y configuración como un objeto separado en un documento JSON. La \textbf{Figura \ref{fig:db_model}} refleja el modelo de la base de datos.
+
+\begin{center}
+    \bigbreak
+    \includegraphics[scale=0.9]{images/marco_aplicativo/db_model.png}
+    \captionof{figure}{Modelo de base de datos}
+    \label{fig:db_model}
+    \bigbreak
+\end{center}
+
+Un ejemplo de los datos crudos en MongoDB: 
+\begin{minted}[linenos]{json}
+{
+    "user": {
+        "username": "user1",
+        "password": "106a6c241b8797f52e1e77317b96a201"
+    },
+    "articles": [
+        {
+            "locale": "en",
+            "extract": {
+                "status": "success",
+                "id": "665d387e-e547-4275-8abf-1076eacf8f92"
+            },
+            "title": "Article 1",
+            "visualizations": {
+                "vis1": {
+                    "query": "...",
+                    "preview": true,
+                    "type": "number",
+                    "description": ""
+                }
+            }
+        },
+        {
+            "locale": "en",
+            "extract": {
+                "status": "success",
+                "id": "e7f48aa8-39e0-46c4-a23a-39485b65e0b4"
+            },
+            "title": "Article 2"
+        }
+    ]
+}
+\end{minted}
+
+Se usó un driver llamado \textbf{PyMongo} para establecer la comunicación entre el código Python y la instancia de base de datos de MongoDB.
+
+
+
+
+
+  
+  
+

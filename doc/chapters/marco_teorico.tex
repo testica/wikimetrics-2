@@ -1,7 +1,7 @@
 Este capítulo cubre los conceptos teóricos necesarios para lograr el entendimiento de asuntos a tratar a lo largo del documento. El capítulo inicia dando contexto sobre Wiki y conceptos que lo rodean. Por último, el capítulo introduce bases teóricas sobre la visualización de datos.
 
 \section{Wikis e historiales de wikis}
-La idea de un Wiki, que es un término Hawaiano lo cual significa \textit{“rápido”} o \textit{“super-rápido”}, fue acuñada por Ward Cunningham en el año 1994 \cite{Wiki}.
+La idea de un Wiki, que es un término hawaiano que significa \textit{“rápido”} o \textit{“super-rápido”}, fue acuñada por Ward Cunningham en el año 1994 \cite{Wiki}.
 Esta idea de Cunningham, que consistía en compartir información, fue iterada y hoy en día llamamos Wiki a un sistema manejador de contenido, lo cual, representa un sitio web, cuyas páginas pueden ser editadas directamente desde el navegador, donde los usuarios crean, modifican, y/o eliminan contenido de la misma.
 
 En la actualidad, existen bastantes herramientas o softwares que implementan el concepto de wiki: MediaWiki, UseModWiki, PhpWiki, TikiWiki, DokuWiki, WikkaWiki, entre otros. Tienen la misma finalidad, pero se distinguen en su destino de uso (uso personal, para intranets, para la web) y su funcionalidad (mantener historial, seguridad, editores visuales, etc.)
@@ -18,7 +18,7 @@ MediaWiki, como se había definido anteriormente, es una implementación del con
     \item\textbf{Historial de ediciones de artículos:} bitácora que almacena todos los cambios que ha recibido un artículo con ciertas propiedades respectivas al cambio.
 \end{itemize}
 
-De las funcionalidades relevantes, la más significativa es el historial de ediciones de artículos debido a que nuestro trabajo se basará principalmente en este. Un historial de ediciones, como se explicó anteriormente, representa una serie de cambios o versiones por la que sufrió un artículo, por lo general suelen ser una lista extensa.
+De las funcionalidades relevantes, la más significativa es el historial de ediciones de artículos debido a que nuestro trabajo se basará principalmente en este. Un historial de ediciones, véase en la \textbf{Figura \ref{fig:marco_teorico_history}}, representa una serie de cambios o versiones por la que sufrió un artículo, por lo general suelen ser una lista extensa.
 
 \begin{center}
     \bigbreak
@@ -28,7 +28,7 @@ De las funcionalidades relevantes, la más significativa es el historial de edic
     \bigbreak
 \end{center}
 
-Cabe destacar que cada versión o cambio provee una serie de propiedades, como: Fecha y hora de la edición, autor de la edición (si el usuario está registrado se refleja su nombre, si no, la dirección ip de su conexión), tamaño del artículo (bytes), bytes modificados, descripción de la edición, selector para identificar si el cambio es menor, y acciones para ejecutar sobre una edición (agradecer o revertir).
+Cabe destacar que cada versión o cambio provee una serie de propiedades, ilustradas en la \textbf{Figura \ref{fig:marco_teorico_history_detail}}, como: Fecha y hora de la edición, autor de la edición (si el usuario está registrado se refleja su nombre, si no, la dirección IP de su conexión), tamaño del artículo (bytes), bytes modificados, descripción de la edición, selector para identificar si el cambio es menor, y acciones para ejecutar sobre una edición (agradecer o revertir).
 
 \begin{center}
     \bigbreak
@@ -38,12 +38,12 @@ Cabe destacar que cada versión o cambio provee una serie de propiedades, como: 
     \bigbreak
 \end{center}
 
-Adicionalmente, MediaWiki provee un API Web\footnote{\href{https://www.mediawiki.org/wiki/API:Main_page}{Página Principal del API de MediaWiki}}, esto significa que la mayoría de sus funcionalidades están expuesta en la Web y pueden ser accedidas y usadas mediante peticiones HTTP (Hypertext Transfer Protocol). De esta forma, será posible enlazar nuestro trabajo con información de Wikipedia.
+Adicionalmente, MediaWiki provee un API Web\footnote{\href{https://www.mediawiki.org/wiki/API:Main_page}{Página Principal del API de MediaWiki}}, esto significa que la mayoría de sus funcionalidades están expuestas en la Web y pueden ser accedidas y usadas mediante peticiones HTTP (Hypertext Transfer Protocol). De esta forma, será posible enlazar nuestro trabajo con información de Wikipedia.
 
 \section{Visualización de datos}
 La visualización de datos es un medio efectivo y eficiente para comunicar una gran cantidad de información \cite{DesignData}, en donde la comunicación está conformada por elementos visuales, contando con barras, puntos, líneas, colores, figuras, sombras, entre otras. La agrupación de estos elementos visuales se conoce como gráfica.
 
-Como en toda comunicación, es necesario un mensajero, un mensaje y un receptor. En la visualización de datos, el papel del mensajero lo protagoniza un diseñador que codifica la información de manera visual y el receptor es el decodificador del mensaje \cite{DataVis}.
+Como en toda comunicación, es necesario un mensajero, un mensaje y un receptor. En la visualización de datos, el papel del mensajero lo protagoniza un diseñador que codifica la información de manera visual y el receptor es el decodificador del mensaje \cite{DataVis}, véase la \textbf{Figura \ref{fig:marco_teorico_flow_vis}}.
 
 \begin{center}
     \bigbreak
@@ -68,7 +68,7 @@ En la visualización de datos se pueden tomar dos enfoques: explicativo y explor
     \bigbreak
 \end{center}
 
-En la figura anterior \textbf{Figura \ref{fig:marco_teorico_story_chart}}, se contempla un enfoque explicativo, en donde el diseñador quiere transmitir una información concreta, que es una comparativa en el crecimiento de usuarios activos haciendo uso de la funcionalidad \textit{“Historias"}\footnote{Historias o Stories, es una funcionalidad en donde una persona puede publicar una foto durante un período de tiempo, suele ser de 24 horas.} entre la mensajería de imágenes Snapchat y la red social Instagram.
+En la \textbf{Figura \ref{fig:marco_teorico_story_chart}}, se contempla un enfoque explicativo, en donde el diseñador quiere transmitir una información concreta, que es una comparativa en el crecimiento de usuarios activos haciendo uso de la funcionalidad \textit{“Historias"}\footnote{Historias o Stories, es una funcionalidad en donde una persona puede publicar una foto durante un período de tiempo, suele ser de 24 horas.} entre la mensajería de imágenes Snapchat y la red social Instagram.
 
 \textbf{Exploratorio:} es un enfoque en donde la gráfica está adaptada para que el receptor pueda analizar y explorar en ella, y así detectar patrones y relaciones en los datos. Este tipo de gráficas por lo general no suelen transmitir una historia como el enfoque explicativo.
 
@@ -80,7 +80,7 @@ En la figura anterior \textbf{Figura \ref{fig:marco_teorico_story_chart}}, se co
     \bigbreak
 \end{center}
 
-En la figura anterior \textbf{Figura \ref{fig:marco_teorico_exploratory_chart}}, cada sub-gráfica representa una relación que existe entre dos (2) atributos. No existe una información concreta a transmitir, por lo tanto queda como tarea de la audiencia analizar y explorar relaciones entre atributos. Por ejemplo, el eje Y3 representa precio y eje X3 representa calidad de un producto, entonces según el comportamiento de la gráfica se interpreta que mientras más costoso es un producto mayor es su calidad.
+En la \textbf{Figura \ref{fig:marco_teorico_exploratory_chart}}, cada sub-gráfica representa una relación que existe entre dos (2) atributos. No existe una información concreta a transmitir, por lo tanto queda como tarea de la audiencia analizar y explorar relaciones entre atributos. Por ejemplo, el eje Y3 representa precio y eje X3 representa calidad de un producto, entonces según el comportamiento de la gráfica se interpreta que mientras más costoso es un producto mayor es su calidad.
 
 \subsection{Preparación de los datos}
 Visualizar datos no es tan sencillo como parece, en su mayoría estos datos tienen que pasar por una limpieza y procesamiento antes de ser visualizados. Si los datos a visualizar son incorrectos o están incompletos, la visualización transmitirá una información errónea. A continuación se presentarán los pasos recomendados [3] para preparar los datos:
@@ -90,28 +90,19 @@ Visualizar datos no es tan sencillo como parece, en su mayoría estos datos tien
     \item\textbf{Examinación:} suelen existir datos incorrectos o incompletos, por lo tanto se debe realizar una verificación de ellos, como eliminar los duplicados, completar con otra fuente los incompletos, acomodar los datos erróneos o en el peor caso removerlos.
     \item\textbf{Estructurar los datos:} dependiendo del tipo de los datos con que contamos la visualización puede variar. Los tipos de datos se pueden dividir en: categórica nominal, categórica ordinal y cuantitativo.
     \begin{itemize}
-        \item Categórica nominal: se distinguen por ser un dato que representa un valor textual. Por ejemplo: Un país, un género, etc.
-        \item Categórica ordinal: es un dato nominal que puede representar un valor. Por ejemplo: Medallas Olímpicas (Oro, plata, bronce), Calor o Frío, etc.
-        \item Cuantitativo: es un dato que representa un valor numérico, en donde algunos son de escala de intervalo y otros de proporción. Por ejemplo: Fechas, temperatura, precio, edad, etc.
+        \item Categórica nominal: se distinguen por ser un dato que representa un valor textual. Por ejemplo: un país, un género, etc.
+        \item Categórica ordinal: es un dato nominal que puede representar un valor. Por ejemplo: medallas olímpicas (oro, plata, bronce), calor o frío, etc.
+        \item Cuantitativo: es un dato que representa un valor numérico, en donde algunos son de escala de intervalo y otros de proporción. Por ejemplo: fechas, temperatura, precio, edad, etc.
     \end{itemize}
     \item\textbf{Limpiar:} eventualmente algunos datos pueden ser atípicos al resto, esto no dice que sean erróneos, pero pueden hacer ruido en la visualización, es buena opción eliminarlos si ese es el caso.
-    \item\textbf{Transformar:} para simplificar la visualización y el análisis de la misma es posible que los datos tengan que sufrir una transformación de tipo o pre-calcular ciertas operaciones en los datos. Por ejemplo: promedio de los precios, categorizar edades (Niño: 0-12, Adolescente: 13- 19, Adulto: 20-50, Anciano: +50).
-\end{itemize}
-
-\subsection{Métodos de visualización de datos}
-Toda visualización está soportada por un método de clasificación, es decir, tiene un motivo y función. A continuación algunos métodos de clasificación \cite{DataVis}:
-
-\begin{itemize}
-    \item Comparar categorías o valores
-    \item Mostrar cambios en el tiempo
-    \item Mostrar conexiones y relaciones
+    \item\textbf{Transformar:} para simplificar la visualización y el análisis de la misma es posible que los datos tengan que sufrir una transformación de tipo o pre-calcular ciertas operaciones en los datos. Por ejemplo: promedio de los precios, categorizar edades (niño: 0-12, adolescente: 13- 19, adulto: 20-50, anciano: +50).
 \end{itemize}
 
 \subsection{Tipos de gráficas según método}
-En esta sección se presentarán los tipos de gráficas correspondientes al método o función, mencionadas en la sección anterior, que se quiere aplicar:
+Toda visualización está soportada por un método de clasificación, es decir, tiene un motivo y función. En esta sección se presentarán algunos tipos de gráficas correspondientes al método o función \cite{DataVis}: 
 
 \begin{itemize}
-    \item\textbf{Comparar categorías:} Gráfica de puntos, Gráfica de barras, Gráfica de barras flotantes, histogramas.
+    \item\textbf{Comparar categorías:} gráfica de puntos (\textbf{Figura \ref{fig:marco_teorico_puntos_chart}}), gráfica de barras (\textbf{Figura \ref{fig:marco_teorico_barra_chart}}), gráfica de barras flotantes (\textbf{Figura \ref{fig:marco_teorico_barra_flotante_chart}}) e histogramas (\textbf{Figura \ref{fig:marco_teorico_histograma_chart}}).
     \begin{center}
         \bigbreak
         \includegraphics[scale=0.5]{images/marco_teorico/puntos_chart.png}
@@ -135,7 +126,7 @@ En esta sección se presentarán los tipos de gráficas correspondientes al mét
         \bigbreak
     \end{center}
     
-    \item\textbf{Cambios en el tiempo:} Gráfica de línea, Gráfica de área, Gráfica de áreas apiladas.
+    \item\textbf{Cambios en el tiempo:} gráfica de línea (\textbf{Figura \ref{fig:marco_teorico_lineal_chart}}), gráfica de área (\textbf{Figura \ref{fig:marco_teorico_area_chart}}) y gráfica de áreas apiladas (\textbf{Figura \ref{fig:marco_teorico_area_apilada_chart}}).
     \begin{center}
         \bigbreak
         \includegraphics[scale=0.5]{images/marco_teorico/lineal_chart.png}
@@ -143,21 +134,20 @@ En esta sección se presentarán los tipos de gráficas correspondientes al mét
         \label{fig:marco_teorico_lineal_chart}
         \bigbreak
         
-        
         \includegraphics[scale=0.3]{images/marco_teorico/area_chart.png}
         \captionof{figure}{Gráfica de áreas}
         \label{fig:marco_teorico_area_chart}
         \bigbreak
-        
+
         \includegraphics[scale=0.4]{images/marco_teorico/area_apilada_chart.png}
         \captionof{figure}{Gráfica de áreas apiladas}
         \label{fig:marco_teorico_area_apilada_chart}
         \bigbreak
     \end{center}
-    \item\textbf{Conexiones y relaciones:} Gráfica de dispersión, Gráfica de burbujas.
+    \item\textbf{Conexiones y relaciones:} gráfica de dispersión (\textbf{Figura \ref{fig:marco_teorico_dispersion_chart}}) y gráfica de burbujas (\textbf{Figura \ref{fig:marco_teorico_burbujas_chart}}).
     \begin{center}
         \bigbreak
-        \includegraphics[scale=0.5]{images/marco_teorico/dispersion_chart.png}
+        \includegraphics[scale=0.4]{images/marco_teorico/dispersion_chart.png}
         \captionof{figure}{Gráfica de dispersión}
         \label{fig:marco_teorico_dispersion_chart}
         \bigbreak

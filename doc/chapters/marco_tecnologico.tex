@@ -1,12 +1,12 @@
 Este capítulo cubre la investigación y evaluación dada sobre herramientas de apoyo posibles a usar en el trabajo para simplificar el desarrollo. El capítulo inicia introduciendo aquellas herramientas que facilitan las construcción de las visualizaciones sobre los datos. Por último, el capítulo presenta las herramientas que soportan, optimizan y simplifican el desarrollo general de la aplicación web.
 
 \section{Tecnologías para la visualización de datos en web}
-Para comenzar, hay que saber que las visualizaciones para este caso se construirán en el ámbito web, haciendo uso de HTML \cite{MozHTML} y JavaScript \cite{MozJS}. De las bibliotecas que nos apoyaremos, algunas construyen la gráfica utilizando el componente Canvas \cite{MozCanvas} de HTML5 y otras utilizando el estándar SVG \cite{W3SVG} (Scalable Vector Graphics).
+Para comenzar, hay que saber que las visualizaciones para este caso se construirán en el ámbito web, haciendo uso de HTML5 \cite{MozHTML} y JavaScript \cite{MozJS}. De las bibliotecas que nos apoyaremos, algunas construyen la gráfica utilizando el componente Canvas \cite{MozCanvas} de HTML5 y otras utilizando el estándar SVG \cite{W3SVG} (Scalable Vector Graphics).
 
 \subsection[SVG vs Canvas]{SVG vs Canvas \cite{OperaSVGCanvas}}
 El elemento Canvas es literalmente, un lienzo donde se va a pintar la gráfica, el proceso de construcción es más complejo y manual ya que la manera para dibujar consiste en pintar pixel por pixel, por lo que el cambio de resoluciones afecta lo dibujado. El elemento SVG (Scalable Vector Graphics) representa un vector escalable, donde cada elemento de la gráfica, ya sea una caja, círculo, texto, o imagen representa un sub-elemento del SVG general. Adicionalmente SVG permite el manejo de eventos y los cambios de resoluciones no afectan la visualización, esto hace que sea más fácil trabajar y personalizar los elementos de la gráfica a dibujar.
 
-Como usaremos bibliotecas para la creación de las gráficas no debemos preocuparnos por la dificultad que toma la construcción con Canvas comparado con SVG, ya que la biblioteca lo hará por nosotros. El punto importante es que Canvas tiene un rendimiento mayor que el SVG cuando la gráfica maneja muchos objetos, debido a que cada objeto de la gráfica es un elemento que impacta en el DOM \cite{W3DOM} del HTML y esto hace que más memoria RAM sea consumida.
+Como usaremos bibliotecas para la creación de las gráficas no debemos preocuparnos por la dificultad que toma la construcción con Canvas comparado con SVG, ya que la biblioteca lo hará por nosotros. El punto importante es que Canvas tiene un rendimiento mejor que el SVG cuando la gráfica maneja muchos objetos, debido a que cada objeto de la gráfica SVG es un elemento que impacta en el DOM \cite{W3DOM} del HTML y esto hace que más memoria RAM sea consumida.
 
 \subsection{Bibliotecas basadas en Canvas}
 A continuación se presentará una lista de bibliotecas que construyen las gráficas haciendo uso de Canvas, acompañada de una lista de las gráficas principales que incluyen:
@@ -87,7 +87,7 @@ Para nuestro trabajo es necesario varios tipos de gráficas, ya que se realizar�
 
 \item \textbf{Rendimiento}
 
-Definimos rendimiento como el comportamiento que toma la biblioteca al construir una gráfica considerablemente pesada (con inmensa cantidad de datos). El problema que podemos presentar al visualizar grandes cantidades de datos es que la vista donde está la gráfica se perciba con cierta lentitud y en el peor de los casos el navegador (browser) se detenga, es decir deje de trabajar. Afortunadamente, hay algunas bibliotecas que optimizan las gráfica y aplican un estilo de paginación, donde no dibujan todos los puntos a la vez, sino a medida que nos profundizamos en la gráfica.
+Definimos rendimiento como el comportamiento que toma la biblioteca al construir una gráfica considerablemente pesada (con inmensa cantidad de datos). El problema que podemos presentar al visualizar grandes cantidades de datos es que la vista donde está la gráfica se perciba con cierta lentitud y en el peor de los casos el navegador (browser) se detenga, es decir, deje de trabajar. Afortunadamente, hay algunas bibliotecas que optimizan las gráficas y aplican un estilo de paginación, donde no dibujan todos los puntos a la vez, sino a medida que nos profundizamos en la gráfica.
 
 Se sometieron algunas de las bibliotecas a la creación de una gráfica desde 10.000 hasta 1.000.000 de datos. En la \textbf{Figura \ref{fig:library_comparison}} podemos apreciar una aproximación del resultado basado en la cantidad de objetos que pudieron soportar, en donde el eje 'y' corresponde al número de objetos, donde M representa el millón. Cabe destacar que D3, Processing y Raphael no fueron considerados ya que su rendimiento es totalmente relativo a como se programe la gráfica.
 \begin{center}
@@ -123,7 +123,7 @@ El ciclo de una aplicación SPA como se muestra en la \textbf{Figura \ref{fig:sp
 A continuación presentaremos dos (2) bibliotecas que nos permiten definir la aquitectura de la aplicación: Angular y jQuery.
 
 \subsubsection{Angular}
-Angular\footnote{Angular 2 \url{https://angular.io/}} es un framework muy popular creado por Google destinado a construir aplicaciones web, donde se maneja la lógica de la aplicación con JavaScript. Para la versión 2 de Angular, que es la que se contempla para este proyecto, se logra una estructura modular en la aplicación, donde cada elemento es considerado un componente que se construye de manera aislada, por lo tanto no se ve afectado por el resto de los mismos. Claramente, el enfoque de Angular sigue la arquitectura SPA, donde logra optimizar y resolver posibles problemas con los estados de transiciones, carga inicial, caching y mejor manejo de peticiones HTTP.
+Angular\footnote{Angular 2 \url{https://angular.io/}} es un framework muy popular creado por Google destinado a construir aplicaciones web, donde se maneja la lógica de la aplicación con \mbox{JavaScript}. Para la versión 2 de Angular, que es la que se contempla para este proyecto, se logra una estructura modular en la aplicación, donde cada elemento es considerado un componente que se construye de manera aislada, por lo tanto no se ve afectado por el resto de los mismos. Claramente, el enfoque de Angular sigue la arquitectura SPA, donde logra optimizar y resolver posibles problemas con los estados de transiciones, carga inicial, caching y mejor manejo de peticiones HTTP.
 
 Es importante saber que Angular es una biblioteca con un catálogo inmenso de funcionalidades soportado por la mayoría de los navegadores, donde ofrece desde mecanismos de seguridad para evitar \textit{Cross-site scripting}\footnote{Cross-site scripting \url{https://es.wikipedia.org/wiki/Cross-site_scripting}} (XSS) hasta un paquete completo de animaciones.
 
@@ -168,7 +168,7 @@ Es una manera de lograr que las vistas sean dinámicas, es decir, los componente
 <li *ngFor="let item of arrayItem"></li>
 <app-detail *ngIf="selectedItem"></app-detail>
 \end{minted}
-La directiva \textbf{*ngFor} nos permite iterar en un ciclo, originando un <li> por cada elemento de arrayItem y \textbf{*ngIf} nos permite mostrar o no elementos mediante una condición.
+La directiva \textbf{*ngFor} nos permite iterar en un ciclo, originando un \textbf{$<$li$>$} por cada elemento de arrayItem y \textbf{*ngIf} nos permite mostrar o no elementos mediante una condición.
 
 \item\textbf{Servicios}
 
@@ -185,7 +185,7 @@ El código de arriba representa un ejemplo de un servicio de Logs, en donde nos 
 \end{itemize}
 
 \subsubsection{jQuery}
-jQuery\footnote{jQuery \url{https://jquery.com/}} es una biblioteca ligera y sencilla, que lleva bastante tiempo siendo usada. Su finalidad es ofrecer soluciones a funciones complejas de manera sencilla principalmente para la manipulación de elementos HTML y eventos, animaciones y AJAX. Considero jQuery como una opción manual al construir una aplicación SPA, ya que directamente no ofrece una solución completa, pero existen plugins y/o guías para lograr dicha arquitectura.
+jQuery\footnote{jQuery \url{https://jquery.com/}} es una biblioteca ligera y sencilla, que lleva bastante tiempo siendo usada. Su finalidad es ofrecer soluciones a funciones complejas de manera sencilla principalmente para la manipulación de elementos HTML y eventos, animaciones y AJAX. jQuery es considerado una alternativa manual si se quiere construir una aplicación SPA, ya que directamente no ofrece una solución completa, pero existen \textit{plugins} y/o guías para lograr dicha arquitectura.
 
 \begin{itemize}
 
@@ -427,4 +427,4 @@ moment().month();
 \end{itemize}
 
 \bigbreak
-Presentadas estas alternativas, tomaremos Angular para la arquitectura y Angular Material para el diseño respectivamente. Esta selección se justifica debido a que Angular como framework para el front-end tiene un enfoque total SPA, además tiene ciertas herramientas integradas, como un manejador de conexiones http que es de bastante utilidad para nuestro caso. También, Angular orienta a programar de manera modular, en donde se logra un código más organizado y reutilizable. Por el lado del diseño, Angular Material es una buena opción, debido a su compatibilidad con el framework, adicionalmente, posee una gran cantidad de vistas adaptativas totalmente controlables mediante directivas de Angular.
+Presentadas estas alternativas, se tomará Angular para la arquitectura y Angular Material para el diseño respectivamente. Esta selección se justifica debido a que Angular como framework para el front-end tiene un enfoque total SPA, además tiene ciertas herramientas integradas, como un manejador de conexiones HTTP que es de bastante utilidad para nuestro caso. También, Angular orienta a programar de manera modular, en donde se logra un código más organizado y reutilizable. Por el lado del diseño, Angular Material es una buena opción, debido a su compatibilidad con el framework, adicionalmente, posee una gran cantidad de vistas adaptativas totalmente controlables mediante directivas de Angular.
