@@ -24,4 +24,7 @@
     <!-- display number -->
     <div *ngIf="isNumber" fxFlex="100" class="number">{{queryResponse.y_values[0].toFixed(2)}}</div>
   </ng-container>
+  <div class="empty" *ngIf="!(queryResponse$ | async)">
+    NO HAY RESULTADOS
+  </div>
 </div>

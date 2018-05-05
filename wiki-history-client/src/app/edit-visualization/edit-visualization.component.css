@@ -13,3 +13,9 @@ div.number {
   margin-top: 15px;
   margin-left: 10px;
 }
+
+.empty {
+  text-align: center;
+  font-weight: bold;
+  color: gray;
+}

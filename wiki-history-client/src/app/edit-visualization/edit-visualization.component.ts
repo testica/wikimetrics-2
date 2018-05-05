@@ -30,7 +30,7 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
   article$: Observable<Article>;
 
   query$: ReplaySubject<WikimetricsQuery[]> = new ReplaySubject(1);
-  queryResponse$: ReplaySubject<QueryResponse> = new ReplaySubject(1);
+  queryResponse$ = new ReplaySubject<QueryResponse | null>(1);
 
   onclick$: Subscription;
 
@@ -106,8 +106,9 @@ export class EditVisualizationComponent implements OnInit, OnDestroy {
     return combineLatest(this.article$, this.query$)
     .take(1)
     .switchMap(([art, query]) => this.wikimetricsSvc.customQuery(art, query))
-    .filter(res => res.length > 0)
-    .map(res => completeQueryToVisualization(res))
+    .map(res => {
+      return res.length > 0 ? completeQueryToVisualization(res) : null;
+    })
     .subscribe(res => {
       console.log(res);
       this.queryResponse$.next(res);
