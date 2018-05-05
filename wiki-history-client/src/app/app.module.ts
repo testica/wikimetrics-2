@@ -33,7 +33,7 @@ import { ArticleService } from './article.service';
 import { AuthGuard } from './auth-guard.service';
 import { NavbarService } from './navbar/navbar.service';
 import { VisualizationService } from './visualization.service';
-import CustomUrlSerializer from './custom-url-serializer';
+import { CustomUrlSerializer } from './custom-url-serializer';
 import { ResizeService } from './resize.service';
 
 @NgModule({

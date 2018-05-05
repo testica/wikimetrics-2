@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    image: mongo:3.6.2
+    restart: always
+    container_name: wiki_history_db
+    environment:
+      - MONGO_INITDB_DATABASE=wiki-history-api
+    ports:
+      - "27017:27017"
+    volumes:
+    - data-volume:/data/db
+  api:
+    build: ./wiki-history-api
+    container_name: wiki_history_api
+    command: /usr/local/bin/uwsgi --http 0.0.0.0:4242 --module app --callab app
+    ports:
+      - "4242:4242"
+    depends_on:
+      - db
+  web:
+    build: ./wiki-history-client
+    container_name: wiki_history_client
+    ports:
+      - "4200:4200"
+volumes:
+  data-volume:

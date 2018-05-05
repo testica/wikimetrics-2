@@ -21,10 +21,7 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=30)
 jwt = JWTManager(app)
 
 # mongo instance
-# mongodb://api:api@ds227865.mlab.com:27865/wiki-history-api
-mongo = MongoClient('ds227865.mlab.com', 27865)['wiki-history-api']
-mongo.authenticate('api', 'api')
-
+mongo = MongoClient('db', 27017)['wiki-history-api']
 
 def md5(my_string):
   m = hashlib.md5()
@@ -298,6 +295,4 @@ def remove_visualization(locale, title, title_vis):
     return '', 204
 
 if __name__ == '__main__':
-  # TODO: check better for production case
-  # app.run(debug=True)
-  app.run(threaded=True)
+  app.run()
