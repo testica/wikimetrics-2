@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/mapTo';
 
 import { Visualization } from '../visualization.service';
 import { ArticleService } from '../article.service';
@@ -21,6 +22,7 @@ export class DefaultVisualizationComponent {
 
   queryResponse$: Observable<QueryResponse>;
   visualization: Visualization | undefined;
+  loaded$: Observable<boolean>;
   constructor(
     private wikimetricsSvc: WikimetricsService,
     private route: ActivatedRoute,
@@ -48,6 +50,8 @@ export class DefaultVisualizationComponent {
     })
     .filter(res => res.length > 0)
     .map(res => completeQueryToVisualization(res));
+
+    this.loaded$ = this.queryResponse$.mapTo(true);
   }
 
   get isNumber() { return this.visualization!.type === 'number'; }

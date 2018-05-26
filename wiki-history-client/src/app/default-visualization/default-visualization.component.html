@@ -14,3 +14,4 @@
   <!-- display number -->
   <div *ngIf="isNumber" fxFlex="100" class="number">{{queryResponse.y_values[0].toFixed(2)}}</div>
 </ng-container>
+<app-loading *ngIf="!(loaded$ | async)"></app-loading>
