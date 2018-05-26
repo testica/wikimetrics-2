@@ -1,4 +1,4 @@
-# teg
+# Wikimetrics 2.0
 Trabajo Especial de Grado
 
 ------
