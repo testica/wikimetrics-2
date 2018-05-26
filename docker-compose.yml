@@ -12,6 +12,7 @@ services:
     - data-volume:/data/db
   api:
     build: ./wiki-history-api
+    restart: always
     container_name: wiki_history_api
     command: /usr/local/bin/uwsgi --http 0.0.0.0:4242 --module app --callab app
     ports:
@@ -20,6 +21,7 @@ services:
       - db
   web:
     build: ./wiki-history-client
+    restart: always
     container_name: wiki_history_client
     ports:
       - "4200:4200"
