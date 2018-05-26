@@ -1,8 +1,9 @@
 <mat-toolbar color="primary">
   <ng-container *ngIf="config$ | async as config">
-      <a class="title" [routerLink]="['/']" fxLayout="column">
+      <mat-icon class="home" [routerLink]="['/']">home</mat-icon>
+      <a class="title" fxLayout="column">
         <span class="title">{{config.title}}</span>
-        <span *ngIf="config.subtitle" class="sub-title">{{config.subtitle}}</span>
+        <span *ngIf="config.subtitle" class="sub-title" (click)="goBack()">{{config.subtitle}}</span>
       </a>
     <span class="spacer"></span>
     <button ngClass.xs="mobile" mat-raised-button *ngIf="!!config.button" (click)="clickButton()">{{config.button}}</button>
